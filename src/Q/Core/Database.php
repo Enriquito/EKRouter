@@ -109,9 +109,55 @@ class Database
 
             return false;
         }
-        finally
-        {
-            $query = null;
+    }
+
+    public function Insert($table,$array)
+    {       
+        $values = "";
+        $keys = "";
+        $count = 0;
+        $paramArray = [];
+        
+        foreach($array as $key => $value)
+        {	
+            if($count == 0)
+            {
+                $paramArray[] = $value;
+                $values .= "?,";
+                $keys .= $key . ",";
+            }
+            else if($count == (count($array) - 1))
+            {
+                $paramArray[] = $value;
+                $values .= "?";
+                $keys .= $key;
+            }
+            else
+            {
+                $paramArray[] = $value;
+                $values .= "?,";
+                $keys .= $key . ",";
+            }
+            
+            $count++;
         }
+        
+        try
+        {
+            $sql_query = "INSERT INTO $table ($keys) VALUES($values)";
+            $con = $this->PDO;
+            $query = $con->prepare($sql_query);
+            $query->execute($paramArray);
+            $stmt = $con->query("SELECT LAST_INSERT_ID()");
+            $lastId = $stmt->fetch(PDO::FETCH_NUM);
+            return $lastId[0];
+        }
+        catch(PDOException $e)
+        {
+            if($this->Debug)
+                echo("Error: " . $e->message);
+                
+            return false;
+        }       
     }
 }

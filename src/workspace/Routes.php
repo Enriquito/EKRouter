@@ -1,5 +1,6 @@
 <?php
 namespace Q\Core;
+
 // Sample use of a GET request with a database call.
 // $app->Router->Get("/user/{id}", function($param) use(&$app){
     // $data = $app->Database->Query("SELECT * FROM users WHERE ID = ". $param['id'],true);
@@ -8,10 +9,25 @@ namespace Q\Core;
 
 $app->Router->Get("/user/{id}", function($param) use(&$app){
     $data = $app->Database->Query("SELECT * FROM users WHERE ID = ". $param['id'],true);
-    Response::Json(["user" => $data, "Rows" => $app->Database->CountRows("SELECT * FROM users")]);
+    Response::Json(
+        [
+            "user" => $data, 
+            "rows" => $app->Database->CountRows("SELECT * FROM users")
+        ]
+    );
 });
 
-$app->Router->Put("/user/{id}", function($param){
-    Response::Json(["userID" => $param['id']]);
-    echo "ik ben een put request";
+$app->Router->Post("/user/{id}", function($param) use(&$app){
+    $data = $app->Router->GetRequestBody("json");
+
+    $success = $app->Database->Insert(
+        "users",
+        [
+            "Username" => $data["Username"],
+            "Password" => $data["Password"],
+            "Image" => $data["Image"]
+        ]
+    );
+
+    Response::Json(["ID" => $success]);
 });
