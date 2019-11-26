@@ -1,4 +1,5 @@
 <?php
+namespace Q\Core;
 
 class Response
 {
