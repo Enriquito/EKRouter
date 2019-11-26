@@ -7,7 +7,7 @@
 
 $app->Router->Get("/user/{id}", function($param) use(&$app){
     $data = $app->Database->Query("SELECT * FROM users WHERE ID = ". $param['id'],true);
-    Response::Json(["user" => $data]);
+    Response::Json(["user" => $data, "Rows" => $app->Database->CountRows("SELECT * FROM users")]);
 });
 
 $app->Router->Put("/user/{id}", function($param){
