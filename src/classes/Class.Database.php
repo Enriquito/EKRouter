@@ -31,20 +31,22 @@ class Database
         }
     }
 
-    public function Query($sql)
+    public function Query($sql, $singleRow = false)
     {
         try
-        {
-// 			echo $sql;
-            
+        { 
             $query = $this->PDO->prepare($sql);
             $query->execute();
             
             if(strpos($sql, "SELECT") !== false)
-                return $query->fetchAll();
+            {
+                if($singleRow)
+                    return $query->fetch(PDO::FETCH_ASSOC);
+                else
+                    return $query->fetchAll(PDO::FETCH_ASSOC);
+            }  
             else
-                return true;
-                
+                return null;       
         }
         catch(PDOException $e)
         {
