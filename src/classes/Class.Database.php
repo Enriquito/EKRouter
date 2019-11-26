@@ -30,4 +30,32 @@ class Database
             return false;
         }
     }
+
+    public function Query($sql)
+    {
+        try
+        {
+// 			echo $sql;
+            
+            $query = $this->PDO->prepare($sql);
+            $query->execute();
+            
+            if(strpos($sql, "SELECT") !== false)
+                return $query->fetchAll();
+            else
+                return true;
+                
+        }
+        catch(PDOException $e)
+        {
+            if($this->debug)
+                echo("Error: " . $e->message);
+
+            return false;
+        }
+        finally
+        {
+            $query = null;
+        }
+    }
 }
