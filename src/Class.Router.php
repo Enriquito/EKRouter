@@ -21,11 +21,8 @@ class Router
 
         foreach($this->routes as $route)
         {
-            //echo $route["route"];
             $routeReplaced = preg_replace("/\{\w+\}/i", "([a-z0-9-]+)", $route["route"]);
             $routeReplaced = str_replace("/", "\/", $routeReplaced);
-
-            //echo $routeReplaced;
 
             if(preg_match("/^". $routeReplaced ."$/i", $this->GetQuery()))
             {

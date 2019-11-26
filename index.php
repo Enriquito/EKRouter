@@ -7,11 +7,11 @@ include_once('src/Class.App.php');
 
 $app = new App();
 
-$app->Router->get("/user/{id}", function($param){
+$app->Router->Get("/user/{id}", function($param){
     Response::Json(["userID" => $param['id']]);
 });
 
-$app->Router->put("/user/{id}", function($param){
+$app->Router->Put("/user/{id}", function($param){
     Response::Json(["userID" => $param['id']]);
     echo "ik ben een put request";
 });
