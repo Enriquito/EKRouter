@@ -23,15 +23,18 @@ class API
 
     private function Match()
     {
+        $matchFound = false;
+
         foreach($this->routes as $route)
         {
+            //echo $route["route"];
             $routeReplaced = preg_replace("/\{\w+\}/i", "([a-z0-9-]+)", $route["route"]);
             $routeReplaced = str_replace("/", "\/", $routeReplaced);
 
+            //echo $routeReplaced;
+
             if(preg_match("/^". $routeReplaced ."$/i", $this->GetQuery()))
             {
-                // echo $routeReplaced . " " . $this->GetQuery();
-
                 preg_match_all("/\{(\w+)\}/i", $route["route"], $matchesRouteVars);
                 unset($matchesRouteVars[0]);
 
@@ -39,19 +42,27 @@ class API
                 unset($queryRoute[0]);
 
                 $ar = [];
-                $i = 0;
+                $i = 1;
+
+                print_r($matchesRouteVars[1]);
+                //print_r($queryRoute[1]);
 
                 foreach($matchesRouteVars[1] as $match => $key)
                 {
-                    $i++;
                     $ar[$key] = $queryRoute[1][$i];
+                    $i = ($i + 2);
                 }
-
-                //print_r($ar);
 
                 if($_SERVER['REQUEST_METHOD'] == $route["method"])
                     $route["callback"]($ar);
+
+                $matchFound = true;
             }
+        }
+
+        if(!$matchFound)
+        {
+            Response::notFound();
         }
     }
 
@@ -82,18 +93,25 @@ class API
 
 $api = new API();
 
-$api->get("/users/all", function(){
-    echo "users func";
+$api->get("/users/all/test/{werkt}", function($param){
+    echo "users func " . $param["werkt"];
 });
 
 $api->get("/user/{id}", function($param){
-    Response::json(["userID" => $param['id']]);
-    // echo $_SERVER['REQUEST_METHOD'];
+    Response::Json(["userID" => $param['id']]);
+    echo $_SERVER['REQUEST_METHOD'];
 });
 
-$api->post("/user/{id}/update", function($param){
-    //Response::json(["userID" => $param['id']]);
-    echo $_SERVER['REQUEST_METHOD'];
+$api->put("/user/{id}", function($param){
+    Response::Json(["userID" => $param['id']]);
+    echo "ik ben een put request";
+});
+
+$api->get("/user/{id}/update/{name}/lang/{taal}", function($param){
+    //Response::json(["param" => $param);
+    //echo $_SERVER['REQUEST_METHOD'];
+    echo "Params: ";
+    print_r($param);
 });
 
 $api->Run();
