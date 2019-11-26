@@ -42,15 +42,17 @@ class API
                 unset($queryRoute[0]);
 
                 $ar = [];
-                $i = 1;
 
-                print_r($matchesRouteVars[1]);
-                //print_r($queryRoute[1]);
+                $explodeRoute = explode("/", $route["route"]);
+                $explodeUrlQuery = explode("/", $this->GetQuery());
 
-                foreach($matchesRouteVars[1] as $match => $key)
+                for($i = 0; $i < count($explodeRoute) ; $i++)
                 {
-                    $ar[$key] = $queryRoute[1][$i];
-                    $i = ($i + 2);
+                    if(strpos($explodeRoute[$i], "{") !== FALSE)
+                    {
+                        preg_match("/\{(\w+)\}/", $explodeRoute[$i], $b);
+                        $ar[$b[1]] = $explodeUrlQuery[$i];
+                    }
                 }
 
                 if($_SERVER['REQUEST_METHOD'] == $route["method"])
@@ -102,16 +104,19 @@ $api->get("/user/{id}", function($param){
     echo $_SERVER['REQUEST_METHOD'];
 });
 
+$api->get("/user/{id}/frikando/naam/{naam}/info/lang/{taal}", function($param){
+    Response::Json(
+        [
+            "userID" => $param['id'], 
+            "taal" => $param["taal"]
+        ]
+    );
+    echo $_SERVER['REQUEST_METHOD'];
+});
+
 $api->put("/user/{id}", function($param){
     Response::Json(["userID" => $param['id']]);
     echo "ik ben een put request";
-});
-
-$api->get("/user/{id}/update/{name}/lang/{taal}", function($param){
-    //Response::json(["param" => $param);
-    //echo $_SERVER['REQUEST_METHOD'];
-    echo "Params: ";
-    print_r($param);
 });
 
 $api->Run();
