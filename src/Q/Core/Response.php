@@ -3,6 +3,11 @@ namespace Q\Core;
 
 class Response
 {
+    function __construct()
+    {
+        
+    }
+
     public static function Json($data, $code = 200)
     {
         header('Content-Type: application/json');
