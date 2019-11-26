@@ -2,20 +2,16 @@
 
 class Response
 {
-    private const Status = [
-        200 => "OK",
-        400 => "Bad Request",
-        401 => "Unauthorized",
-        403 => "Forbidden",
-        404 => "Not Found",
-        500 => "Internal Server Error"
-    ];
-
     public static function Json($data, $code = 200)
     {
         header('Content-Type: application/json');
-        header("HTTP/1.1 " . $code . " " . self::Status[$code]);
+        http_response_code($code);
         print json_encode($data);
+    }
+
+    public static function SetResponse($code)
+    {
+        http_response_code(404);
     }
 
     public static function NotFound()
