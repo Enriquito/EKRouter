@@ -84,12 +84,6 @@ class Router
         return $_SERVER['REQUEST_METHOD'];
     }
 
-    public function GetRequestBody($type = "json")
-    {
-        if($type == "json")
-            return json_decode(file_get_contents('php://input'), true);
-    }
-
     public function Run()
     {
         $this->Match();
