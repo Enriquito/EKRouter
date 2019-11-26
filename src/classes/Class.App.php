@@ -1,6 +1,6 @@
 <?php
-include_once('src/Class.Response.php');
-include_once('src/Class.Router.php');
+include_once('src/classes/Class.Response.php');
+include_once('src/classes/Class.Router.php');
 
 class App
 {
