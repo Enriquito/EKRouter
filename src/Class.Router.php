@@ -12,9 +12,7 @@ class Router
     private function GetQuery()
     {
         if(isset($_GET['q']))
-        {
             return $_GET['q'];
-        }
     }
 
     private function Match()
@@ -64,23 +62,28 @@ class Router
         }
     }
 
-    public function get($route, $function)
+    public function Get($route, $function)
     {
         $this->routes[] = ["route" => $route, "callback" => $function, "method" => "GET"];
     }
 
-    public function post($route, $function)
+    public function Post($route, $function)
     {
         $this->routes[] = ["route" => $route, "callback" => $function, "method" => "POST"];
     }
 
-    public function delete($route, $function)
+    public function Delete($route, $function)
     {
         $this->routes[] = ["route" => $route, "callback" => $function, "method" => "DELETE"];
     }
-    public function put($route, $function)
+    public function Put($route, $function)
     {
         $this->routes[] = ["route" => $route, "callback" => $function, "method" => "PUT"];
+    }
+
+    public static function GetRequestType():string
+    {
+        return $_SERVER['REQUEST_METHOD'];
     }
 
     public function Run()
