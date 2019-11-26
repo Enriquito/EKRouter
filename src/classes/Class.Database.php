@@ -14,7 +14,7 @@ class Database
         return new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset='.DB_CHARSET, DB_USERNAME, DB_PASSWORD);
     }
 
-    public function Count_rows($sql_query)
+    public function CountRows($sql_query)
     {
         try
         {
