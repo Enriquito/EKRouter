@@ -1,6 +1,7 @@
 <?php
 
 define("DB_USE", true);
+define("DB_DEBUG", false);
 define("DB_HOST", "localhost");
 define("DB_USERNAME", "root");
 define("DB_NAME","test");

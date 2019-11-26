@@ -1,4 +1,5 @@
 <?php
+namespace Q\Core;
 
 class Router
 {
@@ -6,7 +7,7 @@ class Router
 
     function __construct()
     {
-
+        
     }
 
     private function GetQuery()

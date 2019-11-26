@@ -1,4 +1,6 @@
 <?php
+namespace Q\Core;
+
 include_once('src/Settings.php');
 include_once('src/classes/Class.Response.php');
 include_once('src/classes/Class.Router.php');

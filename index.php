@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 include_once('src/classes/Class.App.php');
 
-$app = new App();
+$app = new Q\Core\App();
 
 include('src/workspace/Routes.php');
 
