@@ -35,7 +35,7 @@ $app->Router->Post("/user/{id}", function($param) use(&$app){
 });
 */
 
-$app->Router->Get("/user/{id}", function($param) use(&$app){
+$app->Router->Get("user/{id}", function($param) use(&$app){
     $data = $app->Database->Query("SELECT * FROM users WHERE ID = ". $param['id'],true);
     Response::Json(
         [
@@ -61,14 +61,12 @@ $app->Router->Post("/user/{id}", function($param) use(&$app){
     Response::Json($data, 201);
 });
 
-$app->Router->Post("/create-password", function(){
+$app->Router->Post("create-password", function(){
     $password = Request::GetJson()["password"];
-    session_destroy();
-    //User::CreatePassword("123");
-    //echo password_hash($password, PASSWORD_BCRYPT);
+    Response::Json(["Password" => User::CreatePassword($password)]);
 });
 
-$app->Router->Post("/login", function(){
+$app->Router->Post("login", function(){
     $data = Request::GetJson();
     $password = $data["password"];
     $email = $data["email"];

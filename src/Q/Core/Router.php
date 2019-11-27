@@ -79,7 +79,7 @@ class Router
         $this->routes[] = ["route" => $route, "callback" => $function, "method" => "PUT"];
     }
 
-    public static function GetRequestType():string
+    public static function GetRequestType() : string
     {
         return $_SERVER['REQUEST_METHOD'];
     }
