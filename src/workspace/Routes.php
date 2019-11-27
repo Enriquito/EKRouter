@@ -1,32 +1,39 @@
 <?php
 namespace Q\Core;
+use Q\App\User;
 
-// Sample use of a GET request with a database call.
-// $app->Router->Get("/user/{id}", function($param) use(&$app){
-    // $data = $app->Database->Query("SELECT * FROM users WHERE ID = ". $param['id'],true);
-    // Response::Json(
-    //    [
-    //        "user" => $data, 
-    //        "rows" => $app->Database->CountRows("SELECT * FROM users")
-    //    ]
-    //);
-// });
+include_once("src/Q/App/User.php");
 
-// Sample use of a POST request with a database call.
-// $app->Router->Post("/user/{id}", function($param) use(&$app){
-//     $data = Request::GetJson();
+/*
+Sample use of a GET request with a database call.
+$app->Router->Get("/user/{id}", function($param) use(&$app){
+    $data = $app->Database->Query("SELECT * FROM users WHERE ID = ". $param['id'],true);
+    Response::Json(
+       [
+           "user" => $data, 
+           "rows" => $app->Database->CountRows("SELECT * FROM users")
+       ]
+    );
+});
+*/
 
-//     $success = $app->Database->Insert(
-//         "users",
-//         [
-//             "Username" => $data["Username"],
-//             "Password" => $data["Password"],
-//             "Image" => $data["Image"]
-//         ]
-//     );
+/*
+Sample use of a POST request with a database call.
+$app->Router->Post("/user/{id}", function($param) use(&$app){
+    $data = Request::GetJson();
 
-//     Response::Json(["ID" => $success]);
-// });
+    $success = $app->Database->Insert(
+        "users",
+        [
+            "Username" => $data["Username"],
+            "Password" => $data["Password"],
+            "Image" => $data["Image"]
+        ]
+    );
+
+    Response::Json(["ID" => $success]);
+});
+*/
 
 $app->Router->Get("/user/{id}", function($param) use(&$app){
     $data = $app->Database->Query("SELECT * FROM users WHERE ID = ". $param['id'],true);
@@ -52,4 +59,20 @@ $app->Router->Post("/user/{id}", function($param) use(&$app){
     );
     */
     Response::Json($data, 201);
+});
+
+$app->Router->Post("/create-password", function(){
+    $password = Request::GetJson()["password"];
+    session_destroy();
+    //User::CreatePassword("123");
+    //echo password_hash($password, PASSWORD_BCRYPT);
+});
+
+$app->Router->Post("/login", function(){
+    $data = Request::GetJson();
+    $password = $data["password"];
+    $email = $data["email"];
+
+    $user = new User();
+    $user->Login($email, $password);
 });

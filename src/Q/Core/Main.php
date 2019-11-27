@@ -1,7 +1,7 @@
 <?php
 namespace Q\Core;
 
-class App
+class Main
 {
     public $Router = null;
     public $Database = false;
