@@ -18,6 +18,12 @@ class Router
 
     private function Match()
     {
+        if(!isset($_GET['q']))
+        {
+            Response::NotFound();
+            return;
+        }
+
         $matchFound = false;
 
         foreach($this->routes as $route)
@@ -56,7 +62,7 @@ class Router
 
         if(!$matchFound)
         {
-            Response::notFound();
+            Response::NotFound();
         }
     }
 

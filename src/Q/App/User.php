@@ -50,6 +50,16 @@ class User
                     return;
                 }
             }
+            else
+            {
+                Response::Json(
+                    [
+                        "Code" => 1007,
+                        "Messages" => "Your "
+                    ]
+                );
+                return;
+            }
         }
     }
 
@@ -129,5 +139,12 @@ class User
                 ]
             , 200);
         }
+    }
+
+    public function Create($username, $password, $email)
+    {
+        $database = new Database();
+
+        
     }
 }
