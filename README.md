@@ -6,7 +6,7 @@ Q API is a PHP library for routing and database opperations.
 
 ```php
 # Sample use of a GET request with a database call.
-$app->Router->Get("/user/{id}", function($param) use(&$app){
+$app->Router->Get("user/{id}", function($param) use(&$app){
     $data = $app->Database->Query("SELECT * FROM users WHERE ID = ". $param['id'],true);
     Response::Json(
        [
@@ -17,7 +17,7 @@ $app->Router->Get("/user/{id}", function($param) use(&$app){
 });
 
 # Sample use of a POST request with a database call.
-$app->Router->Post("/user/{id}", function($param) use(&$app){
+$app->Router->Post("user/{id}", function($param) use(&$app){
     $data = Request::GetJson();
 
     $success = $app->Database->Insert(

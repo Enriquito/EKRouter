@@ -14,7 +14,5 @@ include_once('src/Q/Core/Main.php');
 
 $app = new Main();
 
-include_once('src/workspace/Routes.php');
-
 $app->Run();
 

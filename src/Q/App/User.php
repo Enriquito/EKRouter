@@ -109,17 +109,25 @@ class User
         return $data;
     }
 
-    public function CheckLogin()
+    public static function CheckLogin()
     {
         if(isset($_SESSION['UserID']))
         {
             Response::Json(
                 [
                     "Code" => 1005,
-                    "Messages" => "Session OK"
+                    "Messages" => "Session OK."
                 ]
             , 200);
-            return;
+        }
+        else
+        {
+            Response::Json(
+                [
+                    "Code" => 1006,
+                    "Messages" => "Not Logged in."
+                ]
+            , 200);
         }
     }
 }

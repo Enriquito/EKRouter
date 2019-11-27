@@ -14,8 +14,15 @@ class Main
             $this->Database = new Database();
     }
 
+    private function LoadRoutes()
+    {
+        $app = $this;
+        include_once(ROUTE_TABLE_LOCATION);
+    }
+
     public function Run()
     {
+        $this->LoadRoutes();
         $this->Router->Run();
     }
 }
