@@ -24,6 +24,7 @@ class Database
     {
         try
         {
+            //echo $sql_query;
             $query = $this->PDO->prepare($sql_query);
             $query->execute();
             return (int)$query->rowCount();

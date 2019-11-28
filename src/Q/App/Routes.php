@@ -30,3 +30,31 @@ $app->Router->Post("api/login", function(){
 $app->Router->Get("api/authenticate-check", function(){
     User::CheckLogin();
 });
+
+$app->Router->Post("api/check-password", function(){
+    $data = Request::GetJson();
+    $password = $data["password"];
+    $usr = new User();
+    $usr->DoesPasswordMeetRequierments($password);
+});
+
+$app->Router->Post("api/user", function(){
+    $data = Request::GetJson();
+    //print_r($data);
+    
+    if($data['action'] != "create")
+        return;
+
+    $user = new User();
+    
+    $user->Username = $data["user"]["username"];
+    $user->Email = $data["user"]["email"];
+
+    $result = $user->Create($data["user"]["password"]);
+
+    if($result["code"] == 1010)
+        Response::Json($result);
+    else
+        Response::Json($result);
+
+});

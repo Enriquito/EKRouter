@@ -50,17 +50,15 @@ class User
                     return;
                 }
             }
-            else
-            {
-                Response::Json(
-                    [
-                        "Code" => 1007,
-                        "Messages" => "Your "
-                    ]
-                );
-                return;
-            }
         }
+
+        Response::Json(
+            [
+                "Code" => 100,
+                "Messages" => "Your password or email is incorrect."
+            ]
+        );
+
     }
 
     public function ChangePassword($oldPassword, $newPassword)
@@ -141,10 +139,77 @@ class User
         }
     }
 
-    public function Create($username, $password, $email)
+    public function Create($password)
     {
+        $scucces = true;
+        $failreason = [];
         $database = new Database();
 
+        $this->Username = $this->CheckInput($this->Username);
+        $this->Email = $this->CheckInput($this->Email);
+
+        if(!$this->DoesPasswordMeetRequierments($password))
+        {
+            $scucces = false;
+            $failreason[] = "Password does not meet the requierments.";
+        }
+
+        if($scucces && $database->CountRows("SELECT * FROM users WHERE username = '". $this->Username . "'") == 1)
+        {
+            $scucces = false;
+            $failreason[] = "Username already exists.";
+        }
+
+        if($scucces)
+        {
+            $insertResult = $database->Insert("users", [
+                "username" => $this->Username,
+                "email" => $this->Email,
+                "password" => $this->CreatePassword($password)
+            ]);
+
+            if(!$insertResult)
+            {
+                $scucces = false;
+                $failreason[] = "Error while creating account. Please try again.";
+            }
+        }       
+                   
+
+        if($scucces != false)
+            return ["code" => "1010", "messages" => "Account creation succesfull"];
+        else
+            return ["code" => "1011", "messages" => "Account creation failed", "errors" => $failreason];
+        
+    }
+
+    public function DoesPasswordMeetRequierments($password)
+    {
+        $success = true;
+        //$failedOn = [];
+        
+        if(strlen($password) < 8)
+        {
+            $success = false;
+            //$failedOn[] = "Password is to short. Minimal 8 characters requierd.";
+        }
+
+        if(strlen($password) > 50)
+        {
+            $success = false;
+            //$failedOn[] = "Password is to long. Password cannot be longer then 50 characters.";
+        }
+            
+        if(preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $password) == 0)
+        {
+            $success = false;
+            //$failedOn[] = "Password does not contain any special characters";
+        }
+        
+        if($success)
+            return true;
+        else
+            return false;
         
     }
 }
