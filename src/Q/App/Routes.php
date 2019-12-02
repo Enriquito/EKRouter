@@ -14,6 +14,7 @@ $app->Router->Get("api/user/{id}", function($param) use(&$app){
 });
 
 $app->Router->Post("api/create-password", function(){
+    echo "test";
     $password = Request::GetJson()["password"];
     Response::Json(["Password" => User::CreatePassword($password)]);
 });

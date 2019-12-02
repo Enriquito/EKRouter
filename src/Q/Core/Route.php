@@ -4,32 +4,18 @@ namespace Q\Core;
 class Route
 {
     public $Route;
-    public $Callback;
+    public $callback;
     public $Method;
 
-    function __construct($route, $callback)
+    function __construct($route, $callback, $method)
     {
         $this->Route = $route;
-        $this->Callback = $callback;
+        $this->callback[] = $callback;
+        $this->Method = $method;
     }
 
-    public function Get()
+    public function Callback($ar)
     {
-        $this->Method = "GET";
-    }
-
-    public function Post()
-    {
-        $this->Method = "Post";
-    }
-
-    public function Put()
-    {
-        $this->Method = "PUT";
-    }
-
-    public function Delete()
-    {
-        $this->Method = "DELETE";
+        $this->callback[0]($ar);
     }
 }

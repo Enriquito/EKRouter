@@ -1,16 +1,12 @@
 <?php
 namespace Q\Core;
+include_once('Route.php');
 
 class Router
 {
-    private $routes = [];
+    public $routes = [];
 
-    function __construct()
-    {
-        
-    }
-
-    private function GetQuery()
+    public function GetQuery()
     {
         if(isset($_GET['q']))
             return $_GET['q'];
@@ -28,12 +24,12 @@ class Router
 
         foreach($this->routes as $route)
         {
-            $routeReplaced = preg_replace("/\{\w+\}/i", "([a-z0-9-]+)", $route["route"]);
+            $routeReplaced = preg_replace("/\{\w+\}/i", "([a-z0-9-]+)", $route->Route);
             $routeReplaced = str_replace("/", "\/", $routeReplaced);
 
             if(preg_match("/^". $routeReplaced ."$/i", $this->GetQuery()))
             {
-                preg_match_all("/\{(\w+)\}/i", $route["route"], $matchesRouteVars);
+                preg_match_all("/\{(\w+)\}/i", $route->Route, $matchesRouteVars);
                 unset($matchesRouteVars[0]);
 
                 preg_match_all('/(\w+)/', $this->GetQuery(), $queryRoute);
@@ -41,7 +37,7 @@ class Router
 
                 $ar = [];
 
-                $explodeRoute = explode("/", $route["route"]);
+                $explodeRoute = explode("/", $route->Route);
                 $explodeUrlQuery = explode("/", $this->GetQuery());
 
                 for($i = 0; $i < count($explodeRoute) ; $i++)
@@ -53,8 +49,8 @@ class Router
                     }
                 }
 
-                if($_SERVER['REQUEST_METHOD'] == $route["method"])
-                    $route["callback"]($ar);
+                if($_SERVER['REQUEST_METHOD'] == $route->Method)
+                    $route->Callback($ar);
 
                 $matchFound = true;
             }
@@ -68,21 +64,21 @@ class Router
 
     public function Get($route, $callback)
     {
-        $this->Routes[] = new Route($route, $callback, "GET");
+        $this->routes[] = new Route($route, $callback, "GET");
     }
 
     public function Post($route, $callback)
     {
-        $this->Routes[] = new Route($route, $callback, "POST");
+        $this->routes[] = new Route($route, $callback, "POST");
     }
 
     public function Delete($route, $callback)
     {
-        $this->Routes[] = new Route($route, $callback, "DELETE");
+        $this->routes[] = new Route($route, $callback, "DELETE");
     }
     public function Put($route, $callback)
     {
-        $this->Routes[] = new Route($route, $callback, "PUT");
+        $this->routes[] = new Route($route, $callback, "PUT");
     }
 
     public function Run()
