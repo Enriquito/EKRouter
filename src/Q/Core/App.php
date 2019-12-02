@@ -1,19 +1,23 @@
 <?php
 namespace Q\Core;
 
-class Router
+class App
 {
-    private $routes = [];
+    public $Routes;
+    public $Database = false;
 
     function __construct()
     {
-        
+        $this->Router = new Router();
+
+        if(DB_USE == true)
+            $this->Database = new Database();
     }
 
-    private function GetQuery()
+    private function LoadRoutes()
     {
-        if(isset($_GET['q']))
-            return $_GET['q'];
+        $app = $this;
+        include_once(ROUTE_TABLE_LOCATION);
     }
 
     private function Match()
@@ -58,35 +62,45 @@ class Router
 
                 $matchFound = true;
             }
-        }
 
-        if(!$matchFound)
-        {
-            Response::NotFound();
+            if(!$matchFound)
+            {
+                Response::NotFound();
+            }
         }
     }
 
     public function Get($route, $callback)
     {
-        $this->Routes[] = new Route($route, $callback, "GET");
+        //$this->routes[] = ["route" => $route, "callback" => $function, "method" => "GET"];
+        $this->Routes[] = new Route($route, $callback);
     }
 
     public function Post($route, $callback)
     {
-        $this->Routes[] = new Route($route, $callback, "POST");
+        //$this->routes[] = ["route" => $route, "callback" => $function, "method" => "POST"];
+        $this->Routes[] = new Route($route, $callback);
     }
 
     public function Delete($route, $callback)
     {
-        $this->Routes[] = new Route($route, $callback, "DELETE");
+        //$this->routes[] = ["route" => $route, "callback" => $function, "method" => "DELETE"];
+        $this->Routes[] = new Route($route, $callback);
     }
     public function Put($route, $callback)
     {
-        $this->Routes[] = new Route($route, $callback, "PUT");
+        //$this->routes[] = ["route" => $route, "callback" => $function, "method" => "PUT"];
+        $this->Routes[] = new Route($route, $callback);
+    }
+
+    public static function GetRequestType() : string
+    {
+        return $_SERVER['REQUEST_METHOD'];
     }
 
     public function Run()
     {
+        $this->LoadRoutes();
         $this->Match();
     }
 }
