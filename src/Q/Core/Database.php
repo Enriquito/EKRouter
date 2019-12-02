@@ -161,4 +161,9 @@ class Database
             return false;
         }       
     }
+
+    public function Close()
+    {
+        $this->PDO = NULL;
+    }
 }

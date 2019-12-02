@@ -2,6 +2,7 @@
 namespace Q\App;
 
 session_start();
+session_regenerate_id();
 
 use Q\Core\Database;
 use Q\Core\Response;
@@ -40,7 +41,7 @@ class User
                 {
                     $_SESSION['UserID'] = $userData['id'];
                     $database->Query("Update users SET last_login = '".date('Y-m-d G:i:s')."' WHERE id = " . $userData["id"]);
-                    
+                    $database->Close();
                     Response::Json(
                         [
                             "Code" => 1001,
@@ -168,10 +169,16 @@ class User
                 "password" => $this->CreatePassword($password)
             ]);
 
+            $database->Close();
+
             if(!$insertResult)
             {
                 $scucces = false;
                 $failreason[] = "Error while creating account. Please try again.";
+            }
+            else
+            {
+                $this->ID = $insertResult;
             }
         }       
                    

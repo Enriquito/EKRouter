@@ -40,7 +40,6 @@ $app->Router->Post("api/check-password", function(){
 
 $app->Router->Post("api/user", function(){
     $data = Request::GetJson();
-    //print_r($data);
     
     if($data['action'] != "create")
         return;
