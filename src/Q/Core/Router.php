@@ -3,7 +3,7 @@ namespace Q\Core;
 
 class Router
 {
-    private $routes = [];
+    private $routes = []; 
 
     function __construct()
     {
