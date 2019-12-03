@@ -1,11 +1,14 @@
 <?php
 namespace Q\Core;
 use Q\App\User;
+use Q\App\Collection;
 
 include_once("src/Q/App/User.php");
+include_once("src/Q/App/Collection.php");
 
 $app->Router->Get("api/user/{id}", function($param) use(&$app){
-    $data = $app->Database->Query("SELECT id, email FROM users WHERE ID = ". $param['id'],true);
+    $data = $app->Database->Query("SELECT id, username, email FROM users WHERE ID = ". $param['id'],true);
+
     Response::Json(
         [
             "user" => $data
@@ -14,7 +17,6 @@ $app->Router->Get("api/user/{id}", function($param) use(&$app){
 });
 
 $app->Router->Post("api/create-password", function(){
-    echo "test";
     $password = Request::GetJson()["password"];
     Response::Json(["Password" => User::CreatePassword($password)]);
 });
@@ -39,11 +41,8 @@ $app->Router->Post("api/check-password", function(){
     $usr->DoesPasswordMeetRequierments($password);
 });
 
-$app->Router->Post("api/user", function(){
+$app->Router->Post("api/user/create", function(){
     $data = Request::GetJson();
-    
-    if($data['action'] != "create")
-        return;
 
     $user = new User();
     
@@ -56,5 +55,24 @@ $app->Router->Post("api/user", function(){
         Response::Json($result);
     else
         Response::Json($result);
+
+});
+
+$app->Router->Post("api/collection/create", function(){
+    $data = Request::GetJson();
+
+    $collection = new Collection();
+
+    $collection->Name = $data["collection"]["name"];
+    $collection->Description = $data["collection"]["description"];
+    $collection->Owner = $data["collection"]["owner"];
+
+    if($collection->Create())
+    {
+        Response::Json([
+            "code" => 000,
+            "messages" => "Collection has been created"
+        ], 201);
+    }
 
 });
