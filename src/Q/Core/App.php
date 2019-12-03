@@ -18,6 +18,7 @@ class App
     private function LoadRoutes()
     {
         $app = $this;
+        include_once("src/Q/Core/CoreRoutes.php");
         include_once(ROUTE_TABLE_LOCATION);
     }
 

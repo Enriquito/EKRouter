@@ -1,8 +1,5 @@
 <?php
-namespace Q\App;
-
-session_start();
-session_regenerate_id();
+namespace Q\Core;
 
 use Q\Core\Database;
 use Q\Core\Response;
@@ -118,25 +115,35 @@ class User
         return $data;
     }
 
-    public static function CheckLogin()
+    public static function CheckLogin($useResponse = false)
     {
         if(isset($_SESSION['UserID']))
         {
-            Response::Json(
-                [
-                    "Code" => 1005,
-                    "Messages" => "Session OK."
-                ]
-            , 200);
+            if($useResponse)
+            {
+                Response::Json(
+                    [
+                        "Code" => 1005,
+                        "Messages" => "Session OK."
+                    ]
+                , 200);
+            }
+            
+            return true;
         }
         else
         {
-            Response::Json(
-                [
-                    "Code" => 1006,
-                    "Messages" => "Not Logged in."
-                ]
-            , 200);
+            if(!$useResponse)
+            {
+                Response::Json(
+                    [
+                        "Code" => 1006,
+                        "Messages" => "Not Logged in."
+                    ]
+                , 200);
+            }
+            
+            return false;
         }
     }
 
@@ -218,5 +225,10 @@ class User
         else
             return false;
         
+    }
+
+    public static function Logout()
+    {
+        session_destroy();
     }
 }

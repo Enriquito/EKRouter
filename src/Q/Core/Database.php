@@ -162,6 +162,27 @@ class Database
         }       
     }
 
+    public function Destroy($table, $where)
+    {
+        $sql = "DELETE FROM $table WHERE $where";
+        echo $sql;
+        try
+        { 
+            $this->PDO->exec($sql);
+        }
+        catch(PDOException $e)
+        {
+            if($this->debug)
+                echo("Error: " . $e->message);
+
+            return false;
+        }
+        finally
+        {
+            $query = null;
+        }
+    }
+
     public function Close()
     {
         $this->PDO = NULL;

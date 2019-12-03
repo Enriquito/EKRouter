@@ -2,8 +2,6 @@
 namespace Q\App;
 use Q\Core\Database;
 
-// include_once('../Core/Database.php');
-
 class Collection
 {
     public $ID;
@@ -28,5 +26,12 @@ class Collection
             return true;
         else
             return false;
+    }
+
+    public static function Destroy($id)
+    {
+        $database = new Database();
+
+        $database->Destroy("collections", "id = ". $id);
     }
 }

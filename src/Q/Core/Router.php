@@ -29,6 +29,16 @@ class Router
 
             if(preg_match("/^". $routeReplaced ."$/i", $this->GetQuery()))
             {
+                if($route->AuthenticationRequierd)
+                {
+                    if(!User::CheckLogin())
+                    {
+                        Response::SetResponse(401);
+                        $matchFound = true;
+                        return;
+                    }
+                }
+
                 preg_match_all("/\{(\w+)\}/i", $route->Route, $matchesRouteVars);
                 unset($matchesRouteVars[0]);
 
@@ -64,21 +74,41 @@ class Router
 
     public function Get($route, $callback)
     {
-        $this->routes[] = new Route($route, $callback, "GET");
+        $route = new Route($route, $callback, "GET");
+        $this->routes[] = $route;
+
+        return $route;
     }
 
     public function Post($route, $callback)
     {
-        $this->routes[] = new Route($route, $callback, "POST");
+        $route = new Route($route, $callback, "POST");
+        $this->routes[] = $route;
+
+        return $route;
     }
 
     public function Delete($route, $callback)
     {
-        $this->routes[] = new Route($route, $callback, "DELETE");
+        $route = new Route($route, $callback, "DELETE");
+        $this->routes[] = $route;
+
+        return $route;
     }
     public function Put($route, $callback)
     {
-        $this->routes[] = new Route($route, $callback, "PUT");
+        $route = new Route($route, $callback, "PUT");
+        $this->routes[] = $route;
+
+        return $route;
+    }
+
+    public function Head($route, $callback)
+    {
+        $route = new Route($route, $callback, "HEAD");
+        $this->routes[] = $route;
+
+        return $route;
     }
 
     public function Run()
