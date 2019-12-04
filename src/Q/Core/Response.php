@@ -12,7 +12,7 @@ class Response
 
     public static function SetResponse($code)
     {
-        http_response_code(404);
+        http_response_code($code);
     }
 
     public static function NotFound()

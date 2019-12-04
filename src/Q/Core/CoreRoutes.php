@@ -59,7 +59,7 @@ $app->Router->Post("api/user/create", function(){
     else
         Response::Json($result);
 
-});
+})->UseAuthentication(true);
 
 $app->Router->Post("api/collection/create", function(){
     $data = Request::GetJson();
@@ -77,7 +77,7 @@ $app->Router->Post("api/collection/create", function(){
             "messages" => "Collection has been created"
         ], 201);
     }
-});
+})->UseAuthentication(true);;
 
 $app->Router->Delete("api/collection/destroy/{id}", function($param){
     Collection::Destroy($param["id"]);

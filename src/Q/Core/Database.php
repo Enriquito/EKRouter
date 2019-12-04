@@ -165,7 +165,7 @@ class Database
     public function Destroy($table, $where)
     {
         $sql = "DELETE FROM $table WHERE $where";
-        echo $sql;
+        //echo $sql;
         try
         { 
             $this->PDO->exec($sql);

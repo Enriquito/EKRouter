@@ -126,7 +126,7 @@ class User
                         "Code" => 1005,
                         "Messages" => "Session OK."
                     ]
-                , 200);
+                , 20);
             }
             
             return true;
@@ -140,7 +140,7 @@ class User
                         "Code" => 1006,
                         "Messages" => "Not Logged in."
                     ]
-                , 200);
+                , 401);
             }
             
             return false;
@@ -231,4 +231,6 @@ class User
     {
         session_destroy();
     }
+
+    public stat
 }

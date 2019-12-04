@@ -1,6 +1,5 @@
 <?php
 namespace Q\Core;
-include_once('Route.php');
 
 class Router
 {
@@ -68,6 +67,7 @@ class Router
 
         if(!$matchFound)
         {
+            echo "a";
             Response::NotFound();
         }
     }
