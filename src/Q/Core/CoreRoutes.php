@@ -33,7 +33,7 @@ $app->Router->Post("api/login", function(){
     $user->Login($email, $password);
 });
 
-$app->Router->Get("api/authenticate-check", function(){
+$app->Router->Get("api/authenticate", function(){
     User::CheckLogin(true);
 });
 

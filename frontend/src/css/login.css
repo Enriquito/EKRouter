@@ -23,7 +23,6 @@ main
     margin-top: 250px;
     padding: 25px;
     background: white;
-    height: 250px;
     border-radius: 10px;
     box-shadow: 1px 1px 5px #0000007a;
 }
@@ -61,4 +60,12 @@ button
 button:hover
 {
     cursor: pointer;
+}
+.login-error-messages
+{
+    color: tomato;
+    padding: 10px 0;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
 }

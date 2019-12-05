@@ -1,12 +1,14 @@
 import React from 'react';
 import Globals from '../Globals.js';
+import '../css/login.css'
 
 class Login extends React.Component {
     constructor(props){
         super(props);
 
         this.state = {
-          data: null,
+            type : "",
+            messages : ""
         };
     }
 
@@ -23,7 +25,8 @@ class Login extends React.Component {
                 email: document.getElementById('username').value,
                 password: document.getElementById('password').value,
             })
-        }).then((resp) => resp.json())
+        })
+        .then((resp) => resp.json())
         .then(function(data){
             console.log(data);
             if(data.Code === 1001){
@@ -31,13 +34,25 @@ class Login extends React.Component {
             }
             else{
                 document.getElementById('password').value = "";
-                this.setState({ messages : "Your password or email is incorrect."});
+                this.setState(
+                    {
+                        type : "error-messages",
+                        messages : "Your password or email is incorrect."
+                    }.bind(this));
             }
-        });
+        })
+        .catch(function(error){
+            this.setState(
+                {
+                    type : "error-messages",
+                    messages : "Something went wrong..."
+                });
+        }.bind(this));
           
     }
 
     render() {
+        console.log(this.state.messages);
       return (
             <main className="flex center">
                 <div className="flex center">
@@ -45,7 +60,7 @@ class Login extends React.Component {
                         <h1>Log into <strong>Q</strong></h1>
                         <input type="email" id="username" placeholder="Example@domain.com" />
                         <input type="password" id="password" placeholder="Password" />
-                        <strong>{}</strong>
+                        <strong className={"login-" + this.state.type}>{this.state.messages}</strong>
                         <button onClick={this.login.bind(this)} >Login</button>
                         <p>
                             <a href="/recover">I forgot my <strong>Username</strong> or <strong>Password</strong></a>

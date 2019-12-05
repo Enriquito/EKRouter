@@ -126,7 +126,7 @@ class User
                         "Code" => 1005,
                         "Messages" => "Session OK."
                     ]
-                , 20);
+                , 200);
             }
             
             return true;

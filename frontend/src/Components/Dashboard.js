@@ -1,47 +1,23 @@
 import React from 'react';
-import Globals from '../Globals.js';
+import { hasSession, logout } from './Helpers';
+import Nav from './Nav';
 
 class Dashboard extends React.Component {
     constructor(props){
+        hasSession();
         super(props);
 
         this.state = {
           data: null,
         };
     }
-
-    componentDidMount(){
-        let isLogedIn = false;
-
-        fetch("http://localhost/api/authenticate-check")
-        .then(function(resp){
-            console.log(resp);
-        }) 
-    }
-
-    test()
-    {
-      fetch("http://localhost/api/authenticate-check")
-        .then(function(resp){
-            console.log(resp);
-        })
-    }
-
+    
     render() {
       return (
         <main class="flex">
-            <nav>
-                <ul>
-                    <li><a href="/dashboard">Dashboard</a></li>
-                    <li><a href="/collections">Collections</a></li>
-                    <li><a href="/users">Users</a></li>
-                    <li><a href="/settings">Settings</a></li>
-                    <li><a href="/logout">Logout</a></li>
-                </ul>
-            </nav>
-
+          <Nav />
             <section>
-                <h1 onClick={this.test}>Dashboard</h1>
+                <h1>Dashboard</h1>
                 <div class="flex">
                     
                 </div>
