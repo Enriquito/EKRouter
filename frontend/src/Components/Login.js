@@ -27,8 +27,11 @@ class Login extends React.Component {
         .then(function(data){
             console.log(data);
             if(data.Code === 1001){
-                alert('login success!');
                 window.location = "/dashboard";
+            }
+            else{
+                document.getElementById('password').value = "";
+                this.setState({ messages : "Your password or email is incorrect."});
             }
         });
           
@@ -42,6 +45,7 @@ class Login extends React.Component {
                         <h1>Log into <strong>Q</strong></h1>
                         <input type="email" id="username" placeholder="Example@domain.com" />
                         <input type="password" id="password" placeholder="Password" />
+                        <strong>{}</strong>
                         <button onClick={this.login.bind(this)} >Login</button>
                         <p>
                             <a href="/recover">I forgot my <strong>Username</strong> or <strong>Password</strong></a>

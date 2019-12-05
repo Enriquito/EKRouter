@@ -16,16 +16,15 @@ class Dashboard extends React.Component {
         fetch("http://localhost/api/authenticate-check")
         .then(function(resp){
             console.log(resp);
-        })
+        }) 
+    }
 
-        if(Globals.isLogedIn)
-        {
-            //alert('logedin');
-        }
-        else
-        {
-           // alert('Not logedin');
-        }
+    test()
+    {
+      fetch("http://localhost/api/authenticate-check")
+        .then(function(resp){
+            console.log(resp);
+        })
     }
 
     render() {
@@ -42,7 +41,7 @@ class Dashboard extends React.Component {
             </nav>
 
             <section>
-                <h1>Dashboard</h1>
+                <h1 onClick={this.test}>Dashboard</h1>
                 <div class="flex">
                     
                 </div>
