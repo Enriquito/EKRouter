@@ -231,6 +231,4 @@ class User
     {
         session_destroy();
     }
-
-    public stat
 }
