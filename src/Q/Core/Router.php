@@ -58,6 +58,8 @@ class Router
                     }
                 }
 
+                //header('Access-Control-Allow-Origin: http://localhost:3000');
+
                 if($_SERVER['REQUEST_METHOD'] == $route->Method)
                     $route->Callback($ar);
 
@@ -67,7 +69,6 @@ class Router
 
         if(!$matchFound)
         {
-            echo "a";
             Response::NotFound();
         }
     }

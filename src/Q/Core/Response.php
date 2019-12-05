@@ -5,6 +5,7 @@ class Response
 {
     public static function Json($data, $code = 200)
     {
+        header('Access-Control-Allow-Origin: http://localhost:3000');
         header('Content-Type: application/json');
         http_response_code($code);
         print json_encode($data);
