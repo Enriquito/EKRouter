@@ -2,21 +2,21 @@ import React from 'react';
 import { hasSession } from './Helpers';
 import Nav from './Nav';
 
-class Collections extends React.Component {
+class Pages extends React.Component {
     constructor(props){
         hasSession();
         super(props);
 
         this.state = {
-          collections: null,
+            pages: null,
         };
     }
 
     componentDidMount(){
-        fetch("http://localhost/api/collection/list/all")
+        fetch("http://localhost/api/page/list/all")
             .then((resp) => resp.json())
             .then((resp) => {
-                this.setState({collections : resp});
+                this.setState({pages : resp});
             })
             .catch((error) => {
                 alert("Error could not fetch data.");
@@ -24,16 +24,21 @@ class Collections extends React.Component {
     }
     
     render() {
-        let cols;
+        let pages;
 
-        if(this.state.collections !== null)
+        const test = (page) => {window.location = "/page/" + page.id}
+
+        if(this.state.pages !== null)
         {
-            cols = this.state.collections.map((collection, index) => {
+            pages = this.state.pages.map((page, index) => {
+                if(page.edited === "0000-00-00 00:00:00")
+                    page.edited = "Never";
+                
                 return (
-                    <tr key={collection.id}>
-                        <td>{collection.name}</td>
-                        <td>0</td>
-                        <td>{collection.created}</td>
+                    <tr onClick={() => test(page)} key={page.id}>
+                        <td>{page.title}</td>
+                        <td>{page.created}</td>
+                        <td>{page.edited}</td>
                     </tr>
                 );
             })
@@ -42,7 +47,7 @@ class Collections extends React.Component {
         <main className="flex">
           <Nav />
             <section>
-                <h1>Collections</h1>
+                <h1>Pages</h1>
                 <div style={{margin : "10px 0"}} className="flex">
                     <button id="new-collection-button">New</button>
                 </div>
@@ -50,21 +55,21 @@ class Collections extends React.Component {
                     <table>
                         <thead>
                             <tr>
-                                <td>Name</td>
-                                <td>Items</td>
+                                <td>Title</td>
                                 <td>Created</td>
+                                <td>Edited</td>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                cols
+                                pages
                             }
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td>Name</td>
-                                <td>Items</td>
+                                <td>Title</td>
                                 <td>Created</td>
+                                <td>Edited</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -75,4 +80,4 @@ class Collections extends React.Component {
     }
   }
 
-export default Collections;
+export default Pages;

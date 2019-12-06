@@ -1,5 +1,4 @@
 import React from 'react';
-import Globals from '../Globals.js';
 import '../css/login.css'
 
 class Login extends React.Component {

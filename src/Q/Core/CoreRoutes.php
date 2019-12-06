@@ -82,3 +82,27 @@ $app->Router->Delete("api/collection/destroy/{id}", function($param){
 $app->Router->Get("api/collection/list/all", function(){
     Response::Json(Collection::GetAll(), 200);
 });
+// Pages
+$app->Router->Get("api/page/list/all", function(){
+    Response::Json(Page::GetAll(), 200);
+})->UseAuthentication(true);
+
+$app->Router->Get("api/page/{id}", function($param){
+    $page = new Page();
+    $page->GetByID($param["id"]);
+
+    Response::Json($page, 200);
+});
+
+$app->Router->Put("api/page/{id}", function($param){
+    $data = Request::GetJson();
+
+    $page = new Page();
+    $page->ID = $param["id"];
+    $page->Title = $data["page"]["title"];
+    $page->Content = $data["page"]["content"];
+
+    $page->Update($param["id"]);
+
+    Response::Json($page, 200);
+});

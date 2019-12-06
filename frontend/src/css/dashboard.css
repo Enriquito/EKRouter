@@ -22,6 +22,7 @@ main nav
     left: 10px;
     position: relative;
     border-radius: 10px;
+    align-self: flex-start;
 }
 main nav ul
 {
@@ -73,16 +74,69 @@ table
     width: 100%;
     border-collapse: collapse
 }
-table thead tr td
+table thead tr td, table tfoot tr td
 {
     font-weight: bold;
 }
 table tbody tr:hover
 {
     cursor: pointer;
+    color: #1abc9c;
 }
-table tbody tr td, table thead tr td
+table tbody tr td, table thead tr td, table tfoot tr td
 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+table tfoot tr td
+{
+    border-bottom: none !important;
+}
+#edit-page-form
+{
+    flex-grow: 1;
+}
+#edit-page-form input, textarea, #save, #delete
+{
+    display: block;
+    margin: 10px 0;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+    outline: none;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+#edit-page-form input
+{
+    font-size: 1.1em;
+}
+#edit-page-form textarea
+{
+    resize: vertical;
+    min-height: 250px;
+}
+#save
+{
+    width: 100px;
+    background: #1abc9c;
+    color: #FFF;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    margin-right: 10px;
+}
+#delete
+{
+    width: 100px;
+    background: tomato;
+    color: #FFF;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+#edit-page-form #settings
+{
+    min-width: 40%;
     padding: 10px;
 }

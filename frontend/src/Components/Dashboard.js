@@ -1,5 +1,5 @@
 import React from 'react';
-import { hasSession, logout } from './Helpers';
+import { hasSession } from './Helpers';
 import Nav from './Nav';
 
 class Dashboard extends React.Component {
