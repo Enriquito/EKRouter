@@ -36,7 +36,7 @@ main
 {
     text-decoration: underline;
 }
-input, button
+.login-input, .login-button
 {
     display: block;
     margin: 2px 0;
@@ -49,7 +49,7 @@ input, button
     border-radius: 10px;
     outline: none;
 }
-button
+.login-button
 {
     margin-top: 20px;
     background: #2980b9;
@@ -57,7 +57,7 @@ button
     box-sizing: content-box;
     font-size: 1.1em;
 }
-button:hover
+.login-button:hover
 {
     cursor: pointer;
 }

@@ -57,7 +57,32 @@ main section
     width: 100%;
 }
 
+#new-collection-button
+{
+    padding: 10px 30px;
+    border-radius: 10px;
+    background: #1abc9c;
+    border: none;
+    color: #FFF;
+    cursor: pointer;
+    font-weight: bold;
+}
+
 table
 {
     width: 100%;
+    border-collapse: collapse
+}
+table thead tr td
+{
+    font-weight: bold;
+}
+table tbody tr:hover
+{
+    cursor: pointer;
+}
+table tbody tr td, table thead tr td
+{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px;
 }

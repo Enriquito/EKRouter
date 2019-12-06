@@ -8,17 +8,43 @@ class Collections extends React.Component {
         super(props);
 
         this.state = {
-          data: null,
+          collections: null,
         };
+    }
+
+    componentDidMount(){
+        fetch("http://localhost/api/collection/list/all")
+            .then((resp) => resp.json())
+            .then((resp) => {
+                this.setState({collections : resp});
+                console.log(this.state.collections);
+            })
+            .catch((error) => {
+                alert("Error could not fetch data.");
+            })
     }
     
     render() {
+        if(his.state.collections !== null)
+        {
+            let cols = this.state.collections.map((collection, index) => {
+                return (
+                    <tr key={collection.id}>
+                        <td>{collection.name}</td>
+                        <td>0</td>
+                        <td>{collection.created}</td>
+                    </tr>
+                );
+            })
+        }
       return (
         <main class="flex">
           <Nav />
             <section>
                 <h1>Collections</h1>
-                <button></button>
+                <div style={{margin : "10px 0"}} className="flex">
+                    <button id="new-collection-button">New</button>
+                </div>
                 <div class="flex">
                     
                     <table>
@@ -30,6 +56,9 @@ class Collections extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
+                            {
+                                
+                            }
                             <tr>
                                 <td>Test</td>
                                 <td>20</td>

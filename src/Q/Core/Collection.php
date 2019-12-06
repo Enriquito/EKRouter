@@ -1,6 +1,5 @@
 <?php
-namespace Q\App;
-use Q\Core\Database;
+namespace Q\Core;
 
 class Collection
 {
@@ -33,5 +32,12 @@ class Collection
         $database = new Database();
 
         $database->Destroy("collections", "id = ". $id);
+    }
+
+    public static function GetAll()
+    {
+        $database = new Database();
+
+        return $database->query("SELECT * FROM collections");
     }
 }

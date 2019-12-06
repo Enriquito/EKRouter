@@ -14,7 +14,7 @@ include_once('src/Q/Core/Request.php');
 include_once('src/Q/Core/Response.php');
 include_once('src/Q/Core/Route.php');
 include_once('src/Q/Core/Router.php');
-
+include_once("src/Q/Core/Collection.php");
 include_once('src/Q/Core/Database.php');
 include_once('src/Q/Core/App.php');
 

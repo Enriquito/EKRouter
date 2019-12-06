@@ -58,10 +58,10 @@ class Login extends React.Component {
                 <div className="flex center">
                     <div id="form-holder">
                         <h1>Log into <strong>Q</strong></h1>
-                        <input type="email" id="username" placeholder="Example@domain.com" />
-                        <input type="password" id="password" placeholder="Password" />
+                        <input className="login-input" type="email" id="username" placeholder="Example@domain.com" />
+                        <input className="login-input" type="password" id="password" placeholder="Password" />
                         <strong className={"login-" + this.state.type}>{this.state.messages}</strong>
-                        <button onClick={this.login.bind(this)} >Login</button>
+                        <button className="login-button" onClick={this.login.bind(this)} >Login</button>
                         <p>
                             <a href="/recover">I forgot my <strong>Username</strong> or <strong>Password</strong></a>
                         </p>

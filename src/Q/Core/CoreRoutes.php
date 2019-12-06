@@ -1,9 +1,5 @@
 <?php
 namespace Q\Core;
-use Q\App\Collection;
-
-//include_once("src/Q/Core/User.php");
-include_once("src/Q/App/Collection.php");
 
 $route = $app->Router->Head("api/logout", function(){
     User::Logout();
@@ -82,3 +78,7 @@ $app->Router->Post("api/collection/create", function(){
 $app->Router->Delete("api/collection/destroy/{id}", function($param){
     Collection::Destroy($param["id"]);
 })->UseAuthentication(true);
+
+$app->Router->Get("api/collection/list/all", function(){
+    Response::Json(Collection::GetAll(), 200);
+});
