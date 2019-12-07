@@ -7,6 +7,7 @@ import Dashboard from './Components/Dashboard';
 import Collections from './Components/Collections';
 import Pages from './Components/Pages';
 import EditPage from './Components/EditPage';
+import NewPage from './Components/NewPage';
 
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
       <Route exact path="/dashboard" component={Dashboard} />  
       <Route exact path="/collections" component={Collections} />
       <Route exact path="/pages" component={Pages} />
-      <Route exact path="/page/:id" component={EditPage} />
+      <Route path="/page/:id" component={EditPage} />
+      <Route exact path="/new/page" component={NewPage} />
     </Router>
     
   );

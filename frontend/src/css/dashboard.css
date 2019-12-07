@@ -18,9 +18,7 @@ main nav
     background: #FFF;
     padding: 20px 10px;
     width: 200px;
-    top: 10px;
-    left: 10px;
-    position: relative;
+    margin: 10px;
     border-radius: 10px;
     align-self: flex-start;
 }
@@ -61,7 +59,6 @@ main section
 #new-collection-button
 {
     padding: 10px 30px;
-    border-radius: 10px;
     background: #1abc9c;
     border: none;
     color: #FFF;
@@ -81,11 +78,15 @@ table thead tr td, table tfoot tr td
 table tbody tr:hover
 {
     cursor: pointer;
-    color: #1abc9c;
+    color: #FFF;
+    background: rgba(26, 188, 156, 0.5);
+}
+table thead tr td
+{
+
 }
 table tbody tr td, table thead tr td, table tfoot tr td
 {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 10px;
 }
 table tfoot tr td
@@ -139,4 +140,5 @@ table tfoot tr td
 {
     min-width: 40%;
     padding: 10px;
+    margin-left: 10px;
 }

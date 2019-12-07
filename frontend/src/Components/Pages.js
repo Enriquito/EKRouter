@@ -49,7 +49,7 @@ class Pages extends React.Component {
             <section>
                 <h1>Pages</h1>
                 <div style={{margin : "10px 0"}} className="flex">
-                    <button id="new-collection-button">New</button>
+                    <button onClick={() => window.location = "/new/page"} id="new-collection-button">New</button>
                 </div>
                 <div className="flex">
                     <table>
@@ -65,13 +65,6 @@ class Pages extends React.Component {
                                 pages
                             }
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>Title</td>
-                                <td>Created</td>
-                                <td>Edited</td>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </section>

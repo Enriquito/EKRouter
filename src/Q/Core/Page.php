@@ -14,8 +14,8 @@ class Page
         $database = new Database();
 
         $result = $database->Insert("pages", [
-            "name" => $this->Title,
-            "description" => $this->Content
+            "title" => $this->Title,
+            "content" => $this->Content
         ]);
         
         if($result != false)
