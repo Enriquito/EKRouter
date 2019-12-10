@@ -1,7 +1,6 @@
 <?php
 namespace Q\Core;
 
-
 class App
 {
     public $Router;
@@ -19,7 +18,7 @@ class App
     {
         $app = $this;
         include_once("src/Q/Core/CoreRoutes.php");
-        include_once(ROUTE_TABLE_LOCATION);
+        //include_once(ROUTE_TABLE_LOCATION);
     }
 
     public function Run()
