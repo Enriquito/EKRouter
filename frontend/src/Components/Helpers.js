@@ -1,4 +1,3 @@
-import { func } from "prop-types";
 
 export function hasSession(){
     fetch("http://localhost/api/authenticate")
