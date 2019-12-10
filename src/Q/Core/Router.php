@@ -16,9 +16,10 @@ class Router
         if(!isset($_GET['q']))
         {
             Response::NotFound();
+            
             return;
         }
-
+        
         $matchFound = false;
 
         foreach($this->routes as $route)
@@ -57,8 +58,6 @@ class Router
                         $ar[$b[1]] = $explodeUrlQuery[$i];
                     }
                 }
-
-                //header('Access-Control-Allow-Origin: http://localhost:3000');
 
                 if($_SERVER['REQUEST_METHOD'] == $route->Method)
                     $route->Callback($ar);

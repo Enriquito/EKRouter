@@ -57,6 +57,7 @@ $app->Router->Post("api/user/create", function(){
 
 })->UseAuthentication(true);
 
+//Collections
 $app->Router->Post("api/collection/create", function(){
     $data = Request::GetJson();
 
@@ -73,7 +74,7 @@ $app->Router->Post("api/collection/create", function(){
             "messages" => "Collection has been created"
         ], 201);
     }
-})->UseAuthentication(true);;
+})->UseAuthentication(true);
 
 $app->Router->Delete("api/collection/destroy/{id}", function($param){
     Collection::Destroy($param["id"]);
@@ -81,7 +82,8 @@ $app->Router->Delete("api/collection/destroy/{id}", function($param){
 
 $app->Router->Get("api/collection/list/all", function(){
     Response::Json(Collection::GetAll(), 200);
-})->UseAuthentication(true);;
+})->UseAuthentication(true);
+
 // Pages
 $app->Router->Get("api/page/list/all", function(){
     Response::Json(Page::GetAll(), 200);
@@ -92,7 +94,7 @@ $app->Router->Get("api/page/{id}", function($param){
     $page->GetByID($param["id"]);
 
     Response::Json($page, 200);
-})->UseAuthentication(true);;
+})->UseAuthentication(true);
 
 $app->Router->Put("api/page/{id}", function($param){
     $data = Request::GetJson();

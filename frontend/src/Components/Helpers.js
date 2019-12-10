@@ -4,10 +4,12 @@ export function hasSession(){
     .then((resp) => {
         if(resp.Code !== 1005){
           window.location = '/';
+          alert("no session");
         }
     })
     .catch((error) => {
         window.location = '/';
+        alert(error);
     })
 }
 
