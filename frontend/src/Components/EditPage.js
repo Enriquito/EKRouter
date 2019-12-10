@@ -52,6 +52,36 @@ class EditPage extends React.Component {
                 });
         }.bind(this));
     }
+
+    delete(){
+        if (window.confirm('Are you sure you want to delete this page?')) {
+            const id = this.props.match.params.id;
+
+            fetch('http://localhost/api/page/' + id, {
+                method : "DELETE",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(function(data){
+                console.log(data);
+                if(data.status === 200){
+                    window.location = '/pages';
+                }
+            })
+            .catch(function(){
+                this.setState(
+                    {
+                        type : "error-messages",
+                        messages : "Something went wrong..."
+                    });
+            }.bind(this));
+        }
+        else {
+            return;
+        }
+    }
     
     render() {
       return (
@@ -61,7 +91,7 @@ class EditPage extends React.Component {
                 <h1>Edit page</h1>
                 <div className="flex">
                     <button onClick={this.save.bind(this)} id="save">Save</button>
-                    <button id="delete">Delete</button>
+                    <button onClick={this.delete.bind(this)} id="delete">Delete</button>
                 </div>
                 <div className="flex" id="edit-page-form">
                     <div style={{flexGrow : 1}}>
