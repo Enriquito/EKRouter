@@ -65,6 +65,11 @@ class Page
 
         $where = "id = " . $this->ID;
 
-        $database->Update("pages", $ar, $where);
+        $result = $database->Update("pages", $ar, $where);
+
+        if($result)
+            Response::SetResponse(200);
+        else
+            Response::SetResponse(500);
     }
 }
