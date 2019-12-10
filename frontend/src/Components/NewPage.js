@@ -13,7 +13,6 @@ class NewPage extends React.Component {
     }
 
     save(){
-
         fetch('http://localhost/api/page', {
             method : "POST",
             headers: {
@@ -60,11 +59,11 @@ class NewPage extends React.Component {
                     <div style={{flexGrow : 1}}>
                         {/* <h2>Page settings</h2> */}
                         <label>Title</label>
-                        <input id="title" type="text" defaultValue={this.state.page.Title} placeholder="The title of my new page" />
+                        <input id="title" type="text" placeholder="The title of my new page" />
                         <label>Route</label>
-                        <input id="route" type="text" defaultValue={this.state.page.Route} placeholder="/example/route" />
+                        <input defaultValue="/" id="route" type="text" placeholder="/example/route" />
                         <label>Content</label>
-                        <textarea id="content" defaultValue={this.state.page.Content} placeholder="My new page content here"></textarea>
+                        <textarea id="content" placeholder="My new page content here"></textarea>
                     </div>
                     <div id="settings">
                         {/* <h2>Aditional settings</h2> */}
