@@ -116,7 +116,6 @@ $app->Router->Post("api/page", function(){
     $page->Title = $data["page"]["title"];
     $page->Content = $data["page"]["content"];
     
-
     if($page->Create())
         Response::SetResponse(201);
     else
