@@ -1,5 +1,5 @@
 import React from 'react';
-import { hasSession } from './Helpers';
+import { hasSession, formatDate } from './Helpers';
 import Nav from './Nav';
 
 class Pages extends React.Component {
@@ -33,6 +33,15 @@ class Pages extends React.Component {
             pages = this.state.pages.map((page, index) => {
                 if(page.edited === "0000-00-00 00:00:00")
                     page.edited = "Never";
+                else
+                {
+                    const date = formatDate(page.edited);
+
+                    page.edited = date.day + "-" + date.month + "-" + date.year;
+                }
+
+                const date = formatDate(page.created);
+                page.created = date.day + "-" + date.month + "-" + date.year;
                 
                 return (
                     <tr onClick={() => test(page)} key={page.id}>
