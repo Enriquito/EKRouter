@@ -26,7 +26,7 @@ class Pages extends React.Component {
     render() {
         let pages;
 
-        const test = (page) => {window.location = "/page/" + page.id}
+        const redirect = (page) => {window.location = "/page/" + page.id}
 
         if(this.state.pages !== null)
         {
@@ -43,7 +43,7 @@ class Pages extends React.Component {
                 page.created = date.day + "-" + date.month + "-" + date.year;
                 
                 return (
-                    <tr onClick={() => test(page)} key={page.id}>
+                    <tr onClick={() => redirect(page)} key={page.id}>
                         <td>{page.title}</td>
                         <td>{page.created}</td>
                         <td>{page.edited}</td>
@@ -69,9 +69,7 @@ class Pages extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                pages
-                            }
+                            {pages}
                         </tbody>
                     </table>
                 </div>
