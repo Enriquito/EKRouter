@@ -1,4 +1,3 @@
-
 export function hasSession(){
     fetch("http://localhost/api/authenticate")
     .then((resp) => resp.json())
