@@ -107,6 +107,7 @@ table tfoot tr td
     outline: none;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    color: #545454;
 }
 #edit-page-form input
 {
