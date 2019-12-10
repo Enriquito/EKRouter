@@ -14,7 +14,7 @@ class NewPage extends React.Component {
 
     save(){
 
-        fetch('http://localhost/api/page/', {
+        fetch('http://localhost/api/page', {
             method : "POST",
             headers: {
                 'Accept': 'application/json',
@@ -27,9 +27,11 @@ class NewPage extends React.Component {
         })
         .then((resp) => resp.json())
         .then(function(data){
+            
             console.log(data);
             if(data.code === 201){
-                alert("Page has been created");
+                window.location = '/pages';
+                alert("test");
             }
             else{
                 alert("Something went wrong");
