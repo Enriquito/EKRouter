@@ -9,7 +9,6 @@ import Pages from './Components/Pages';
 import EditPage from './Components/EditPage';
 import NewPage from './Components/NewPage';
 
-
 function App() {
   return(
     <Router>
@@ -20,7 +19,6 @@ function App() {
       <Route path="/page/:id" component={EditPage} />
       <Route exact path="/new/page" component={NewPage} />
     </Router>
-    
   );
 }
 
