@@ -122,3 +122,7 @@ $app->Router->Post("api/page", function(){
         Response::SetResponse(200);
 
 })->UseAuthentication(true);
+
+$app->Router->Delete("api/page/{id}", function($param){
+    Page::Destroy($param["id"]);
+})->UseAuthentication(true);
