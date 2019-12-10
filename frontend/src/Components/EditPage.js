@@ -26,32 +26,41 @@ class EditPage extends React.Component {
     }
 
     save(){
-        const id = this.props.match.params.id;
+        if (window.confirm('Are you sure you want to update this page?')) {
+            const id = this.props.match.params.id;
 
-        fetch('http://localhost/api/page/' + id, {
-            method : "PUT",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ page : {
-                title: document.getElementById('title').value,
-                route: document.getElementById('route').value,
-                content: document.getElementById('content').value
-            }})
-        })
-        .then((resp) => resp.json())
-        .then(function(data){
-            console.log(data);
-            
-        })
-        .catch(function(error){
-            this.setState(
-                {
-                    type : "error-messages",
-                    messages : "Something went wrong..."
-                });
-        }.bind(this));
+            fetch('http://localhost/api/page/' + id, {
+                method : "PUT",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ page : {
+                    title: document.getElementById('title').value,
+                    route: document.getElementById('route').value,
+                    content: document.getElementById('content').value
+                }})
+            })
+            .then(function(data){
+                console.log(data);
+                if(data.status === 200){
+                    alert("Page has been updated");
+                }
+                else{
+                    alert("Error while updating page");
+                }
+            })
+            .catch(function(error){
+                this.setState(
+                    {
+                        type : "error-messages",
+                        messages : "Something went wrong..."
+                    });
+            }.bind(this));
+        }
+        else{
+            return;
+        }
     }
 
     delete(){
