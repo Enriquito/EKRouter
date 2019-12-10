@@ -5,6 +5,7 @@ class Page
 {
     public $ID;
     public $Title;
+    public $Route;
     public $Content;
     public $Created;
     public $Edited;
@@ -15,6 +16,7 @@ class Page
 
         $result = $database->Insert("pages", [
             "title" => $this->Title,
+            "route" => $this->Route,
             "content" => $this->Content
         ]);
         
@@ -46,6 +48,7 @@ class Page
 
         $this->ID = $data["id"];
         $this->Title = $data["title"];
+        $this->Route = $data["route"];
         $this->Content = $data["content"];
         $this->Created = $data["created"];
         $this->Edited = $data["edited"];
@@ -56,6 +59,7 @@ class Page
         $database = new Database();
         $ar = [
             "title" => $this->Title,
+            "route" => $this->Route,
             "content" => $this->Content
         ];
 

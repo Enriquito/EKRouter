@@ -22,7 +22,8 @@ class NewPage extends React.Component {
             },
             body: JSON.stringify({ page : {
                 title: document.getElementById('title').value,
-                content: document.getElementById('content').value,
+                route: document.getElementById('route').value,
+                content: document.getElementById('content').value
             }})
         })
         .then((resp) => resp.json())
@@ -58,8 +59,12 @@ class NewPage extends React.Component {
                 <div className="flex" id="edit-page-form">
                     <div style={{flexGrow : 1}}>
                         {/* <h2>Page settings</h2> */}
-                        <input id="title" type="text" defaultValue={this.state.page.Title} placeholder="Page title" />
-                        <textarea id="content" defaultValue={this.state.page.Content} placeholder="Page content"></textarea>
+                        <label>Title</label>
+                        <input id="title" type="text" defaultValue={this.state.page.Title} placeholder="The title of my new page" />
+                        <label>Route</label>
+                        <input id="route" type="text" defaultValue={this.state.page.Route} placeholder="/example/route" />
+                        <label>Content</label>
+                        <textarea id="content" defaultValue={this.state.page.Content} placeholder="My new page content here"></textarea>
                     </div>
                     <div id="settings">
                         {/* <h2>Aditional settings</h2> */}

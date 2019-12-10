@@ -102,6 +102,7 @@ $app->Router->Put("api/page/{id}", function($param){
     $page = new Page();
     $page->ID = $param["id"];
     $page->Title = $data["page"]["title"];
+    $page->Route = $data["page"]["route"];
     $page->Content = $data["page"]["content"];
 
     $page->Update($param["id"]);
@@ -114,6 +115,7 @@ $app->Router->Post("api/page", function(){
 
     $page = new Page();
     $page->Title = $data["page"]["title"];
+    $page->Route = $data["page"]["route"];
     $page->Content = $data["page"]["content"];
     
     if($page->Create())
