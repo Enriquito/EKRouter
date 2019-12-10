@@ -36,7 +36,6 @@ class Pages extends React.Component {
                 else
                 {
                     const date = formatDate(page.edited);
-
                     page.edited = date.day + "-" + date.month + "-" + date.year;
                 }
 
