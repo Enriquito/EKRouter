@@ -1,3 +1,5 @@
+import { func } from "prop-types";
+
 export function hasSession(){
     fetch("http://localhost/api/authenticate")
     .then((resp) => resp.json())
@@ -21,4 +23,17 @@ export function logout(){
     .catch((error) => {
         window.location = '/';
     })
+}
+
+export function formatDate(date){
+    const t = date.split(/[- :]/);
+
+    return {
+        year : t[0],
+        month : t[1],
+        day : t[2],
+        hour : t[3],
+        minutes : t[4],
+        seconds : t[5]
+    }
 }
