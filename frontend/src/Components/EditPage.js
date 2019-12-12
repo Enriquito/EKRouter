@@ -110,11 +110,12 @@ class EditPage extends React.Component {
             let data = this.state.status.map((status, index) => {
                 return <option defaultValue={status.id} value={status.id} key={status.id}>{status.status}</option>
             });
-           alert(this.state.page.Status);
+
             return(
-                <select id="status" defaultValue={this.state.page.Status}>
+                <select id="status" defaultValue="Published">
                     {data}
-                </select>);
+                </select>
+            );
         }
     }
     
