@@ -99,12 +99,12 @@ class EditPage extends React.Component {
           <Nav />
             <section>
                 <h1>Edit page</h1>
-                <div className="flex">
+                {/* <div className="flex">
                     <button onClick={this.save.bind(this)} id="save">Save</button>
                     <button onClick={this.delete.bind(this)} id="delete">Delete</button>
-                </div>
+                </div> */}
                 <div className="flex" id="edit-page-form">
-                    <div style={{flexGrow : 1}}>
+                    <div id="main-form">
                         {/* <h2>Page settings</h2> */}
                         <label>Title</label>
                         <input id="title" type="text" defaultValue={this.state.page.Title} placeholder="The title of my new page" />
@@ -115,10 +115,41 @@ class EditPage extends React.Component {
                     </div>
                     <div id="settings">
                         {/* <h2>Aditional settings</h2> */}
-                        <div style={{textAlign : "center"}}>
+                        <div className="category">
+                            <h3>Publish</h3>
+                            <div>
+                                <span>Last Edit</span> <strong>12-11-2019</strong>
+                            </div>
+                            
+                            <div>
+                                <span>Created</span> <strong>12-10-2019</strong>
+                            </div>
+                            
+                            <div>
+                                <span>Status</span>
+                                <select>
+                                    <option>Published</option>
+                                    <option>Hidden</option>
+                                    <option>Unpublished</option>
+                                </select>
+                            </div>
+                            <div className="flex center">
+                                <button onClick={this.delete.bind(this)} id="delete">Delete</button>
+                                <button onClick={this.save.bind(this)} id="save">Save</button>
+                            </div>
+                            
+                        </div>
+                        <div className="category">
                             <h3>Tags</h3>
+                        </div>
+                        <div className="category">
                             <h3>Collection links</h3>
                         </div>
+                        <div className="category">
+                            <h3>Other</h3>
+                            
+                        </div>
+                        
                     </div>
                 </div>
             </section>

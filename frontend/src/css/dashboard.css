@@ -51,8 +51,8 @@ main section
     top: 10px;
     position: relative;
     border-radius: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 5px;
+    margin-right: 15px;
     width: 100%;
 }
 
@@ -78,8 +78,9 @@ table thead tr td, table tfoot tr td
 table tbody tr:hover
 {
     cursor: pointer;
-    color: #FFF;
-    background: rgba(26, 188, 156, 0.5);
+    color: rgba(26, 188, 156, 1);
+    font-weight: 600;
+    /* background: rgba(26, 188, 156, 0.5); */
 }
 table thead tr td
 {
@@ -118,28 +119,64 @@ table tfoot tr td
     resize: vertical;
     min-height: 250px;
 }
-#save
+#save, #delete
 {
-    width: 100px;
-    background: #1abc9c;
-    color: #FFF;
     font-weight: bold;
     cursor: pointer;
     border: none;
-    margin-right: 10px;
+    color: #FFF;
+    width: 100px;
+    border-radius: 5px;
+}
+#save
+{
+    background: #1abc9c;
 }
 #delete
 {
-    width: 100px;
     background: tomato;
-    color: #FFF;
-    font-weight: bold;
-    cursor: pointer;
+    margin-right: 10px;
+}
+#edit-page-form #settings .category
+{
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px 0;
+    background: hsla(0, 0%, 95%, 1);
+}
+#edit-page-form #settings .category select
+{
     border: none;
+    font-weight: bold;
+    font-size: 1em;
+    outline: none;
+}
+#edit-page-form #settings .category:first-child
+{
+    margin-top: 0;
+}
+#edit-page-form #settings .category h3
+{
+    margin: 5px 0;
+    color: #545454;
+}
+#edit-page-form #settings .category span
+{
+    display: inline-block;
+    width: 70px;
 }
 #edit-page-form #settings
 {
-    min-width: 40%;
-    padding: 10px;
+    min-width: 30%;
     margin-left: 10px;
+    border-radius: 5px;
+}
+#main-form
+{
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 5px;
+    flex-grow: 1;
+    padding: 10px;
+    background: hsla(0, 0%, 95%, 1);
 }

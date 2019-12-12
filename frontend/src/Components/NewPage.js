@@ -53,10 +53,10 @@ class NewPage extends React.Component {
             <section>
                 <h1>New page</h1>
                 <div className="flex">
-                    <button onClick={this.save.bind(this)} id="save">Save</button>
+                    
                 </div>
                 <div className="flex" id="edit-page-form">
-                    <div style={{flexGrow : 1}}>
+                    <div id="main-form">
                         {/* <h2>Page settings</h2> */}
                         <label>Title</label>
                         <input id="title" type="text" placeholder="The title of my new page" />
@@ -67,8 +67,11 @@ class NewPage extends React.Component {
                     </div>
                     <div id="settings">
                         {/* <h2>Aditional settings</h2> */}
-                        <div>
+                        <button onClick={this.save.bind(this)} id="save">Save</button>
+                        <div className="category">
                             <h3>Tags</h3>
+                        </div>
+                        <div className="category">
                             <h3>Collection links</h3>
                         </div>
                     </div>
