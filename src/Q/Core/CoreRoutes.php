@@ -130,3 +130,8 @@ $app->Router->Post("api/page", function(){
 $app->Router->Delete("api/page/{id}", function($param){
     Page::Destroy($param["id"]);
 })->UseAuthentication(true);
+
+$app->Router->Get("api/pages/status", function() use(&$app){
+    $status = $app->Database->Query("SELECT * FROM page_status");
+    Response::Json($status, 200);
+})->UseAuthentication(true);

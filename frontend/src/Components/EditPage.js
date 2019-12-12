@@ -16,13 +16,23 @@ class EditPage extends React.Component {
         const id = this.props.match.params.id;
 
         fetch("http://localhost/api/page/" + id)
-            .then((resp) => resp.json())
-            .then((resp) => {
-                this.setState({page : resp});
-            })
-            .catch((error) => {
-                alert("Error could not fetch data.");
-            })
+        .then((resp) => resp.json())
+        .then((resp) => {
+            this.setState({page : resp});
+        })
+        .catch((error) => {
+            alert("Error could not fetch data.");
+        });
+
+        fetch("http://localhost/api/pages/status")
+        .then((resp) => resp.json())
+        .then((resp) => {
+            this.setState({status : resp});
+        })
+        .catch((error) => {
+            alert("Error could not fetch data.");
+            return;
+        });
     }
 
     save(){
@@ -38,7 +48,8 @@ class EditPage extends React.Component {
                 body: JSON.stringify({ page : {
                     title: document.getElementById('title').value,
                     route: document.getElementById('route').value,
-                    content: document.getElementById('content').value
+                    content: document.getElementById('content').value,
+                    status: document.getElementById('status').value
                 }})
             })
             .then(function(data){
@@ -92,6 +103,20 @@ class EditPage extends React.Component {
             return;
         }
     }
+
+    getPageStatus(){
+        if(this.state.status != null && this.state.page.Status != null)
+        {
+            let data = this.state.status.map((status, index) => {
+                return <option defaultValue={status.id} value={status.id} key={status.id}>{status.status}</option>
+            });
+           alert(this.state.page.Status);
+            return(
+                <select id="status" defaultValue={this.state.page.Status}>
+                    {data}
+                </select>);
+        }
+    }
     
     render() {
       return (
@@ -99,13 +124,8 @@ class EditPage extends React.Component {
           <Nav />
             <section>
                 <h1>Edit page</h1>
-                {/* <div className="flex">
-                    <button onClick={this.save.bind(this)} id="save">Save</button>
-                    <button onClick={this.delete.bind(this)} id="delete">Delete</button>
-                </div> */}
                 <div className="flex" id="edit-page-form">
                     <div id="main-form">
-                        {/* <h2>Page settings</h2> */}
                         <label>Title</label>
                         <input id="title" type="text" defaultValue={this.state.page.Title} placeholder="The title of my new page" />
                         <label>Route</label>
@@ -114,7 +134,6 @@ class EditPage extends React.Component {
                         <textarea id="content" defaultValue={this.state.page.Content} placeholder="My new page content here"></textarea>
                     </div>
                     <div id="settings">
-                        {/* <h2>Aditional settings</h2> */}
                         <div className="category">
                             <h3>Publish</h3>
                             <div>
@@ -127,11 +146,9 @@ class EditPage extends React.Component {
                             
                             <div>
                                 <span>Status</span>
-                                <select>
-                                    <option>Published</option>
-                                    <option>Hidden</option>
-                                    <option>Unpublished</option>
-                                </select>
+                                {
+                                    this.getPageStatus(this.state.page.Status)
+                                }
                             </div>
                             <div className="flex center">
                                 <button onClick={this.delete.bind(this)} id="delete">Delete</button>

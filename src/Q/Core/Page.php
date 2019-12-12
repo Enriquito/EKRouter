@@ -49,6 +49,7 @@ class Page
             FROM pages p 
             JOIN page_status ps 
             ON p.status = ps.id
+            WHERE p.id = $id
         ";
 
         $data = $database->query($query, true);
