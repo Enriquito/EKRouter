@@ -186,5 +186,6 @@ class Database
     public function Close()
     {
         $this->PDO = NULL;
+        return null;
     }
 }
