@@ -13,20 +13,19 @@ class NewBlock extends React.Component {
     }
 
     save(){
-        fetch('http://localhost/api/page', {
+        fetch('http://localhost/api/block', {
             method : "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ page : {
-                title: document.getElementById('name').value,
+            body: JSON.stringify({ block : {
+                name: document.getElementById('name').value,
                 content: document.getElementById('content').value
             }})
         })
         .then((resp) => resp.json())
         .then(function(data){
-            
             console.log(data);
             if(data.code === 201){
                 window.location = '/blocks';
@@ -62,9 +61,19 @@ class NewBlock extends React.Component {
                         <label>Content</label>
                         <textarea id="content" placeholder="My new page content here"></textarea>
                     </div>
+                    
                     <div id="settings">
                         {/* <h2>Aditional settings</h2> */}
-                        <button onClick={this.save.bind(this)} id="save">Save</button>
+                        <div className="category">
+                            <div className="flex">
+                                <button onClick={this.save.bind(this)} id="save">Save</button>
+                            </div>
+                            
+                            
+                        </div>
+                        <div className="category">
+                            <h3>Links</h3>
+                        </div>
                     </div>
                 </div>
             </section>
