@@ -135,3 +135,35 @@ $app->Router->Get("api/pages/status", function() use(&$app){
     $status = $app->Database->Query("SELECT * FROM page_status");
     Response::Json($status, 200);
 })->UseAuthentication(true);
+
+//blocks
+$app->Router->Get("api/block/list/all", function(){
+    Response::Json(Block::GetAll(), 200);
+})->UseAuthentication(true);
+
+$app->Router->Post("api/block", function(){
+    $data = Request::GetJson();
+
+    $block = new Block();
+    $block->Name = $data["block"]["name"];
+    $block->Content = $data["block"]["content"];
+    
+    if($block->Create())
+        Response::SetResponse(201);
+    else
+        Response::SetResponse(200);
+
+})->UseAuthentication(true);
+
+$app->Router->Put("api/block/{id}", function($param){
+    $data = Request::GetJson();
+
+    $block = new Block();
+    $block->ID = $param["id"];
+    $block->Name = $data["block"]["name"];
+    $block->Content = $data["block"]["content"];
+
+    $block->Update();
+
+    Response::Json($block, 200);
+})->UseAuthentication(true);
