@@ -10,6 +10,7 @@ import EditPage from './Components/EditPage';
 import NewPage from './Components/NewPage';
 import Blocks from './Components/Blocks';
 import NewBlock from './Components/NewBlock';
+import EditBlock from './Components/EditBlock';
 
 function App() {
   return(
@@ -19,6 +20,7 @@ function App() {
       <Route exact path="/collections" component={Collections} />
       <Route exact path="/pages" component={Pages} />
       <Route exact path="/blocks" component={Blocks} />
+      <Route exact path="/block/:id" component={EditBlock} />
       <Route exact path="/new/block" component={NewBlock} />
       <Route path="/page/:id" component={EditPage} />
       <Route exact path="/new/page" component={NewPage} />

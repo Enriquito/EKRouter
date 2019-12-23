@@ -89,6 +89,12 @@ $app->Router->Get("api/page/list/all", function(){
     Response::Json(Page::GetAll(), 200);
 })->UseAuthentication(true);
 
+$app->Router->Get("api/page/search/{like}", function($param){
+    $like = $param['like'];
+
+    Response::Json(Page::Search($like), 200);
+})->UseAuthentication(true);
+
 $app->Router->Get("api/page/{id}", function($param){
     $page = new Page();
     $page->GetByID($param["id"]);
@@ -166,4 +172,23 @@ $app->Router->Put("api/block/{id}", function($param){
     $block->Update();
 
     Response::Json($block, 200);
+})->UseAuthentication(true);
+
+$app->Router->Get("api/block/{id}", function($param){
+    Response::Json(Block::Get($param['id']), 200);
+})->UseAuthentication(true);
+
+
+$app->Router->Delete("api/block/{id}", function($param){
+    Block::Destroy($param["id"]);
+})->UseAuthentication(true);
+
+$app->Router->Post("api/block/create/link", function(){
+    $data = Request::GetJson();
+    
+    if(Block::CreateblockLink($data['block']["blockID"],  $data['block']["pageID"]))
+        Response::SetResponse(201);
+    else
+        Response::SetResponse(200);
+
 })->UseAuthentication(true);

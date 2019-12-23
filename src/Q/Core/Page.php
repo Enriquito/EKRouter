@@ -18,7 +18,8 @@ class Page
         $result = $database->Insert("pages", [
             "title" => $this->Title,
             "route" => $this->Route,
-            "content" => $this->Content
+            "content" => $this->Content,
+            "status" => $this->Status
         ]);
         
         if($result != false)
@@ -86,5 +87,14 @@ class Page
             Response::SetResponse(200);
         else
             Response::SetResponse(500);
+    }
+    
+    public static function Search($query)
+    {
+        $database = new Database();
+
+        $q = "SELECT * FROM `pages` WHERE title LIKE '%$query%'";
+
+        return $database->Query($q, false);
     }
 }

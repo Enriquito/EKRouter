@@ -14,7 +14,7 @@ class Block
         $database = new Database();
 
         $result = $database->Insert("blocks", [
-            "name" => $this->Name,
+            "name" => str_replace(" ", "-", $this->Name),
             "content" => $this->Content
         ]);
         
@@ -38,12 +38,19 @@ class Block
         return $database->query("SELECT * FROM blocks");
     }
 
+    public static function Get($id)
+    {
+        $database = new Database();
+
+        return $database->Query("SELECT * FROM blocks WHERE id = $id", true);
+    }
+
     public function Update()
     {
         $database = new Database();
         $ar = [
             "id" => $this->ID,
-            "name" => $this->Name,
+            "name" => str_replace(" ", "-", $this->Name),
             "content" => $this->Content
         ];
 
@@ -55,5 +62,19 @@ class Block
             Response::SetResponse(200);
         else
             Response::SetResponse(500);
+    }
+
+    public static function CreateblockLink($blockID, $pageID){
+        $database = new Database();
+
+        $result = $database->Insert("block_links", [
+            "block_id" => $blockID,
+            "page_id" =>  $pageID
+        ]);
+
+        if($result != false)
+            return true;
+        else
+            return false;
     }
 }
