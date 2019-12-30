@@ -153,9 +153,10 @@ $app->Router->Post("api/block", function(){
     $block = new Block();
     $block->Name = $data["block"]["name"];
     $block->Content = $data["block"]["content"];
-    
-    if($block->Create())
-        Response::SetResponse(201);
+    $result = $block->Create();
+
+    if($result != false)
+        Response::Json(["id" => $result], 201);
     else
         Response::SetResponse(200);
 
@@ -186,7 +187,7 @@ $app->Router->Delete("api/block/{id}", function($param){
 $app->Router->Post("api/block/create/link", function(){
     $data = Request::GetJson();
     
-    if(Block::CreateblockLink($data['block']["blockID"],  $data['block']["pageID"]))
+    if(Block::CreateblockLink($data['blocklink']["blockID"],  $data['blocklink']["pageID"]))
         Response::SetResponse(201);
     else
         Response::SetResponse(200);

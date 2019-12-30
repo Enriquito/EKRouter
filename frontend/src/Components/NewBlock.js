@@ -8,7 +8,7 @@ class NewBlock extends React.Component {
         hasSession();
 
         this.state = {
-            block: {Name : null, Content : null},
+            block: {Name : null, Content : null, PageLink: null},
             page : {}
         };
     }
@@ -31,14 +31,18 @@ class NewBlock extends React.Component {
                 content: document.getElementById('content').value
             }})
         })
+        .then((resp) => resp.json())
         .then(function(data){
-            if(data.status === 201){
-                window.location = '/blocks';
+            console.log(data.id);
+            if(data.id != null ){
+                alert("ok");
+                console.log(this);
+                this.savePageLink(this.state.block.PageLink, data.id);
             }
             else{
                 alert("Something went wrong");
             }
-        })
+        }.bind(this))
         .catch(function(error){
             this.setState(
                 {
@@ -48,16 +52,8 @@ class NewBlock extends React.Component {
         }.bind(this));
     }
 
-    newPageLink(){
-        const holder = document.getElementById('page-link-holder');
-        const newLink = document.createElement('div');
-        newLink.classList.add('page-link');
-        newLink.innerHTML = "New Link";
-
-        holder.appendChild(newLink);
-    }
-
-    linkPage(pageid, blockid){
+    savePageLink(pageid, blockid){
+        alert("call");
         fetch('http://localhost/api/block/create/link', {
             method : "POST",
             headers: {
@@ -86,28 +82,48 @@ class NewBlock extends React.Component {
         }.bind(this));
     }
 
+    newPageLink(){
+        const holder = document.getElementById('page-link-holder');
+        const newLink = document.createElement('div');
+        newLink.classList.add('page-link');
+        newLink.innerHTML = "New Link";
+
+        holder.appendChild(newLink);
+    }
+
+    linkPage(pageid){
+        this.setState({
+            block : {
+                PageLink : pageid
+            }
+        });
+    }
+
     searchPage(){
         const inp = document.getElementById("searh-page-input").value;
         const holder = document.getElementById('page-link-holder');
-
-        holder.querySelector('ul').innerHTML = "";
-
         fetch("http://localhost/api/page/search/" + inp)
-        .then((resp) => resp.json())
-        .then((resp) => {
-            resp.forEach(element => {
-                console.log(element);
-                const li = document.createElement('li');
-                li.addEventListener('click', () => {
-                    this.linkPage(element.id, this.state.block.id)
+            .then((resp) => resp.json())
+            .then((resp) => {
+                holder.querySelector('ul').innerHTML = "";
+                resp.forEach(element => {
+                    console.log(element);
+                    const li = document.createElement('li');
+                    li.addEventListener('click', () => {
+                        this.linkPage(element.id, this.state.block.id)
+                    });
+                    li.innerHTML = element.title;
+                    
+                    holder.querySelector('ul').appendChild(li);
                 });
-                li.innerHTML = element.title
-                holder.querySelector('ul').appendChild(li);
+            })
+            .catch((error) => {
+                console.error(error);
             });
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+
+        setTimeout(() => {
+            
+        }, 500);
     }
     
     render() {
@@ -138,8 +154,7 @@ class NewBlock extends React.Component {
                         <div className="category">
                             <h3>Page links</h3>
                             <div className="flex">
-                                <input placeholder="Link this block to page..." type="text" id="searh-page-input" onChange={this.searchPage.bind(this)} />
-                                <button>Add</button>
+                                <input placeholder="Link this block to a page..." type="text" id="searh-page-input" onChange={this.searchPage.bind(this)} />
                             </div>
                             <div id="page-link-holder" className="flex wrap">
                                 <ul>

@@ -20,6 +20,24 @@ class Database
         return new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset='.DB_CHARSET, DB_USERNAME, DB_PASSWORD);
     }
 
+    public function GetLastInsertedID($table)
+    {
+        try
+        {
+            $sql_query = "SELECT max(id) as 'last_id' FROM $table";
+            $query = $this->PDO->prepare($sql_query);
+            $query->execute();
+            return (int)$query->fetch(PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e)
+        {
+            if($this->debug)
+                echo("Error: " . $e->message);
+
+            return false;
+        }
+    }
+
     public function CountRows($sql_query) : int
     {
         try

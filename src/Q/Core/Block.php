@@ -19,7 +19,7 @@ class Block
         ]);
         
         if($result != false)
-            return true;
+            return $result;
         else
             return false;
     }
@@ -41,8 +41,17 @@ class Block
     public static function Get($id)
     {
         $database = new Database();
+        $data = $database->Query("SELECT * FROM blocks WHERE id = $id", true);
 
-        return $database->Query("SELECT * FROM blocks WHERE id = $id", true);
+        $links = $database->Query("SELECT BL.page_id, P.title 
+                                    FROM block_links BL
+                                    JOIN pages P
+                                    ON BL.page_id = P.id
+                                    WHERE block_id = $id");
+
+        $data["page_links"] = $links;
+
+        return $data;
     }
 
     public function Update()

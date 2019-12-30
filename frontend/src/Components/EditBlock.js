@@ -19,6 +19,7 @@ class EditBlock extends React.Component {
         .then((resp) => resp.json())
         .then((resp) => {
             this.setState({block : resp});
+            console.log(this.state.block);
             if(this.state.block.id === undefined)
                 window.location = "/blocks";
         })
@@ -99,6 +100,33 @@ class EditBlock extends React.Component {
         const name = document.getElementById('name');
         name.value = name.value.replace(' ', '-');
     }
+
+    searchPage(){
+        const inp = document.getElementById("searh-page-input").value;
+        const holder = document.getElementById('page-link-holder');
+        fetch("http://localhost/api/page/search/" + inp)
+            .then((resp) => resp.json())
+            .then((resp) => {
+                holder.querySelector('ul').innerHTML = "";
+                resp.forEach(element => {
+                    console.log(element);
+                    const li = document.createElement('li');
+                    li.addEventListener('click', () => {
+                        this.linkPage(element.id, this.state.block.id)
+                    });
+                    li.innerHTML = element.title;
+                    
+                    holder.querySelector('ul').appendChild(li);
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        setTimeout(() => {
+            
+        }, 500);
+    }
     
     render() {
         let created = "";
@@ -145,8 +173,15 @@ class EditBlock extends React.Component {
                         </div>
                         <div className="category">
                             <h3>Page links</h3>
-                            <div className="flex center"></div>
-                        </div>                       
+                            <div className="flex">
+                                <input placeholder="Link this block to page..." type="text" id="searh-page-input" onChange={this.searchPage.bind(this)} />
+                            </div>
+                            <div id="page-link-holder" className="flex wrap">
+                                <ul>
+                                    
+                                </ul>
+                            </div>                            
+                        </div>                     
                     </div>
                 </div>
             </section>
