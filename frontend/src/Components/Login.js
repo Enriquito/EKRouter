@@ -31,15 +31,15 @@ class Login extends React.Component {
             if(data.Code === 1001){
                 window.location = "/dashboard";
             }
-            else{
+            else if(data.Code === 100){
                 document.getElementById('password').value = "";
                 this.setState(
                     {
                         type : "error-messages",
                         messages : "Your password or email is incorrect."
-                    }.bind(this));
+                    });
             }
-        })
+        }.bind(this))
         .catch(function(error){
             this.setState(
                 {
