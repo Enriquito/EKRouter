@@ -72,18 +72,4 @@ class Block
         else
             Response::SetResponse(500);
     }
-
-    public static function CreateblockLink($blockID, $pageID){
-        $database = new Database();
-
-        $result = $database->Insert("block_links", [
-            "block_id" => $blockID,
-            "page_id" =>  $pageID
-        ]);
-
-        if($result != false)
-            return true;
-        else
-            return false;
-    }
 }
