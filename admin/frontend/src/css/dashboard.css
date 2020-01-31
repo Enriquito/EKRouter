@@ -9,18 +9,23 @@ html, body
     height: 100%;
     font-family: 'Roboto';
 }
+#root
+{
+    height: 100%;
+}
 main
 {
     width: 100%;
+    height: 100%;
 }
 main nav
 {
-    background: #FFF;
+    
     padding: 20px 10px;
     width: 200px;
-    margin: 10px;
-    border-radius: 10px;
     align-self: flex-start;
+    height: 100%;
+    background: #1abc9c;
 }
 main nav ul
 {
@@ -34,7 +39,7 @@ main nav ul li
 }
 main nav ul li a
 {
-    color: #545454;
+    color: #FFF;
     text-decoration: none;
     font-weight: bold;
 }
@@ -44,146 +49,34 @@ main nav ul li a:hover
     text-decoration: underline;
 }
 
-main section
+main #holder
 {
     background: #FFF;
-    padding: 20px;
-    top: 10px;
     position: relative;
-    border-radius: 10px;
-    margin-left: 5px;
-    margin-right: 15px;
     width: 100%;
+    height: 100%;
 }
-
-#new-collection-button
+main #holder #collection-holder
 {
-    padding: 10px 30px;
-    background: #1abc9c;
-    border: none;
-    color: #FFF;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-table
-{
-    width: 100%;
-    border-collapse: collapse
-}
-table thead tr td, table tfoot tr td
-{
-    font-weight: bold;
-}
-table tbody tr:hover
-{
-    cursor: pointer;
-    color: rgba(26, 188, 156, 1);
-    font-weight: 600;
-    /* background: rgba(26, 188, 156, 0.5); */
-}
-table thead tr td
-{
-
-}
-table tbody tr td, table thead tr td, table tfoot tr td
-{
-    padding: 15px 10px;
-}
-table tfoot tr td
-{
-    border-bottom: none !important;
-}
-#edit-page-form
-{
-    flex-grow: 1;
-}
-#edit-page-form input, textarea, #save, #delete
-{
-    display: block;
-    margin: 10px 0;
-    width: 100%;
     padding: 10px;
-    border: 1px solid rgba(0,0,0,0.1);
-    outline: none;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    color: #545454;
-}
-#edit-page-form input
-{
-    font-size: 1.1em;
-}
-#edit-page-form textarea
-{
-    resize: vertical;
-    min-height: 250px;
-}
-#save, #delete
-{
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    color: #FFF;
-    width: 100px;
-    border-radius: 5px;
-}
-#save
-{
-    background: #1abc9c;
-}
-#delete
-{
-    background: tomato;
-    margin-right: 10px;
-}
-#edit-page-form #settings .category
-{
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 5px;
+    min-width: 20%;
+    background: rgba(124, 124, 124, 0.1);
     padding: 10px;
-    margin: 5px 0;
-    background: hsla(0, 0%, 95%, 1);
+    height: 100%;
 }
-#edit-page-form #settings .category select
+main #holder #collection-holder ul
 {
-    border: none;
-    font-weight: bold;
-    font-size: 1em;
-    outline: none;
+    padding: 0;
 }
-#edit-page-form #settings .category:first-child
+main #holder #collection-holder ul li
 {
-    margin-top: 0;
+    list-style-type: none;
 }
-#edit-page-form #settings .category h3
+main #holder #collection-holder h4
 {
-    margin: 5px 0;
-    color: #545454;
+    color: rgba(168, 168, 168, 1);
 }
-#edit-page-form #settings .category span
+main #holder #type-holder
 {
-    display: inline-block;
-    width: 70px;
-}
-#edit-page-form #settings
-{
-    min-width: 30%;
-    margin-left: 10px;
-    border-radius: 5px;
-}
-#main-form
-{
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 5px;
-    flex-grow: 1;
     padding: 10px;
-    background: hsla(0, 0%, 95%, 1);
-}
-.page-link
-{
-    border-radius: 5px;
-    border: 1px solid rgba(0,0,0,0.5);
-    padding: 5px;
-    margin: 5px;
 }

@@ -13,63 +13,40 @@ class Collections extends React.Component {
     }
 
     componentDidMount(){
-        fetch("http://localhost/api/collection/list/all")
-            .then((resp) => resp.json())
-            .then((resp) => {
-                this.setState({collections : resp});
-            })
-            .catch((error) => {
-                alert("Error could not fetch data.");
-            })
+        
+    }
+
+    New(){
+        let inp = document.createElement('input');
+        let li = document.createElement('li');
+        li.append(inp)
+        let coll = document.getElementById("collection-list");
+        coll.append(li)
+        console.log('a');
     }
     
     render() {
-        let cols;
-
-        if(this.state.collections !== null)
-        {
-            cols = this.state.collections.map((collection, index) => {
-                return (
-                    <tr key={collection.id}>
-                        <td>{collection.name}</td>
-                        <td>0</td>
-                        <td>{collection.created}</td>
-                    </tr>
-                );
-            })
-        }
+        
       return (
         <main className="flex">
           <Nav />
-            <section>
-                <h1>Collections</h1>
-                <div style={{margin : "10px 0"}} className="flex">
-                    <button id="new-collection-button">New</button>
+            <div id="holder">
+                <div style={{height: "100%"}} className='flex'>
+                    <div id="collection-holder">
+                        <h4>Collections</h4>
+                        <ul>
+                            <li onClick={this.New}>New</li>
+                        </ul>
+                        <ul id="collection-list">
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div id="type-holder">
+                        <h4>Types</h4>
+                    </div>
                 </div>
-                <div className="flex">
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Name</td>
-                                <td>Items</td>
-                                <td>Created</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                cols
-                            }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>Name</td>
-                                <td>Items</td>
-                                <td>Created</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </section>
+                
+            </div>
         </main>
       );
     }
