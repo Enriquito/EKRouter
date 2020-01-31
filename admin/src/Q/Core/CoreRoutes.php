@@ -183,13 +183,3 @@ $app->Router->Get("api/block/{id}", function($param){
 $app->Router->Delete("api/block/{id}", function($param){
     Block::Destroy($param["id"]);
 })->UseAuthentication(true);
-
-$app->Router->Post("api/block/create/link", function(){
-    $data = Request::GetJson();
-    
-    if(Block::CreateblockLink($data['blocklink']["blockID"],  $data['blocklink']["pageID"]))
-        Response::SetResponse(201);
-    else
-        Response::SetResponse(200);
-
-})->UseAuthentication(true);
