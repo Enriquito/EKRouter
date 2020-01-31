@@ -8,6 +8,10 @@ header h1
 {
     font-size: 4rem;
 }
+header h3
+{
+    text-align: center;
+}
 header nav
 {
     padding: 40px;
@@ -33,18 +37,54 @@ header nav ul li a:hover
     color: #FFF;
     text-decoration: underline;
 }
-main section:first-child
+main figure
 {
     background: #FFF;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 10px;
     transition: margin 0.3s;
     border-radius: 5px;
-    animation: 0.5s ease-out 0s SectionOnLoadAnimation;
-    margin: -50px;
+    margin-right: 10px;
+    padding: 0 !important;
+    cursor: pointer;
 }
-@keyframes SectionOnLoadAnimation
+main figure.top
 {
-    0%{margin: -30px;}
-    100% {margin: -50px;}
+    margin-top: -90px;
+}
+main figure:nth-child(-n+2)
+{
+    animation: 0.5s ease-out 0s SectionOnLoadAnimationTop;
+}
+main figure:nth-child(even)
+{
+    /* animation: 0.5s ease-out 0.1s SectionOnLoadAnimation; */
+}
+main figure figcaption
+{
+    padding: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    background: rgba(0,0,0,0.1);
+    width: 100%;
+    color: #FFF;
+    /* display: none; */
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+main figure:hover figcaption
+{
+    display: block;
+    opacity: 1;
+}
+main figure img
+{
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+@keyframes SectionOnLoadAnimationTop
+{
+    0%{margin-top: -30px;}
+    100% {margin-top: -90px;}
 }
