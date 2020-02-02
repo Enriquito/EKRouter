@@ -1,6 +1,7 @@
 import React from 'react';
 import { hasSession } from './Helpers';
 import Nav from './Nav';
+import check from '../checked.png';
 
 class Collections extends React.Component {
     constructor(props){
@@ -13,7 +14,7 @@ class Collections extends React.Component {
     }
 
     componentDidMount(){
-        
+        console.log(check);
     }
 
     New(){
@@ -21,6 +22,9 @@ class Collections extends React.Component {
         let li = document.createElement('li');
         li.append(inp)
         let coll = document.getElementById("collection-list");
+        let check = document.createElement('img');
+        check.src = {check}
+        li.append(check)
         coll.append(li)
         console.log('a');
     }
