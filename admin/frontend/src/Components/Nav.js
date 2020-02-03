@@ -11,7 +11,7 @@ function Nav(){
                 {/* <li><a href="/blocks">Blocks</a></li> */}
                 <li><a href="/users">Users</a></li>
                 <li><a href="/settings">Settings</a></li>
-                <li><a onClick={logout} href="#">Logout</a></li>
+                <li><a onClick={logout} href="/">Logout</a></li>
             </ul>
         </nav>
     );
