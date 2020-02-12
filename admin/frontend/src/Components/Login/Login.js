@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/login.css'
+import './login.css'
 
 class Login extends React.Component {
     constructor(props){

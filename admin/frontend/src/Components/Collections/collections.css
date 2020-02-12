@@ -1,0 +1,64 @@
+main #holder #collection-holder
+{
+    padding: 10px;
+    min-width: 300px;
+    background: rgba(124, 124, 124, 0.1);
+    padding: 10px;
+    height: 100%;
+}
+main #holder #collection-holder ul
+{
+    padding-left: 5px;
+}
+main #holder #collection-holder ul li
+{
+    list-style-type: none;
+    font-size: 1.2em;
+    margin-top: 10px;
+    cursor: pointer;
+}
+main #holder #collection-holder h3
+{
+    color: rgba(168, 168, 168, 1);
+    display: inline-block;
+    color: #444444;
+}
+main #holder #collection-holder .new-collection-button
+{
+    margin: 0;
+    padding: 0;
+    height: 25px;
+    width: 100px;
+    margin-left: 10px;
+}
+form
+{
+    position: absolute;
+    border: 1px solid #444444;
+    border-radius: 5px;
+    background: rgb(55,64,80);
+    display: block;
+    padding: 10px;
+    width: 400px;
+    height: auto;
+}
+form #input-holder
+{
+    width: 60%;
+    height: 100%;
+    margin-bottom: 15px;
+}
+form input[type="text"], textarea, button
+{
+    width: 100%;
+}
+form textarea
+{
+    height: 100px;
+    resize: none;
+}
+form h2
+{
+    color: #FFF;
+    text-align: center;
+}

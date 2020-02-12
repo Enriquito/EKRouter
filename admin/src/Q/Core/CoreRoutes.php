@@ -84,64 +84,6 @@ $app->Router->Get("api/collection/list/all", function(){
     Response::Json(Collection::GetAll(), 200);
 })->UseAuthentication(true);
 
-// Pages
-$app->Router->Get("api/page/list/all", function(){
-    Response::Json(Page::GetAll(), 200);
-})->UseAuthentication(true);
-
-$app->Router->Get("api/page/search/{like}", function($param){
-    $like = $param['like'];
-
-    Response::Json(Page::Search($like), 200);
-})->UseAuthentication(true);
-
-$app->Router->Get("api/page/{id}", function($param){
-    $page = new Page();
-    $page->GetByID($param["id"]);
-
-    Response::Json($page, 200);
-})->UseAuthentication(true);
-
-$app->Router->Put("api/page/{id}", function($param){
-    $data = Request::GetJson();
-
-    $page = new Page();
-    $page->ID = $param["id"];
-    $page->Title = $data["page"]["title"];
-    $page->Route = $data["page"]["route"];
-    $page->Content = $data["page"]["content"];
-    $page->Status = $data["page"]["status"];
-
-    $page->Update($param["id"]);
-
-    Response::Json($page, 200);
-})->UseAuthentication(true);
-
-$app->Router->Post("api/page", function(){
-    $data = Request::GetJson();
-
-    $page = new Page();
-    $page->Title = $data["page"]["title"];
-    $page->Route = $data["page"]["route"];
-    $page->Content = $data["page"]["content"];
-    $page->Status = $data["page"]["status"];
-    
-    if($page->Create())
-        Response::SetResponse(201);
-    else
-        Response::SetResponse(200);
-
-})->UseAuthentication(true);
-
-$app->Router->Delete("api/page/{id}", function($param){
-    Page::Destroy($param["id"]);
-})->UseAuthentication(true);
-
-$app->Router->Get("api/pages/status", function() use(&$app){
-    $status = $app->Database->Query("SELECT * FROM page_status");
-    Response::Json($status, 200);
-})->UseAuthentication(true);
-
 //blocks
 $app->Router->Get("api/block/list/all", function(){
     Response::Json(Block::GetAll(), 200);

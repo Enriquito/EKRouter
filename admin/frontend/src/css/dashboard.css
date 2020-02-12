@@ -3,7 +3,7 @@
 
 html, body
 {
-    background: #1abc9c;
+    background: #FFF !important;
     margin: 0px;
     width: 100%;
     height: 100%;
@@ -18,36 +18,6 @@ main
     width: 100%;
     height: 100%;
 }
-main nav
-{
-    
-    padding: 20px 10px;
-    width: 200px;
-    align-self: flex-start;
-    height: 100%;
-    background: #1abc9c;
-}
-main nav ul
-{
-    padding: 0;
-    margin: 0;
-}
-main nav ul li
-{
-    list-style-type: none;
-    padding: 5px;
-}
-main nav ul li a
-{
-    color: #FFF;
-    text-decoration: none;
-    font-weight: bold;
-}
-main nav ul li a:hover
-{
-    color: #1abc9c;
-    text-decoration: underline;
-}
 
 main #holder
 {
@@ -56,27 +26,61 @@ main #holder
     width: 100%;
     height: 100%;
 }
-main #holder #collection-holder
-{
-    padding: 10px;
-    min-width: 20%;
-    background: rgba(124, 124, 124, 0.1);
-    padding: 10px;
-    height: 100%;
-}
-main #holder #collection-holder ul
-{
-    padding: 0;
-}
-main #holder #collection-holder ul li
-{
-    list-style-type: none;
-}
-main #holder #collection-holder h4
-{
-    color: rgba(168, 168, 168, 1);
-}
+
 main #holder #type-holder
 {
     padding: 10px;
+}
+button, input[type="text"], textarea
+{
+    border-radius: 5px;
+    border: none;
+    margin: 5px 0;
+    /* color: #FFF; */
+    font-weight: bold;
+    box-sizing: border-box;
+}
+button
+{
+    cursor: pointer;
+    padding: 5px 20px;
+    margin: 5px;
+}
+button:focus
+{
+    outline: none;
+}
+input[type="text"], textarea
+{
+    outline: none;
+    color: #444444;
+    width: 100px;
+    padding: 5px 10px;
+    text-align: center;
+}
+.theme-green-bg
+{
+    background: #1abc9c;
+    color: #FFF;
+}
+.theme-green-color
+{
+    color: #1abc9c;
+}
+.theme-red-bg
+{
+    background: tomato;
+    color: #FFF;
+}
+.theme-red-color
+{
+    color: tomato;
+}
+#overlay
+{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
