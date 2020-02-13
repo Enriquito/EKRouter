@@ -105,3 +105,14 @@ $app->Router->Get("api/property/{id}", function($param){
         Response::SetResponse(404);
     
 })->UseAuthentication(true);
+
+//Items
+$app->Router->Get("api/item/{id}", function($param){
+    $obj = Item::Get($param["id"]);
+    
+    if($obj != null)
+        Response::Json($obj, 200);
+    else
+        Response::SetResponse(404);
+    
+})->UseAuthentication(true);
