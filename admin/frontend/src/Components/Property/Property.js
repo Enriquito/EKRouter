@@ -9,8 +9,6 @@ class Property extends React.Component {
         this.state = {
           SelectedCollection : null
         };
-
-        this.New = this.New.bind(this);
     }
 
     componentDidMount(){
@@ -52,10 +50,6 @@ class Property extends React.Component {
       }.bind(this));
     }
 
-    NewProperty(){
-        
-    }
-
     LoadProperties(){
       fetch(`http://localhost/api/properties/`)
         .then((resp) => resp.json())
@@ -75,12 +69,13 @@ class Property extends React.Component {
       
 
       return (
-        <div>
+        <div className="flex vertical-center">
           <select>
               <option value="string">String</option>
               <option value="interger">Interger</option>
           </select>
           <input type="text" placeholder="Name your property" />
+          <button>Save</button>
         </div>
       );
     }

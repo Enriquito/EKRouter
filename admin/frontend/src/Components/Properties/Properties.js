@@ -1,14 +1,15 @@
 import React from 'react';
-//import Property from '../Property';
+import './properties.css';
+import Property from '../Property';
 
 class Properties extends React.Component {
     constructor(props){
         super(props);
 
         this.state = {
-          
+          PropertyList : [],
+          ShowNewPropertyWindow : false
         };
-
     }
 
     componentDidMount(){
@@ -50,10 +51,6 @@ class Properties extends React.Component {
       }.bind(this));
     }
 
-    NewProperty(){
-        
-    }
-
     LoadProperties(){
       fetch(`http://localhost/api/properties/`)
         .then((resp) => resp.json())
@@ -65,18 +62,36 @@ class Properties extends React.Component {
         });
     }
 
+    NewProperty(){
+      this.setState({
+        ShowNewPropertyWindow : true
+      });
+    }
+
     Create(){
 
     }
     
     render() {
       let screen = null;
+      let newProperty = null;
+
+      if(this.state.ShowNewPropertyWindow){
+        newProperty = <Property />;
+      }
+
+     
 
       if(this.props.id != null){
         screen = (
-          <div>
-            <h4>Properties</h4>
-            <button onClick={this.NewProperty}>New</button>
+          <div id="properties-holder">
+            <div className="flex vertical-center">
+              <h3>Properties</h3>
+              <button id="new-property-button" className="theme-green-bg" onClick={this.NewProperty.bind(this)}>New</button>
+            </div>
+            <div>
+                {newProperty}
+            </div>
           </div>
         );
       }
