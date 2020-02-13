@@ -2,7 +2,7 @@ main nav
 {
     
     padding: 20px 10px;
-    width: 200px;
+    min-width: 200px;
     align-self: flex-start;
     height: 100%;
     background: rgb(55,64,80);
