@@ -84,44 +84,24 @@ $app->Router->Get("api/collection/list/all", function(){
     Response::Json(Collection::GetAll(), 200);
 })->UseAuthentication(true);
 
-//blocks
-$app->Router->Get("api/block/list/all", function(){
-    Response::Json(Block::GetAll(), 200);
-})->UseAuthentication(true);
-
-$app->Router->Post("api/block", function(){
-    $data = Request::GetJson();
-
-    $block = new Block();
-    $block->Name = $data["block"]["name"];
-    $block->Content = $data["block"]["content"];
-    $result = $block->Create();
-
-    if($result != false)
-        Response::Json(["id" => $result], 201);
+$app->Router->Get("api/collection/{id}", function($param){
+    $obj = Collection::Get($param["id"]);
+    
+    if($obj != null)
+        Response::Json($obj, 200);
     else
-        Response::SetResponse(200);
-
+        Response::SetResponse(404);
+    
 })->UseAuthentication(true);
 
-$app->Router->Put("api/block/{id}", function($param){
-    $data = Request::GetJson();
+//Property
 
-    $block = new Block();
-    $block->ID = $param["id"];
-    $block->Name = $data["block"]["name"];
-    $block->Content = $data["block"]["content"];
-
-    $block->Update();
-
-    Response::Json($block, 200);
-})->UseAuthentication(true);
-
-$app->Router->Get("api/block/{id}", function($param){
-    Response::Json(Block::Get($param['id']), 200);
-})->UseAuthentication(true);
-
-
-$app->Router->Delete("api/block/{id}", function($param){
-    Block::Destroy($param["id"]);
+$app->Router->Get("api/property/{id}", function($param){
+    $obj = Property::Get($param["id"]);
+    
+    if($obj != null)
+        Response::Json($obj, 200);
+    else
+        Response::SetResponse(404);
+    
 })->UseAuthentication(true);

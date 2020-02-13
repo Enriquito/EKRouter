@@ -12,6 +12,7 @@ class Property extends React.Component {
     }
 
     componentDidMount(){
+      if(!this.props.CreateMode)
         this.LoadProperties();
     }
 

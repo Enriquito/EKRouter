@@ -17,6 +17,7 @@ include_once("src/Q/Core/Collection.php");
 include_once('src/Q/Core/Block.php');
 include_once("src/Q/Core/Page.php");
 include_once('src/Q/Core/Database.php');
+include_once('src/Q/Core/Property.php');
 include_once('src/Q/Core/App.php');
 
 $app = new App();

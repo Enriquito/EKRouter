@@ -37,6 +37,7 @@ class Properties extends React.Component {
           console.log(data);
           if(data.status === 201){
               alert("Collection has been created");
+              this.forceUpdate();
           }
           else{
               alert("Error while updating page");
@@ -75,12 +76,17 @@ class Properties extends React.Component {
     render() {
       let screen = null;
       let newProperty = null;
+      let propertyList = null;
 
       if(this.state.ShowNewPropertyWindow){
-        newProperty = <Property />;
+        newProperty = <Property CreateMode={true} />;
       }
 
-     
+      if(this.state.PropertyList != null){
+        propertyList = this.state.PropertyList.map((el) => {
+            return(<Property key={el.id} CreateMode={false} id={el.id} />);
+        });
+      }
 
       if(this.props.id != null){
         screen = (
@@ -91,6 +97,9 @@ class Properties extends React.Component {
             </div>
             <div>
                 {newProperty}
+            </div>
+            <div>
+              {propertyList}
             </div>
           </div>
         );
