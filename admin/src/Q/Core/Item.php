@@ -4,9 +4,7 @@ namespace Q\Core;
 class Item
 {
     public $ID;
-    public $Name;
-    public $Value;
-    public $Type;
+    public $Properties = []; //array
     public $Created;
     public $Creator;
 
@@ -36,33 +34,48 @@ class Item
 
     public static function Get($id)
     {
-        //Afmaken
-        // SELECT i.id, pr.name, pv.value, t.name as 'type', i.created, i.creator FROM items i
-        // JOIN propertie_values pv
-        // ON i.id = pv.item
-        // JOIN properties pr
-        // ON pr.id = pv.property
-        // JOIN types t
-        // ON t.id = pr.type
-        // GROUP BY i.collection = 1
         $database = new Database();
 
-        $data = $database->query("SELECT * FROM items WHERE id = $id");
+        $data = $database->query("SELECT * FROM items WHERE id = $id", true);
 
-        if(count($data) == 1)
+        if($data == null)
         {
-            $data = $data[0];
-
-            $col = new Item();
-
-            $col->ID = $data["id"];
-            $col->Name = $data["name"];
-            $col->Description = $data["description"];
-            $col->Owner = $data["owner"];
-            $col->Created = $data["created"];
-
+            Response::NotFound();
+            return;
         }
 
-        return $col;
+        $item = new Item();
+
+        $item->ID = $data['id'];
+        $item->Created = $data['created'];
+        $item->Creator = $data['creator'];
+
+        $query = "SELECT pr.name, pv.value, t.name as 'type' FROM items i
+        JOIN propertie_values pv
+        ON i.id = pv.item
+        JOIN properties pr
+        ON pr.id = pv.property
+        JOIN types t
+        ON t.id = pr.type
+        WHERE i.id = $id
+        ";
+
+        $data = $database->query($query);
+
+        if(count($data) > 0)
+        {
+            foreach($data as $d)
+            {
+                $ar = [
+                    "Name" => $d['name'],
+                    "Value" => $d['value'],
+                    "Type" => $d['type']
+                ];
+
+                $item->Properties[] = $ar;
+            }
+        }
+
+        return $item;
     }
 }

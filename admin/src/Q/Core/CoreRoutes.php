@@ -85,13 +85,7 @@ $app->Router->Get("api/collection/list/all", function(){
 })->UseAuthentication(true);
 
 $app->Router->Get("api/collection/{id}", function($param){
-    $obj = Collection::Get($param["id"]);
-    
-    if($obj != null)
-        Response::Json($obj, 200);
-    else
-        Response::SetResponse(404);
-    
+    Collection::Get($param["id"]);
 })->UseAuthentication(true);
 
 //Property

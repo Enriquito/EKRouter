@@ -90,8 +90,8 @@ class Collections extends React.Component {
       let cols = null;
 
       if(this.state.Collections != null){
-        cols = this.state.Collections.map((el) => {
-          return(<li onClick={() => {this.setState({SelectedCollection : el.id})}} key={el.id}>{el.name}</li>)
+        cols = this.state.Collections.map((el, index) => {
+          return(<li onClick={() => {this.setState({SelectedCollection : index})}} key={el.ID}>{el.Name}</li>)
         });
       }
 
@@ -119,6 +119,15 @@ class Collections extends React.Component {
           </div>
         );
       }
+
+      let propList = null;
+
+      if(this.state.SelectedCollection != null){
+        propList = (<Properties 
+        propertyList={this.state.Collections[this.state.SelectedCollection].Properties} 
+        id={this.state.SelectedCollection}
+        />);
+      }
     
       return (
             <div id="holder">
@@ -134,7 +143,7 @@ class Collections extends React.Component {
                         {colList}
                     </div> 
                     <div id="type-holder">
-                        <Properties id={this.state.SelectedCollection}/>
+                        {propList}
                     </div>
                 </div>
             </div>

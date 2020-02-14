@@ -1,13 +1,14 @@
 import React from 'react';
-import { hasSession } from '../Helpers';
 
 class Property extends React.Component {
     constructor(props){
-        hasSession();
         super(props);
 
         this.state = {
-          SelectedCollection : null
+          ID : null,
+          Name : null,
+          Type : null,
+          Description : null
         };
     }
 
@@ -52,14 +53,14 @@ class Property extends React.Component {
     }
 
     LoadProperties(){
-      fetch(`http://localhost/api/properties/`)
-        .then((resp) => resp.json())
-        .then((resp) => {
-            this.setState({Collections : resp});
-        })
-        .catch((error) => {
-            alert("Error could not fetch data.");
-        });
+      const data = this.props.data;
+
+      this.setState({
+          ID : data.ID,
+          Name : data.Name,
+          Type : data.Type,
+          Description : data.Description
+      });
     }
 
     Create(){
@@ -71,11 +72,11 @@ class Property extends React.Component {
 
       return (
         <div className="flex vertical-center">
-          <select>
-              <option value="string">String</option>
-              <option value="interger">Interger</option>
+          <select value={this.state.Type}>
+              <option value="String">String</option>
+              <option value="Interger">Interger</option>
           </select>
-          <input type="text" placeholder="Name your property" />
+          <input defaultValue={this.state.Name} type="text" placeholder="Name your property" />
           <button>Save</button>
         </div>
       );

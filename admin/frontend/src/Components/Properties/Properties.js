@@ -76,15 +76,16 @@ class Properties extends React.Component {
     render() {
       let screen = null;
       let newProperty = null;
-      let propertyList = null;
+      let pl = null;
 
       if(this.state.ShowNewPropertyWindow){
         newProperty = <Property CreateMode={true} />;
       }
 
-      if(this.state.PropertyList != null){
-        propertyList = this.state.PropertyList.map((el) => {
-            return(<Property key={el.id} CreateMode={false} id={el.id} />);
+      if(this.props.propertyList != null){
+        pl = this.props.propertyList.map((el) => {
+          console.log(el);
+          return(<Property key={el.ID} CreateMode={false} data={el} />);
         });
       }
 
@@ -99,7 +100,7 @@ class Properties extends React.Component {
                 {newProperty}
             </div>
             <div>
-              {propertyList}
+              {pl}
             </div>
           </div>
         );

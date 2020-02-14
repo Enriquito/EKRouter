@@ -8,7 +8,7 @@ class Collection
     public $Description;
     public $Owner;
     public $Created;
-    public $Items;
+    public $Items = [];
     public $Properties;
 
     public function Create()
@@ -39,19 +39,26 @@ class Collection
     {
         $database = new Database();
 
-        return $database->query("SELECT * FROM collections");
+        $data = $database->query("SELECT id FROM collections");
+
+        $ar = [];
+
+        foreach($data as $col)
+        {
+            $ar[] = Collection::Get($col['id'], true);
+        }
+
+        return $ar;
     }
 
-    public static function Get($id)
+    public static function Get($id, $returnArray = false)
     {
         $database = new Database();
 
-        $data = $database->query("SELECT * FROM collections WHERE id = $id");
+        $data = $database->query("SELECT * FROM collections WHERE id = $id", true);
 
-        if(count($data) == 1)
+        if($data != null)
         {
-            $data = $data[0];
-
             $col = new Collection();
 
             $col->ID = $data["id"];
@@ -67,19 +74,42 @@ class Collection
 
             $data = $database->query($query);
 
-            foreach($data as $prop){
-                $p = new Property();
-
-                $p->ID = $prop["id"];
-                $p->Name = $prop["name"];
-                $p->Description = $prop["description"];
-                $p->Collection = $col->ID;
-                $p->Type = $prop["type"];
-
-                $col->Properties[] = $p;
+            if(count($data) > 0)
+            {
+                foreach($data as $prop)
+                {
+                    $p = new Property();
+    
+                    $p->ID = $prop["id"];
+                    $p->Name = $prop["name"];
+                    $p->Description = $prop["description"];
+                    $p->Collection = $col->ID;
+                    $p->Type = $prop["type"];
+    
+                    $col->Properties[] = $p;
+                }
             }
-        }
 
-        return $col;
+            $query = "SELECT id FROM items WHERE collection = " . $col->ID;
+            $data = $database->query($query);
+
+            foreach($data as $it)
+            {
+                $item = Item::Get($it['id']);
+
+                $col->Items[] = $item;
+            }
+            if($returnArray)
+                return $col;
+            else
+                Response::Json($col, 200);    
+        }
+        else
+        {
+            if($returnArray)
+                return null;
+            else
+                Response::NotFound();
+        }
     }
 }
