@@ -13,11 +13,11 @@ class Property
     {
         $database = new Database();
 
-        $result = $database->Insert("collections", [
-            "id" => $this->ID,
+        $result = $database->Insert("properties", [
             "name" => $this->Name,
             "description" => $this->Description,
-            "owner" => $this->Owner
+            "collection" => $this->Collection,
+            "type" => $this->Type
         ]);
         
         if($result != false)
@@ -30,7 +30,7 @@ class Property
     {
         $database = new Database();
 
-        $database->Destroy("collections", "id = ". $id);
+        $database->Destroy("property", "id = ". $id);
     }
 
     public static function Get($id)

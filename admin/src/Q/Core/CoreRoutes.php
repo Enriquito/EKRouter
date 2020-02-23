@@ -100,6 +100,25 @@ $app->Router->Get("api/property/{id}", function($param){
     
 })->UseAuthentication(true);
 
+$app->Router->Post("api/property/create", function(){
+    $data = Request::GetJson();
+
+    $property = new Property();
+
+    $property->Name = $data["property"]["name"];
+    $property->Description = $data["property"]["description"];
+    $property->Type = $data["property"]["type"];
+    $property->Collection = $data["property"]["collection"];
+
+    if($property->Create())
+    {
+        Response::Json([
+            "code" => 000,
+            "messages" => "Property has been created"
+        ], 201);
+    }
+})->UseAuthentication(true);
+
 //Items
 $app->Router->Get("api/item/{id}", function($param){
     $obj = Item::Get($param["id"]);

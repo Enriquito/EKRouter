@@ -1,0 +1,13 @@
+.property-holder input[type="text"], select, button
+{
+    margin: 2px;
+}
+.property-holder input[type="text"]
+{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+.property-holder button
+{
+    width: 100px;
+}

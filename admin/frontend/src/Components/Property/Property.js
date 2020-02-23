@@ -1,4 +1,5 @@
 import React from 'react';
+import "./property.css";
 
 class Property extends React.Component {
     constructor(props){
@@ -8,7 +9,8 @@ class Property extends React.Component {
           ID : null,
           Name : null,
           Type : null,
-          Description : null
+          Description : null,
+          Collection : null
         };
     }
 
@@ -17,8 +19,8 @@ class Property extends React.Component {
         this.LoadProperties();
     }
 
-    Save(name, description){
-      fetch('http://localhost/api/collection/create', {
+    Save(name, description, type, collection){
+      fetch('http://localhost/api/property/create', {
           method : "POST",
           headers: {
               'Accept': 'application/json',
@@ -29,7 +31,8 @@ class Property extends React.Component {
               collection : {
                 name: name,
                 description: description,
-                owner : 14
+                type : type,
+                collection : collection
               }
             }
             )
@@ -37,10 +40,10 @@ class Property extends React.Component {
       .then(function(data){
           console.log(data);
           if(data.status === 201){
-              alert("Collection has been created");
+              alert("Property has been created");
           }
           else{
-              alert("Error while updating page");
+              alert("Error while createing property");
           }
       })
       .catch(function(error){
@@ -59,7 +62,8 @@ class Property extends React.Component {
           ID : data.ID,
           Name : data.Name,
           Type : data.Type,
-          Description : data.Description
+          Description : data.Description,
+          Collection : data.Collection
       });
     }
 
@@ -71,13 +75,13 @@ class Property extends React.Component {
       
 
       return (
-        <div className="flex vertical-center">
+        <div className="flex vertical-center property-holder">
           <select value={this.state.Type}>
               <option value="String">String</option>
               <option value="Interger">Interger</option>
           </select>
           <input defaultValue={this.state.Name} type="text" placeholder="Name your property" />
-          <button>Save</button>
+          <button className="theme-green-bg">Save</button>
         </div>
       );
     }

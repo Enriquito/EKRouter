@@ -51,7 +51,7 @@ form #input-holder
 }
 form input[type="text"], textarea, button
 {
-    
+    width: 100%;
 }
 form textarea
 {
