@@ -39,13 +39,20 @@ class Collection
     {
         $database = new Database();
 
-        $data = $database->query("SELECT id FROM collections");
+        $data = $database->query("SELECT `id`, `name` FROM collections");
 
         $ar = [];
 
         foreach($data as $col)
         {
-            $ar[] = Collection::Get($col['id'], true);
+            $collection = new Collection();
+
+            $collection->ID = $col['id'];
+            $collection->Name = $col['name'];
+
+            $ar[] = $collection;
+
+            // $ar[] = Collection::Get($col['id'], true);
         }
 
         return $ar;

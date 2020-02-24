@@ -91,7 +91,7 @@ class Collections extends React.Component {
 
       if(this.state.Collections != null){
         cols = this.state.Collections.map((el, index) => {
-          return(<li onClick={() => {this.setState({SelectedCollection : index})}} key={el.ID}>{el.Name}</li>)
+          return(<li onClick={() => {this.setState({SelectedCollection : index});}} key={el.ID}>{el.Name}</li>)
         });
       }
 
@@ -124,8 +124,8 @@ class Collections extends React.Component {
 
       if(this.state.SelectedCollection != null){
         propList = (<Properties 
-        propertyList={this.state.Collections[this.state.SelectedCollection].Properties} 
         id={this.state.SelectedCollection}
+        CollectionID = {this.state.Collections[this.state.SelectedCollection].ID}
         />);
       }
     

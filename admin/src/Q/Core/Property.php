@@ -30,7 +30,7 @@ class Property
     {
         $database = new Database();
 
-        $database->Destroy("property", "id = ". $id);
+        $database->Destroy("properties", "id = ". $id);
     }
 
     public static function Get($id)

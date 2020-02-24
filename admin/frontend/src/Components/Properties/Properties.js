@@ -7,13 +7,24 @@ class Properties extends React.Component {
         super(props);
 
         this.state = {
-          PropertyList : [],
+          Collection : null,
           ShowNewPropertyWindow : false
         };
     }
 
     componentDidMount(){
-        
+        this.loadCollection();
+    }
+
+    loadCollection(){
+      fetch(`http://localhost/api/collection/${this.props.CollectionID}`)
+        .then((resp) => resp.json())
+        .then((resp) => {
+            this.setState({Collection : resp});
+        })
+        .catch((error) => {
+            alert("Error could not fetch data.");
+        });
     }
 
     Save(name, description){
@@ -52,25 +63,21 @@ class Properties extends React.Component {
       }.bind(this));
     }
 
-    LoadProperties(){
-      fetch(`http://localhost/api/properties/`)
-        .then((resp) => resp.json())
-        .then((resp) => {
-            this.setState({Collections : resp});
-        })
-        .catch((error) => {
-            alert("Error could not fetch data.");
-        });
-    }
-
     NewProperty(){
       this.setState({
         ShowNewPropertyWindow : true
       });
     }
 
-    Create(){
+    reRender(){
+      this.loadCollection();
+    }
 
+    RemoveNewProperty(){
+      this.loadCollection();
+      this.setState({
+        ShowNewPropertyWindow : false
+      });
     }
     
     render() {
@@ -79,13 +86,12 @@ class Properties extends React.Component {
       let pl = null;
 
       if(this.state.ShowNewPropertyWindow){
-        newProperty = <Property CreateMode={true} />;
+        newProperty = <Property RemoveComponent={this.RemoveNewProperty.bind(this)} CollectionID={this.state.Collection.ID} CreateMode={true} />;
       }
 
-      if(this.props.propertyList != null){
-        pl = this.props.propertyList.map((el) => {
-          console.log(el);
-          return(<Property key={el.ID} CreateMode={false} data={el} />);
+      if(this.state.Collection != null){
+        pl = this.state.Collection.Properties.map((el) => {
+          return(<Property ReRenderParent={this.reRender.bind(this)} key={el.ID} CreateMode={false} data={el} />);
         });
       }
 

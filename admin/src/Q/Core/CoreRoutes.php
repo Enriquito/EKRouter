@@ -1,6 +1,7 @@
 <?php
 namespace Q\Core;
 
+// User stuff
 $route = $app->Router->Head("api/logout", function(){
     User::Logout();
 });
@@ -89,7 +90,6 @@ $app->Router->Get("api/collection/{id}", function($param){
 })->UseAuthentication(true);
 
 //Property
-
 $app->Router->Get("api/property/{id}", function($param){
     $obj = Property::Get($param["id"]);
     
@@ -117,6 +117,10 @@ $app->Router->Post("api/property/create", function(){
             "messages" => "Property has been created"
         ], 201);
     }
+})->UseAuthentication(true);
+
+$app->Router->Delete("api/property/destroy/{id}", function($param){
+    Property::Destroy($param["id"]);
 })->UseAuthentication(true);
 
 //Items
