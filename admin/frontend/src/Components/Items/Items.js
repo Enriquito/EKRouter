@@ -74,22 +74,17 @@ class Items extends React.Component {
         <main className="flex">
           <Navigation />
           <div id="holder">
-                <div style={{height: "100%"}} className='flex'>
-                    <div id="collection-holder">
-                        <div className="flex vertical-center">
-                          <h3>Items</h3>
-                          <button 
-                            className="theme-green-bg new-collection-button" 
-                            >New</button>
-                        </div>
-                       
-                        
-                    </div> 
-                    <div id="type-holder">
-                       
-                    </div>
-                </div>
-            </div>
+            <h1>Items</h1>
+            
+            <table>
+              <thead>
+                <tr>
+                  <th>Collection</th>
+                  <th>Title</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
         </main>
       );
     }
