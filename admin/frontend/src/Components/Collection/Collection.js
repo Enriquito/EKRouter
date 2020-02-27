@@ -154,11 +154,14 @@ class Collection extends React.Component {
     }
     
     render() {  
-        let colName = "Loading...";
+        let colName = null;
+        let colDescription = null;
         let properties = null;
 
         if(this.state.Collection != null){
             colName = this.state.Collection.Name;
+            colDescription = this.state.Collection.Description;
+            console.log(this.state.Collection.Description);
 
             properties = this.state.Collection.Properties.map((el, index) => {
                 return (
@@ -187,9 +190,18 @@ class Collection extends React.Component {
         <main className="flex">
           <Navigation />
             <div id="holder">
-                <h1>{colName}</h1>
+                <h1>Edit Collection</h1>
+                <h2 style={{margin: "10px 0"}}>Info</h2>
+                <label>Name</label>
+                <br />
+                <input  defaultValue={colName} type="text" placeholder="Collection name" />
+                <br />
+                <label>Description</label>
+                <br />
+                <textarea onChange={() => {}} defaultValue={colDescription}></textarea>
+
                 
-                <h2 style={{margin: "10px 0"}}>Collection properties</h2>
+                <h2 style={{margin: "10px 0"}}>Properties</h2>
                 <div>
                     <div className="flex center">
                         <table>
@@ -228,6 +240,19 @@ class Collection extends React.Component {
                         </table>
                     </div>
                 </div>
+                <div className="flex">
+                    <button 
+                    style={{width: "75px", height : "30px", padding : "0"}} 
+                    className="theme-green-bg new-collection-button"
+                    onClick={() => {}}
+                    >Save</button>
+                    <button 
+                    style={{width: "75px", height : "30px", padding : "0"}} 
+                    className="theme-red-bg new-collection-button"
+                    onClick={() => {}}
+                    >Delete</button>
+                </div>
+                
             </div>
         </main>
       );
