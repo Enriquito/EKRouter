@@ -9,7 +9,8 @@ class Collection extends React.Component {
         super(props);
 
         this.state = {
-          Collection: null
+          Collection : null,
+          Changes : null
         };
     }
 
@@ -164,6 +165,11 @@ class Collection extends React.Component {
             console.log(this.state.Collection.Description);
 
             properties = this.state.Collection.Properties.map((el, index) => {
+                let status = "Open";
+
+                if(parseInt(el.Locked) === 1)
+                    status = "Locked";
+
                 return (
                     <tr key={el.ID}>
                         <td><input defaultValue={el.Name} type="text" placeholder="Property name"/></td>
@@ -174,6 +180,7 @@ class Collection extends React.Component {
                             </select>
                         </td>
                         <td><input defaultValue={el.Description} type="text" placeholder="Property description"/></td>
+                        <td>{status}</td>
                         <td>
                             <button 
                             style={{width: "75px", height : "30px", padding : "0"}} 
@@ -190,15 +197,27 @@ class Collection extends React.Component {
         <main className="flex">
           <Navigation />
             <div id="holder">
-                <h1>Edit Collection</h1>
-                <h2 style={{margin: "10px 0"}}>Info</h2>
+                
+                <div className="flex">
+                    <h1 style={{marginTop: "0px"}}>Edit Collection</h1>
+                    <button 
+                    style={{width: "75px", height : "30px", padding : "0"}} 
+                    className="theme-green-bg new-collection-button"
+                    onClick={() => {}}
+                    >Save</button>
+                    <button 
+                    style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
+                    className="theme-red-bg new-collection-button"
+                    onClick={() => {}}
+                    >Delete</button>
+                </div>
                 <label>Name</label>
                 <br />
-                <input  defaultValue={colName} type="text" placeholder="Collection name" />
+                <input style={{width: "500px"}} defaultValue={colName} type="text" placeholder="Collection name" />
                 <br />
                 <label>Description</label>
                 <br />
-                <textarea onChange={() => {}} defaultValue={colDescription}></textarea>
+                <textarea style={{width: "500px", height: "150px", resize: "vertical"}} onChange={() => {}} defaultValue={colDescription}></textarea>
 
                 
                 <h2 style={{margin: "10px 0"}}>Properties</h2>
@@ -210,6 +229,7 @@ class Collection extends React.Component {
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Description</td>
+                                    <td>Status</td>
                                     <td></td>
                                 </tr>
                             </thead>
@@ -227,6 +247,7 @@ class Collection extends React.Component {
                                     <td>
                                         <input id="new-property-description" type="text" placeholder="Property description"/>
                                     </td>
+                                    <td></td>
                                     <td>
                                         <button 
                                         style={{width: "75px", height : "30px", padding : "0"}} 
@@ -240,19 +261,6 @@ class Collection extends React.Component {
                         </table>
                     </div>
                 </div>
-                <div className="flex">
-                    <button 
-                    style={{width: "75px", height : "30px", padding : "0"}} 
-                    className="theme-green-bg new-collection-button"
-                    onClick={() => {}}
-                    >Save</button>
-                    <button 
-                    style={{width: "75px", height : "30px", padding : "0"}} 
-                    className="theme-red-bg new-collection-button"
-                    onClick={() => {}}
-                    >Delete</button>
-                </div>
-                
             </div>
         </main>
       );

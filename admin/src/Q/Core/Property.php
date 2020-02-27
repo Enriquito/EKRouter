@@ -8,6 +8,7 @@ class Property
     public $Description;
     public $Collection;
     public $Type;
+    public $Locked;
 
     public function Create()
     {
@@ -36,7 +37,7 @@ class Property
     public static function Get($id)
     {
         $database = new Database();
-        $query = "SELECT col.id as 'collection_id', pro.id, pro.name, pro.description,ty.name as 'type' FROM collections col
+        $query = "SELECT col.id as 'collection_id', pro.id, pro.name, pro.description,ty.name as 'type', pro.locked FROM collections col
         JOIN properties pro
         ON col.id = pro.id
         JOIN types ty
@@ -54,6 +55,9 @@ class Property
             $prop->Type = $data["type"];
             $prop->Description = $data["description"];
             $prop->Collection = $data["collection_id"];
+            $prop->Locked = $data["locked"];
+
+            echo $prop->Locked;
 
             return $prop;
         }

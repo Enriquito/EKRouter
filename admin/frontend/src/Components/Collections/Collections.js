@@ -88,8 +88,8 @@ class Collections extends React.Component {
         <main className="flex">
           <Navigation />
           <div id="holder">
-            <div className="flex vertical-center">
-              <h1>Collections</h1>
+            <div className="flex">
+              <h1 style={{marginTop: "0px"}}>Collections</h1>
               <button style={{width: "100px", height : "30px", marginLeft : "10px"}} className="theme-green-bg new-collection-button">New</button>
             </div>
             <table>
