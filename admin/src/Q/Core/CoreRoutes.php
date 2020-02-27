@@ -100,15 +100,24 @@ $app->Router->Get("api/property/{id}", function($param){
     
 })->UseAuthentication(true);
 
-$app->Router->Post("api/property/create", function(){
+$app->Router->Post("api/property", function(){
     $data = Request::GetJson();
 
     $property = new Property();
 
     $property->Name = $data["property"]["name"];
     $property->Description = $data["property"]["description"];
-    $property->Type = $data["property"]["type"];
     $property->Collection = $data["property"]["collection"];
+
+    switch($data["property"]["type"])
+    {
+        case "Interger":
+            $property->Type = 1;
+        break;
+        case "String":
+            $property->Type = 2;
+        break;
+    }
 
     if($property->Create())
     {

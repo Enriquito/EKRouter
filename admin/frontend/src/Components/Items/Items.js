@@ -1,20 +1,20 @@
 import React from 'react';
 import { hasSession } from '../Helpers';
 import Navigation from '../Navigation';
-import './collections.css';
+import './items.css';
 
-class Collections extends React.Component {
+class Items extends React.Component {
     constructor(props){
         hasSession(false);
         super(props);
 
         this.state = {
-          Collections: []
+          
         };
     }
 
     componentDidMount(){
-        this.LoadCollections();
+        
     }
 
     Save(event){
@@ -57,7 +57,7 @@ class Collections extends React.Component {
       
     }
     
-    LoadCollections(){
+    LoadItems(){
       fetch("http://localhost/api/collection/list/all")
         .then((resp) => resp.json())
         .then((resp) => {
@@ -69,46 +69,30 @@ class Collections extends React.Component {
     }
     
     render() {
-      let cols = null;
-
-      if(this.state.Collections != null){
-        cols = this.state.Collections.map((el) => {
-          return(
-            <tr onClick={() => {document.location = `collection/edit/${el.Name.toLowerCase()}`}} key={el.ID}>
-              <td>{el.Name}</td>
-              <td>{el.Created}</td>
-              <td>{el.ItemCount}</td>
-              <td>{el.Owner}</td>
-            </tr>
-            )
-        });
-      }
-
+          
       return (
         <main className="flex">
           <Navigation />
           <div id="holder">
-            <div className="flex vertical-center">
-              <h1>Collections</h1>
-              <button style={{width: "100px", height : "30px", marginLeft : "10px"}} className="theme-green-bg new-collection-button">New</button>
+                <div style={{height: "100%"}} className='flex'>
+                    <div id="collection-holder">
+                        <div className="flex vertical-center">
+                          <h3>Items</h3>
+                          <button 
+                            className="theme-green-bg new-collection-button" 
+                            >New</button>
+                        </div>
+                       
+                        
+                    </div> 
+                    <div id="type-holder">
+                       
+                    </div>
+                </div>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Created</th>
-                  <th>Items</th>
-                  <th>Creator</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cols}
-              </tbody>
-            </table>
-          </div>
         </main>
       );
     }
   }
 
-export default Collections;
+export default Items;

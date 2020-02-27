@@ -4,18 +4,19 @@ import './App.css';
 import Login from './Components/Login';
 import Dashboard from './Components/Dashboard';
 import Collections from './Components/Collections';
-import Navigation from './Components/Navigation';
+import Items from './Components/Items';
+import Collection from './Components/Collection';
+
 
 function App() {
   return(
-    <main className="flex">
-      <Navigation />
       <Router>
-      <Route exact path="/" component={Login} />
-      <Route exact path="/dashboard" component={Dashboard} />  
-      <Route exact path="/collections" component={Collections} />
+        <Route exact path="/" component={Login} />
+        <Route exact path="/dashboard" component={Dashboard} />  
+        <Route exact path="/collections" component={Collections} />
+        <Route exact path="/collection/edit/:name" component={Collection} />
+        <Route exact path="/items" component={Items} />
     </Router>
-    </main>
   );
 }
 

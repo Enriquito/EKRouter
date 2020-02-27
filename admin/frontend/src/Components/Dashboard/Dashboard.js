@@ -1,5 +1,6 @@
 import React from 'react';
 import { hasSession } from '../Helpers';
+import Navigation from '../Navigation';
 
 class Dashboard extends React.Component {
     constructor(props){
@@ -13,7 +14,10 @@ class Dashboard extends React.Component {
     
     render() {
       return (
-        <div></div>
+        <main className="flex">
+        
+          <Navigation />
+        </main>
       );
     }
   }

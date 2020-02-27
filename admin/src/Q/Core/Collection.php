@@ -9,6 +9,7 @@ class Collection
     public $Owner;
     public $Created;
     public $Items = [];
+    public $ItemCount;
     public $Properties;
 
     public function Create()
@@ -39,20 +40,23 @@ class Collection
     {
         $database = new Database();
 
-        $data = $database->query("SELECT `id`, `name` FROM collections");
+        $data = $database->query("SELECT `id`, `name`, `created`, `owner` FROM collections");
 
         $ar = [];
 
         foreach($data as $col)
         {
             $collection = new Collection();
+            $count = $database->query("SELECT COUNT(*) as 'item_count' FROM items WHERE `collection` = " . $col['id']);
+            $user = $database->query("SELECT username FROM users WHERE id = " . $col['owner']);
 
             $collection->ID = $col['id'];
             $collection->Name = $col['name'];
+            $collection->Created = $col['created'];
+            $collection->ItemCount = $count[0]["item_count"];
+            $collection->Owner = $user[0]["username"];
 
             $ar[] = $collection;
-
-            // $ar[] = Collection::Get($col['id'], true);
         }
 
         return $ar;
@@ -61,8 +65,12 @@ class Collection
     public static function Get($id, $returnArray = false)
     {
         $database = new Database();
+        $data = null;
 
-        $data = $database->query("SELECT * FROM collections WHERE id = $id", true);
+        if(is_int($id))
+            $data = $database->query("SELECT * FROM collections WHERE id = $id", true);
+        else
+            $data = $database->query("SELECT * FROM collections WHERE `name` = '$id'", true);        
 
         if($data != null)
         {
@@ -113,10 +121,7 @@ class Collection
         }
         else
         {
-            if($returnArray)
-                return null;
-            else
-                Response::NotFound();
+            Response::NotFound();
         }
     }
 }
