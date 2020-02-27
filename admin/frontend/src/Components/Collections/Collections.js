@@ -124,7 +124,6 @@ class Collections extends React.Component {
 
       if(this.state.SelectedCollection != null){
         propList = (<Properties 
-        id={this.state.SelectedCollection}
         CollectionID = {this.state.Collections[this.state.SelectedCollection].ID}
         />);
       }

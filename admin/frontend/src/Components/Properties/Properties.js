@@ -95,7 +95,7 @@ class Properties extends React.Component {
         });
       }
 
-      if(this.props.id != null){
+      if(this.props.CollectionID != null){
         screen = (
           <div id="properties-holder">
             <div className="flex vertical-center">

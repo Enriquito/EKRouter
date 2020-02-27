@@ -171,7 +171,7 @@ class Property extends React.Component {
 
       return (
         <div className="flex vertical-center property-holder">
-          <select onChange={(e) => {this.onChange(e)}} value={this.state.Type}>
+          <select onChange={(e) => {this.onChange(e)}} defaultValue={this.state.Type}>
               <option value="String">String</option>
               <option value="Interger">Interger</option>
           </select>
