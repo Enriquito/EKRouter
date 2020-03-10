@@ -101,7 +101,6 @@ $app->Router->Put("api/collection", function(){
         return;
     }
     
-
     $collection = new Collection();
 
     $collection->ID = $data["collection"]["id"];
@@ -117,6 +116,7 @@ $app->Router->Put("api/collection", function(){
         Response::SetResponse(500);
 
 })->UseAuthentication(true);
+
 //Property
 $app->Router->Get("api/property/{id}", function($param){
     $obj = Property::Get($param["id"]);
@@ -163,6 +163,16 @@ $app->Router->Delete("api/property/destroy/{id}", function($param){
 //Items
 $app->Router->Get("api/item/{id}", function($param){
     $obj = Item::Get($param["id"]);
+    
+    if($obj != null)
+        Response::Json($obj, 200);
+    else
+        Response::SetResponse(404);
+    
+})->UseAuthentication(true);
+
+$app->Router->Get("api/items/{collection}", function($param){
+    $obj = Item::GetByCollection($param["collection"]);
     
     if($obj != null)
         Response::Json($obj, 200);

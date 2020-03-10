@@ -87,11 +87,12 @@ class Collections extends React.Component {
       if(this.state.Collections != null){
         cols = this.state.Collections.map((el) => {
           return(
-            <tr onClick={() => {document.location = `collection/edit/${el.Name.toLowerCase()}`}} key={el.ID}>
+            <tr key={el.ID}>
               <td>{el.Name}</td>
               <td>{el.Created}</td>
               <td>{el.ItemCount}</td>
-              <td>{el.Owner}</td>
+              <td onClick={() => {document.location = `collection/edit/${el.Name.toLowerCase()}`}}><div className="gg-pen"></div></td>
+              <td onClick={() => {document.location = `items/${el.Name.toLowerCase()}`}}><div className="gg-feed"></div></td>
             </tr>
             )
         });
@@ -111,7 +112,6 @@ class Collections extends React.Component {
                   <th>Name</th>
                   <th>Created</th>
                   <th>Items</th>
-                  <th>Creator</th>
                 </tr>
               </thead>
               <tbody>

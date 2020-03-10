@@ -62,6 +62,7 @@ class Database
         { 
             $query = $this->PDO->prepare($sql);
             $query->execute();
+            // echo $sql;
             
             if(strpos($sql, "SELECT") !== false)
             {

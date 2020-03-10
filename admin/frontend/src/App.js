@@ -15,7 +15,7 @@ function App() {
         <Route exact path="/dashboard" component={Dashboard} />  
         <Route exact path="/collections" component={Collections} />
         <Route exact path="/collection/edit/:name" component={Collection} />
-        <Route exact path="/items" component={Items} />
+        <Route exact path="/items/:collection" component={Items} />
     </Router>
   );
 }
