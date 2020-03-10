@@ -82,7 +82,7 @@ class Collection
             $col->Owner = $data["owner"];
             $col->Created = $data["created"];
 
-            $query = "SELECT pro.id, pro.name,pro.description ,ty.name as 'type', pro.locked FROM properties pro
+            $query = "SELECT pro.id, pro.name,pro.description ,ty.type, pro.locked FROM properties pro
             JOIN types ty
             ON ty.id = pro.type
             WHERE pro.collection = " . $col->ID;

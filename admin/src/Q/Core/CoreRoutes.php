@@ -128,7 +128,7 @@ $app->Router->Get("api/property/{id}", function($param){
     
 })->UseAuthentication(true);
 
-$app->Router->Post("api/property", function(){
+$app->Router->Post("api/property", function() use(&$app){
     $data = Request::GetJson();
 
     $property = new Property();
@@ -137,15 +137,9 @@ $app->Router->Post("api/property", function(){
     $property->Description = $data["property"]["description"];
     $property->Collection = $data["property"]["collection"];
 
-    switch($data["property"]["type"])
-    {
-        case "Interger":
-            $property->Type = 1;
-        break;
-        case "String":
-            $property->Type = 2;
-        break;
-    }
+    $tempType = $data["property"]["type"];
+
+    $property->Type = $app->Database->query("SELECT id FROM types WHERE `type` = '$tempType'", true)['id'];
 
     if($property->Create())
     {
@@ -157,7 +151,9 @@ $app->Router->Post("api/property", function(){
 })->UseAuthentication(true);
 
 $app->Router->Delete("api/property/destroy/{id}", function($param){
-    Property::Destroy($param["id"]);
+    $response = Property::Destroy($param["id"]);
+
+    Response::SetResponse($response);
 })->UseAuthentication(true);
 
 //Items
@@ -174,6 +170,17 @@ $app->Router->Get("api/item/{id}", function($param){
 $app->Router->Get("api/items/{collection}", function($param){
     $obj = Item::GetByCollection($param["collection"]);
     
+    if($obj != null)
+        Response::Json($obj, 200);
+    else
+        Response::SetResponse(404);
+    
+})->UseAuthentication(true);
+
+//Types
+$app->Router->Get("api/type/all", function() use(&$app){
+    $obj = $app->Database->query("SELECT * FROM types");
+
     if($obj != null)
         Response::Json($obj, 200);
     else

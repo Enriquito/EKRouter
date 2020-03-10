@@ -31,7 +31,17 @@ class Property
     {
         $database = new Database();
 
-        $database->Destroy("properties", "id = ". $id);
+        $locked = $database->query("SELECT locked from properties WHERE id = $id", true)['locked'];
+        if($locked != 1)
+        {
+            $database->Destroy("properties", "id = ". $id);
+            return 200;
+        }
+        else if($locked == 1)
+            return 400;
+        else
+            return 500;
+            
     }
 
     public static function Get($id)

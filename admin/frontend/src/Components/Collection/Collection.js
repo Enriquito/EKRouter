@@ -10,12 +10,14 @@ class Collection extends React.Component {
 
         this.state = {
           Collection : null,
-          Changes : null
+          Changes : null,
+          Types : null
         };
     }
 
     componentDidMount(){
         this.getCollection();
+        this.getTypes();
     }
 
     getCollection(){
@@ -29,10 +31,20 @@ class Collection extends React.Component {
         });
     }
 
+    getTypes(){
+        fetch(`http://localhost/api/type/all`)
+        .then((resp) => resp.json())
+        .then((resp) => {
+            this.setState({Types : resp});
+        })
+        .catch((error) => {
+            alert("Error could not fetch data.");
+        });
+    }
+
     Save(){
       const name = document.getElementById("collection-name").value;
       const description = document.getElementById("collection-description").value;
-      alert("test");
 
       fetch('http://localhost/api/collection', {
           method : "PUT",
@@ -140,11 +152,6 @@ class Collection extends React.Component {
       })
       .catch(function(error){
         alert('error');
-          this.setState(
-              {
-                  type : "error-messages",
-                  messages : "Something went wrong..."
-              });
       }.bind(this));
     }
     
@@ -152,11 +159,18 @@ class Collection extends React.Component {
         let colName = null;
         let colDescription = null;
         let properties = null;
+        let types = null;
+
+        if(this.state.Types != null)
+        {
+            types = this.state.Types.map((el) => {
+                return <option key={el.id} value={el.type}>{el.name}</option>
+            });
+        }
 
         if(this.state.Collection != null){
             colName = this.state.Collection.Name;
             colDescription = this.state.Collection.Description;
-            console.log(this.state.Collection.Description);
 
             properties = this.state.Collection.Properties.map((el, index) => {
                 let status = null;
@@ -171,8 +185,7 @@ class Collection extends React.Component {
                         <td><input defaultValue={el.Name} type="text" placeholder="Property name"/></td>
                         <td>
                             <select defaultValue={el.Type}>
-                                <option value="Interger">Interger</option>
-                                <option value="String">String</option>
+                                {types}
                             </select>
                         </td>
                         <td><input defaultValue={el.Description} type="text" placeholder="Property description"/></td>
@@ -235,8 +248,7 @@ class Collection extends React.Component {
                                     </td>
                                     <td>
                                         <select id="new-property-type">
-                                            <option value="String">String</option>
-                                            <option value="Interger">Interger</option>
+                                            {types}
                                         </select>
                                     </td>
                                     <td>
