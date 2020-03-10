@@ -125,4 +125,20 @@ class Collection
             Response::NotFound();
         }
     }
+
+    public function Update()
+    {
+        $database = new Database();
+
+        $result = $database->Update("collections", [
+            "name" => $this->Name,
+            "description" => $this->Description,
+            "owner" => $this->Owner
+        ], "id = " . $this->ID);
+
+        if($result)
+            return true;
+        else
+            return false;
+    }
 }

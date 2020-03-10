@@ -29,9 +29,10 @@ class Collection extends React.Component {
         });
     }
 
-    Save(event){
+    Save(){
       const name = document.getElementById("collection-name").value;
       const description = document.getElementById("collection-description").value;
+      alert("test");
 
       fetch('http://localhost/api/collection', {
           method : "PUT",
@@ -41,6 +42,7 @@ class Collection extends React.Component {
           },
           body: JSON.stringify({ 
               collection : {
+                id : this.state.Collection.ID,
                 name: name,
                 description: description,
                 owner : 14
@@ -49,12 +51,8 @@ class Collection extends React.Component {
           )
       })
       .then(function(data){
-          if(data.status === 201){
-              alert("Collection has been created");
-          }
-          else{
-              alert("Error while updating page");
-          }
+          if(data.status !== 200)
+            alert("Error while updating page");
       })
       .catch(function(error){
         alert('error');
@@ -64,13 +62,9 @@ class Collection extends React.Component {
                   messages : "Something went wrong..."
               });
       }.bind(this));
-
-      event.preventDefault();
-      
     }
 
     deleteProperty(id, arrayIndex){
-
         let r = window.confirm("Are you sure you want to delete this property?");
 
         if(r === false)
@@ -165,10 +159,12 @@ class Collection extends React.Component {
             console.log(this.state.Collection.Description);
 
             properties = this.state.Collection.Properties.map((el, index) => {
-                let status = "Open";
+                let status = null;
 
                 if(parseInt(el.Locked) === 1)
-                    status = "Locked";
+                    status = <span className="gg-lock" />;
+                else
+                    status = <span className="gg-lock-unlock" />;
 
                 return (
                     <tr key={el.ID}>
@@ -197,13 +193,12 @@ class Collection extends React.Component {
         <main className="flex">
           <Navigation />
             <div id="holder">
-                
                 <div className="flex">
                     <h1 style={{marginTop: "0px"}}>Edit Collection</h1>
                     <button 
                     style={{width: "75px", height : "30px", padding : "0"}} 
                     className="theme-green-bg new-collection-button"
-                    onClick={() => {}}
+                    onClick={this.Save.bind(this)}
                     >Save</button>
                     <button 
                     style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
@@ -213,11 +208,11 @@ class Collection extends React.Component {
                 </div>
                 <label>Name</label>
                 <br />
-                <input style={{width: "500px"}} defaultValue={colName} type="text" placeholder="Collection name" />
+                <input id="collection-name" style={{width: "500px"}} defaultValue={colName} type="text" placeholder="Collection name" />
                 <br />
                 <label>Description</label>
                 <br />
-                <textarea style={{width: "500px", height: "150px", resize: "vertical"}} onChange={() => {}} defaultValue={colDescription}></textarea>
+                <textarea id="collection-description" style={{width: "500px", height: "150px", resize: "vertical"}} onChange={() => {}} defaultValue={colDescription}></textarea>
 
                 
                 <h2 style={{margin: "10px 0"}}>Properties</h2>
@@ -229,7 +224,7 @@ class Collection extends React.Component {
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Description</td>
-                                    <td>Status</td>
+                                    <td></td>
                                     <td></td>
                                 </tr>
                             </thead>

@@ -9,15 +9,28 @@ class Collections extends React.Component {
         super(props);
 
         this.state = {
-          Collections: []
+          Collections: [],
+          Changes : {
+            Properties : null,
+            Collection : {
+              Name : null,
+              Description : null
+            }
+          }
         };
     }
 
     componentDidMount(){
-        this.LoadCollections();
+        this.loadCollections();
     }
 
-    Save(event){
+    update(){
+      if(this.state.Changes.Properties !== null){
+        
+      }
+    }
+
+    save(event){
       const name = document.getElementById("collection-name").value;
       const description = document.getElementById("collection-description").value;
 
@@ -57,7 +70,7 @@ class Collections extends React.Component {
       
     }
     
-    LoadCollections(){
+    loadCollections(){
       fetch("http://localhost/api/collection/list/all")
         .then((resp) => resp.json())
         .then((resp) => {

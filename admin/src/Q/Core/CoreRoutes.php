@@ -89,6 +89,34 @@ $app->Router->Get("api/collection/{id}", function($param){
     Collection::Get($param["id"]);
 })->UseAuthentication(true);
 
+$app->Router->Put("api/collection", function(){
+    $data = Request::GetJson();
+    $database = new Database();
+
+    $col = $database->query("SELECT id FROM collections WHERE id = " . $data["collection"]["id"]);
+
+    if(count($col) < 1)
+    {
+        Response::SetResponse(404);
+        return;
+    }
+    
+
+    $collection = new Collection();
+
+    $collection->ID = $data["collection"]["id"];
+    $collection->Name = $data["collection"]["name"];
+    $collection->Description = $data["collection"]["description"];
+    $collection->Owner = $data["collection"]["owner"];
+
+    $result = $collection->Update();
+
+    if($result)
+        Response::SetResponse(200);
+    else
+        Response::SetResponse(500);
+
+})->UseAuthentication(true);
 //Property
 $app->Router->Get("api/property/{id}", function($param){
     $obj = Property::Get($param["id"]);
