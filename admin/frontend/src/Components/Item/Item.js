@@ -29,22 +29,21 @@ class Item extends React.Component {
     }
 
     Save(){
-      const name = document.getElementById("collection-name").value;
-      const description = document.getElementById("collection-description").value;
-      alert("test");
+      let itemData = this.state.Item.Properties;
+      console.log(itemData['Title']);
 
-      fetch('http://localhost/api/collection', {
-          method : "PUT",
+      fetch('http://localhost/api/item', {
+          method : "POST",
           headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({ 
-              collection : {
-                id : this.state.Collection.ID,
-                name: name,
-                description: description,
-                owner : 14
+              item : {
+                id : this.state.Item.ID,
+                Properties : [
+
+                ]
               }
             }
           )
@@ -62,6 +61,16 @@ class Item extends React.Component {
               });
       }.bind(this));
     }
+
+    updateItem(event, index){
+      const data = this.state.Item;
+
+      data.Properties[index].Value = event.target.value;
+
+      this.setState({
+        Item : data
+      });
+    }
     
     render() {  
         let properties = null;
@@ -75,19 +84,29 @@ class Item extends React.Component {
                 let inputField = null;
 
                 if(el.Type === "textarea")
-                inputField = <textarea 
-                    id="collection-description" 
+                inputField = <textarea
+                    id={`item-${el.Name}`}
                     style={{width: "500px", height: "150px", resize: "vertical"}} 
-                    onChange={() => {}}
                     defaultValue = {el.Value} 
+                    onChange={(e) => {
+                      this.updateItem(e, index)
+                    }}
                     ></textarea>
                 else
                 {
-                    inputField = <input id="collection-name" defaultValue={value} style={{width: "500px"}} type={el.Type} placeholder="Collection name" />
+                    inputField = <input 
+                    id={`item-${el.Name}`} 
+                    onChange={(e) => {
+                      this.updateItem(e, index)
+                    }}
+                    defaultValue={value} 
+                    style={{width: "500px"}} 
+                    type={el.Type} 
+                    placeholder="Collection name" />
                 }
 
                 return (
-                    <div>
+                    <div key={el.Name}>
                         <label>{el.Name}</label>
                         <br />
                         {inputField}

@@ -67,20 +67,24 @@ table
 {
     width: 100%;
     text-align: left;
+    border-collapse: collapse; 
 }
 table thead th
 {
     padding: 5px;
-    font-size: 1.5em;
+    color: #545454;
+}
+table thead tr
+{
+    background: #f1f1f1;
 }
 table tbody tr
 {
-    
+    height: 40px;
 }
 table tbody tr td
 {
     padding: 5px;
-    font-size: 1.2em;
 }
 table tbody tr td div
 {
