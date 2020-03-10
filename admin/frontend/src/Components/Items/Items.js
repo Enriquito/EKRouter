@@ -7,7 +7,7 @@ class Items extends React.Component {
     constructor(props){
         hasSession(false);
         super(props);
-
+        
         this.state = {
           Items : null
         };
@@ -86,7 +86,7 @@ class Items extends React.Component {
               <td>{title}</td>
               <td></td>
               <td>{el.Created}</td>
-              <td onClick={() => {document.location = `item/edit/${el.ID.toLowerCase()}`}}><div className="gg-pen"></div></td>
+              <td onClick={() => {document.location = `/item/edit/${el.ID.toLowerCase()}`}}><div className="gg-pen"></div></td>
             </tr>
             )
         });

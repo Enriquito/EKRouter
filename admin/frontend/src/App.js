@@ -6,6 +6,7 @@ import Dashboard from './Components/Dashboard';
 import Collections from './Components/Collections';
 import Items from './Components/Items';
 import Collection from './Components/Collection';
+import Item from './Components/Item';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/collections" component={Collections} />
         <Route exact path="/collection/edit/:name" component={Collection} />
         <Route exact path="/items/:collection" component={Items} />
+        <Route exact path="/item/edit/:id" component={Item} />
     </Router>
   );
 }

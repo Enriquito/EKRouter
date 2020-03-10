@@ -50,8 +50,8 @@ class Item
         $item->Created = $data['created'];
         $item->Creator = $data['creator'];
 
-        $query = "SELECT pr.name, pv.value, t.name as 'type' FROM items i
-        JOIN propertie_values pv
+        $query = "SELECT pr.name, pv.value, t.type FROM items i
+        JOIN property_values pv
         ON i.id = pv.item
         JOIN properties pr
         ON pr.id = pv.property
@@ -103,7 +103,7 @@ class Item
             $item->Created = $itemEl['created'];
             $item->Creator = $itemEl['creator'];
 
-            $query = "SELECT pr.name, pv.value, t.name as 'type' FROM items i
+            $query = "SELECT pr.name, pv.value, t.type FROM items i
             JOIN property_values pv
             ON i.id = pv.item
             JOIN properties pr
