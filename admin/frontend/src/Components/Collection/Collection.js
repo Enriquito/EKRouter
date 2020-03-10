@@ -152,7 +152,7 @@ class Collection extends React.Component {
       })
       .catch(function(error){
         alert('error');
-      }.bind(this));
+      });
     }
     
     render() {  

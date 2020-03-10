@@ -5,6 +5,7 @@ class Item
 {
     public $ID;
     public $Properties = []; //array
+    public $Collection;
     public $Created;
     public $Creator;
 
@@ -48,6 +49,7 @@ class Item
 
         $item->ID = $data['id'];
         $item->Created = $data['created'];
+        $item->Collection = $data['collection'];
         $item->Creator = $data['creator'];
 
         $query = "SELECT pr.name, pv.value, t.type FROM items i
@@ -133,5 +135,40 @@ class Item
         }
 
         return $items;
+    }
+
+    public function Update()
+    {
+        $database = new Database();
+
+        $result = $database->Update("items", [
+            "id" => $this->ID,
+            "collection" => $this->Collection
+        ], "id = " . $this->ID);
+
+        $results = [];
+
+        
+
+        foreach($this->Properties as $prop)
+        {
+            //$type = Database::query("SELECT * FROM types WHERE ");
+            $result[] = $database->Update("property_values", [
+                            "item" => $this->ID,
+                            "property" => $prop['property'],
+                            "value" => $prop['value']
+                        ], "item = " . $this->ID . " AND property = " . $prop['property']);
+        }
+
+        foreach($results as $result)
+        {
+            if(!$result)
+                return false;
+        }
+
+        if($result)
+            return true;
+        else
+            return false;
     }
 }

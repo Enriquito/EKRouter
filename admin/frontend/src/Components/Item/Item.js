@@ -33,7 +33,7 @@ class Item extends React.Component {
       console.log(itemData['Title']);
 
       fetch('http://localhost/api/item', {
-          method : "POST",
+          method : "PUT",
           headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
@@ -41,9 +41,10 @@ class Item extends React.Component {
           body: JSON.stringify({ 
               item : {
                 id : this.state.Item.ID,
-                Properties : [
-
-                ]
+                collection : this.state.Item.Collection,
+                created : this.state.Item.Created,
+                creator : this.state.Item.Creator,
+                Properties : this.state.Item.Properties
               }
             }
           )
@@ -78,7 +79,6 @@ class Item extends React.Component {
         if(this.state.Item != null){
 
             properties = this.state.Item.Properties.map((el, index) => {
-                let type = null;
                 const value = el.Value;
 
                 let inputField = null;

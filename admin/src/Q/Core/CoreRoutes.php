@@ -177,6 +177,21 @@ $app->Router->Get("api/items/{collection}", function($param){
     
 })->UseAuthentication(true);
 
+$app->Router->Put("api/item", function(){
+    $data = Request::GetJson();
+
+    $item = new Item();
+    $item->ID = $data["item"]["id"];
+    $item->Collection = $data["item"]["collection"];
+    $item->Creator = $data["item"]["creator"];
+    $item->Created = $data["item"]["created"];
+    $item->Properties = $data["item"]["properties"];
+
+    $item->Update();
+
+    Response::Json($item, 200);
+});
+
 //Types
 $app->Router->Get("api/type/all", function() use(&$app){
     $obj = $app->Database->query("SELECT * FROM types");
