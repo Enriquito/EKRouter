@@ -116,6 +116,16 @@ class Collection extends React.Component {
                     el.Description = e.target.value;
                 else if(type === "name")
                     el.Name = e.target.value;
+                else if(type === "type")
+                {
+                    console.log(true);
+                    for(let i = 0; i < this.state.Types.length; i++){
+                        if(e.target.value == this.state.Types[i].type){
+                            el.Type = this.state.Types[i].type;
+                        }
+                    }
+                }
+                    
                 this.setState({
                     Collection : collection
                 });
@@ -126,6 +136,16 @@ class Collection extends React.Component {
 
     saveProperty(index){
         const property = this.state.Collection.Properties[index];
+        const a = {
+            property : {
+                id : property.ID,
+                name: property.Name,
+                description: property.Description,
+                type : property.Type
+              }
+        }
+
+        console.log(a);
 
         fetch('http://localhost/api/property', {
           method : "PUT",
@@ -134,10 +154,11 @@ class Collection extends React.Component {
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({ 
-              property : {
+            property : {
                 id : property.ID,
                 name: property.Name,
-                description: property.Description
+                description: property.Description,
+                type : property.Type
               }
             }
           )
@@ -267,7 +288,11 @@ class Collection extends React.Component {
                     <tr key={el.ID}>
                         <td>{inputField}</td>
                         <td>
-                            <select defaultValue={el.Type}>
+                            <select 
+                            onChange={(e) => {
+                                this.updateProperty(e, el.ID, "type");
+                            }}
+                            defaultValue={el.Type}>
                                 {types}
                             </select>
                         </td>

@@ -165,6 +165,15 @@ $app->Router->Put("api/property", function() use(&$app){
     $property->Name = $data["property"]["name"];
     $property->Description = $data["property"]["description"];
 
+    $database = new Database();
+    $type = $data["property"]["type"];
+
+    $data = $database->query("SELECT id FROM types WHERE `type` = '$type'" , true);
+
+    $property->Type = $data['id'];
+
+    print_r($property);
+
     if($property->Update())
         Response::SetResponse(200);
     else

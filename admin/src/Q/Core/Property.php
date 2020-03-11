@@ -97,8 +97,11 @@ class Property
         $database = new Database();
         $result = $database->Update("properties", [
             "name" => $this->Name,
-            "description" => $this->Description
+            "description" => $this->Description,
+            "type" => $this->Type
         ], "id = " . $this->ID);
+
+        
 
         return $result;
     }
