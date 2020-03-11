@@ -105,6 +105,52 @@ class Collection extends React.Component {
       }.bind(this))
     }
 
+    updateProperty(e, id, type){
+        const collection = this.state.Collection;
+
+        for(let i = 0; i < collection.Properties.length; i++){
+            const el = collection.Properties[i];
+
+            if(el.ID === id){
+                if(type === "description")
+                    el.Description = e.target.value;
+                else if(type === "name")
+                    el.Name = e.target.value;
+                this.setState({
+                    Collection : collection
+                });
+                break;
+            }
+        }
+    }
+
+    saveProperty(index){
+        const property = this.state.Collection.Properties[index];
+
+        fetch('http://localhost/api/property', {
+          method : "PUT",
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+              property : {
+                id : property.ID,
+                name: property.Name,
+                description: property.Description
+              }
+            }
+          )
+      })
+      .then(function(data){
+          if(data.status !== 200)
+            alert("Error while updating page");
+      })
+      .catch(function(error){
+        alert('error');
+      });
+    }
+
     createNewProperty(){
         const collection = this.state.Collection;
         const nameEl = document.getElementById("new-property-name");
@@ -192,12 +238,21 @@ class Collection extends React.Component {
             colName = this.state.Collection.Name;
             colDescription = this.state.Collection.Description;
             let delButton = null;
-   
+            
             properties = this.state.Collection.Properties.map((el, index) => {
                 let status = null;
+                let inputField = <input defaultValue={el.Name} 
+                                type="text" 
+                                onChange={(e) => {
+                                    this.updateProperty(e, el.ID, "name");
+                                }}
+                                placeholder="Property name"/>;
 
                 if(parseInt(el.Locked) === 1)
+                {
                     status = <span className="gg-lock" />;
+                    inputField = <input disabled={true} defaultValue={el.Name} type="text" placeholder="Property name"/>;
+                }
                 else
                 {
                     status = <span className="gg-lock-unlock" />;
@@ -208,20 +263,33 @@ class Collection extends React.Component {
                                 >Delete</button>;       
                 }
                     
-                
-
                 return (
                     <tr key={el.ID}>
-                        <td><input defaultValue={el.Name} type="text" placeholder="Property name"/></td>
+                        <td>{inputField}</td>
                         <td>
                             <select defaultValue={el.Type}>
                                 {types}
                             </select>
                         </td>
-                        <td><input defaultValue={el.Description} type="text" placeholder="Property description"/></td>
+                        <td>
+                            <input 
+                                defaultValue={el.Description} 
+                                type="text"
+                                onChange={(e) => {
+                                    this.updateProperty(e, el.ID, "description");
+                                }}
+                                placeholder="Property description"/>
+                        </td>
                         <td>{status}</td>
                         <td>
                             {delButton}
+                        </td>
+                        <td>
+                        <button 
+                                style={{width: "75px", height : "30px", padding : "0"}} 
+                                className="theme-green-bg new-collection-button"
+                                onClick={() => {this.saveProperty(index)}}
+                                >Save</button>
                         </td>
                     </tr>
                 );

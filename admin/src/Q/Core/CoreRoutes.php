@@ -156,6 +156,22 @@ $app->Router->Delete("api/property/destroy/{id}", function($param){
     Response::SetResponse($response);
 })->UseAuthentication(true);
 
+$app->Router->Put("api/property", function() use(&$app){
+    $data = Request::GetJson();
+
+    $property = new Property();
+
+    $property->ID = $data["property"]["id"];
+    $property->Name = $data["property"]["name"];
+    $property->Description = $data["property"]["description"];
+
+    if($property->Update())
+        Response::SetResponse(200);
+    else
+        Response::SetResponse(500);
+
+})->UseAuthentication(true);
+
 //Items
 $app->Router->Get("api/item/{id}", function($param){
     $obj = Item::Get($param["id"]);

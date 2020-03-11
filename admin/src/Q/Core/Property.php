@@ -91,4 +91,15 @@ class Property
         }
         
     }
+
+    public function Update()
+    {
+        $database = new Database();
+        $result = $database->Update("properties", [
+            "name" => $this->Name,
+            "description" => $this->Description
+        ], "id = " . $this->ID);
+
+        return $result;
+    }
 }
