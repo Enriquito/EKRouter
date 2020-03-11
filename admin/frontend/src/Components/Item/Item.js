@@ -111,8 +111,9 @@ class Item extends React.Component {
         <main className="flex">
           <Navigation />
             <div id="holder">
+                <h1 style={{marginTop: "0px"}}>Edit item</h1>
+                {properties}
                 <div className="flex">
-                    <h1 style={{marginTop: "0px"}}>Edit item</h1>
                     <button 
                     style={{width: "75px", height : "30px", padding : "0"}} 
                     className="theme-green-bg new-collection-button"
@@ -124,7 +125,6 @@ class Item extends React.Component {
                     onClick={() => {}}
                     >Delete</button>
                 </div>
-                {properties}
             </div>
         </main>
       );

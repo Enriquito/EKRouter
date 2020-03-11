@@ -60,6 +60,7 @@ class Item
         JOIN types t
         ON t.id = pr.type
         WHERE i.id = $id
+        ORDER BY locked DESC
         ";
 
         $data = $database->query($query);

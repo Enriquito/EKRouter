@@ -96,8 +96,10 @@ class Items extends React.Component {
         <main className="flex">
           <Navigation />
           <div id="holder">
-          <h1>{this.props.match.params.collection} items</h1>
-            
+          <div className="flex">
+            <h1 style={{marginTop: "0px"}}>{this.props.match.params.collection} items</h1>
+            <button style={{width: "75px", height : "30px", padding : "0"}} className="theme-green-bg new-collection-button">New</button>
+            </div>
             <table>
               <thead>
                 <tr>

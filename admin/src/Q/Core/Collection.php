@@ -85,7 +85,7 @@ class Collection
             $query = "SELECT pro.id, pro.name,pro.description ,ty.type, pro.locked FROM properties pro
             JOIN types ty
             ON ty.id = pro.type
-            WHERE pro.collection = " . $col->ID;
+            WHERE pro.collection = " . $col->ID . " ORDER BY pro.locked DESC";
 
             $data = $database->query($query);
 

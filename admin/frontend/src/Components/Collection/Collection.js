@@ -191,6 +191,7 @@ class Collection extends React.Component {
         if(this.state.Collection != null){
             colName = this.state.Collection.Name;
             colDescription = this.state.Collection.Description;
+            let delButton = null;
    
             properties = this.state.Collection.Properties.map((el, index) => {
                 let status = null;
@@ -198,7 +199,16 @@ class Collection extends React.Component {
                 if(parseInt(el.Locked) === 1)
                     status = <span className="gg-lock" />;
                 else
+                {
                     status = <span className="gg-lock-unlock" />;
+                    delButton = <button 
+                                style={{width: "75px", height : "30px", padding : "0"}} 
+                                className="theme-red-bg new-collection-button"
+                                onClick={() => {this.deleteProperty(el.ID, index);}}
+                                >Delete</button>;       
+                }
+                    
+                
 
                 return (
                     <tr key={el.ID}>
@@ -211,11 +221,7 @@ class Collection extends React.Component {
                         <td><input defaultValue={el.Description} type="text" placeholder="Property description"/></td>
                         <td>{status}</td>
                         <td>
-                            <button 
-                            style={{width: "75px", height : "30px", padding : "0"}} 
-                            className="theme-red-bg new-collection-button"
-                            onClick={() => {this.deleteProperty(el.ID, index);}}
-                            >Delete</button>
+                            {delButton}
                         </td>
                     </tr>
                 );
@@ -226,8 +232,15 @@ class Collection extends React.Component {
         <main className="flex">
           <Navigation />
             <div id="holder">
+                <h1 style={{marginTop: "0px"}}>Edit Collection</h1>
+                <label>Name</label>
+                <br />
+                <input id="collection-name" style={{width: "500px"}} defaultValue={colName} type="text" placeholder="Collection name" />
+                <br />
+                <label>Description</label>
+                <br />
+                <textarea id="collection-description" style={{width: "500px", height: "150px", resize: "vertical"}} onChange={() => {}} defaultValue={colDescription}></textarea>
                 <div className="flex">
-                    <h1 style={{marginTop: "0px"}}>Edit Collection</h1>
                     <button 
                     style={{width: "75px", height : "30px", padding : "0"}} 
                     className="theme-green-bg new-collection-button"
@@ -239,14 +252,6 @@ class Collection extends React.Component {
                     onClick={() => {}}
                     >Delete</button>
                 </div>
-                <label>Name</label>
-                <br />
-                <input id="collection-name" style={{width: "500px"}} defaultValue={colName} type="text" placeholder="Collection name" />
-                <br />
-                <label>Description</label>
-                <br />
-                <textarea id="collection-description" style={{width: "500px", height: "150px", resize: "vertical"}} onChange={() => {}} defaultValue={colDescription}></textarea>
-
                 
                 <h2 style={{margin: "10px 0"}}>Properties</h2>
                 <div>
