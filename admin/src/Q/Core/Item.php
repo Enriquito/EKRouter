@@ -139,36 +139,17 @@ class Item
 
     public function Update()
     {
-        $database = new Database();
-
-        $result = $database->Update("items", [
-            "id" => $this->ID,
-            "collection" => $this->Collection
-        ], "id = " . $this->ID);
-
-        $results = [];
-
-        
+        $result = false;
 
         foreach($this->Properties as $prop)
         {
-            //$type = Database::query("SELECT * FROM types WHERE ");
-            $result[] = $database->Update("property_values", [
-                            "item" => $this->ID,
-                            "property" => $prop['property'],
-                            "value" => $prop['value']
-                        ], "item = " . $this->ID . " AND property = " . $prop['property']);
+            $database = new Database();
+            $name = $prop['Name'];
+            $colID = $this->Collection;
+            $propertyID = $database->query("SELECT id FROM properties WHERE `name` = '$name' AND `collection` = $colID", true)['id'];
+            $result = $database->Update("property_values", ["value" => $prop['Value']], "item = " . $this->ID . " AND property = " . $propertyID);
         }
 
-        foreach($results as $result)
-        {
-            if(!$result)
-                return false;
-        }
-
-        if($result)
-            return true;
-        else
-            return false;
+        return $result;
     }
 }

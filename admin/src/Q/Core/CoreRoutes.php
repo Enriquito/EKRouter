@@ -187,9 +187,12 @@ $app->Router->Put("api/item", function(){
     $item->Created = $data["item"]["created"];
     $item->Properties = $data["item"]["properties"];
 
-    $item->Update();
+    $result = $item->Update();
 
-    Response::Json($item, 200);
+    if($result)
+        Response::SetResponse(200);
+    else
+        Response::SetResponse(500);
 });
 
 //Types

@@ -29,9 +29,6 @@ class Item extends React.Component {
     }
 
     Save(){
-      let itemData = this.state.Item.Properties;
-      console.log(itemData['Title']);
-
       fetch('http://localhost/api/item', {
           method : "PUT",
           headers: {
@@ -44,7 +41,7 @@ class Item extends React.Component {
                 collection : this.state.Item.Collection,
                 created : this.state.Item.Created,
                 creator : this.state.Item.Creator,
-                Properties : this.state.Item.Properties
+                properties : this.state.Item.Properties
               }
             }
           )
@@ -55,12 +52,7 @@ class Item extends React.Component {
       })
       .catch(function(error){
         alert('error');
-          this.setState(
-              {
-                  type : "error-messages",
-                  messages : "Something went wrong..."
-              });
-      }.bind(this));
+      });
     }
 
     updateItem(event, index){
