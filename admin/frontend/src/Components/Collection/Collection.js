@@ -28,7 +28,7 @@ class Collection extends React.Component {
         })
         .catch((error) => {
             alert("Error could not fetch data.");
-        });
+        });            
     }
 
     getTypes(){
@@ -110,7 +110,27 @@ class Collection extends React.Component {
         const nameEl = document.getElementById("new-property-name");
         const descriptionEl = document.getElementById("new-property-description");
         const typeEl = document.getElementById("new-property-type");
-        const id = parseInt(collection.Properties[(collection.Properties.length - 1)].ID) + 1;
+        let id = 0;
+
+        if(this.state.Collection.Properties == null)
+        {
+            let col = this.state.Collection;
+            col.Properties = [];
+
+            this.setState({
+                col
+            });
+        }
+
+        try
+        {
+            id = parseInt(collection.Properties[(collection.Properties.length - 1)].ID) + 1;
+        }
+        catch
+        {
+
+        }
+        
 
         const prop = {
             "Collection" : this.state.Collection.ID,
@@ -119,7 +139,7 @@ class Collection extends React.Component {
             "Name" : nameEl.value,
             "Type" : typeEl.value
         };
-
+        
         collection.Properties.push(prop);
 
         this.setState({
@@ -171,7 +191,7 @@ class Collection extends React.Component {
         if(this.state.Collection != null){
             colName = this.state.Collection.Name;
             colDescription = this.state.Collection.Description;
-
+   
             properties = this.state.Collection.Properties.map((el, index) => {
                 let status = null;
 
@@ -199,7 +219,7 @@ class Collection extends React.Component {
                         </td>
                     </tr>
                 );
-            });            
+            });  
         }
 
       return (

@@ -33,7 +33,7 @@ main #holder #type-holder
     padding: 10px;
     width: 100%;
 }
-button, input[type="text"], textarea
+button, input[type="text"], input[type="number"], textarea
 {
     border-radius: 5px;
     border: 1px solid rgba(0,0,0,0.1);
@@ -51,7 +51,7 @@ button:focus
 {
     outline: none;
 }
-input[type="text"], textarea
+input[type="text"], input[type="number"], textarea
 {
     outline: none;
     color: #444444;

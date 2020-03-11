@@ -12,19 +12,33 @@ class Property
 
     public function Create()
     {
-        $database = new Database();
+        try
+        {
+            $database = new Database();
 
-        $result = $database->Insert("properties", [
-            "name" => $this->Name,
-            "description" => $this->Description,
-            "collection" => $this->Collection,
-            "type" => $this->Type
-        ]);
-        
-        if($result != false)
+            $result = $database->Insert("properties", [
+                "name" => $this->Name,
+                "description" => $this->Description,
+                "collection" => $this->Collection,
+                "type" => $this->Type
+            ]);
+
+            $itemIDs = $database->query("SELECT id FROM items WHERE `collection` = ". $this->Collection);
+            
+            foreach($itemIDs as $id)
+            {
+                $result = $database->Insert("property_values", [
+                    "item" => $id['id'],
+                    "property" => $result
+                ]);
+            }    
+
             return true;
-        else
+        }
+        catch(Exception $e)
+        {
             return false;
+        }            
     }
 
     public static function Destroy($id)

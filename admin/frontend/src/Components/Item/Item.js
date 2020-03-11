@@ -94,7 +94,7 @@ class Item extends React.Component {
                     defaultValue={value} 
                     style={{width: "500px"}} 
                     type={el.Type} 
-                    placeholder="Collection name" />
+                    placeholder="Enter your content here" />
                 }
 
                 return (

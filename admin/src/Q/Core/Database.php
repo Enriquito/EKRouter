@@ -166,8 +166,10 @@ class Database
         try
         {
             $sql_query = "INSERT INTO $table ($keys) VALUES($values)";
+            // echo $sql_query;
             $con = $this->PDO;
             $query = $con->prepare($sql_query);
+            // print_r($paramArray);
             $query->execute($paramArray);
             $stmt = $con->query("SELECT LAST_INSERT_ID()");
             $lastId = $stmt->fetch(PDO::FETCH_NUM);
