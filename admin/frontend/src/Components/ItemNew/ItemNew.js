@@ -2,45 +2,45 @@ import React from 'react';
 import { hasSession } from '../Helpers';
 import Navigation from '../Navigation';
 
-class Item extends React.Component {
+class ItemNew extends React.Component {
     constructor(props){
         hasSession(false);
         super(props);
+        this.Item = [];
         
         this.state = {
-          Item : null
+            Collection : null
         };
     }
 
     componentDidMount(){
-        this.getItem();
+        this.Load();
     }
 
-    getItem(){
-        fetch(`http://localhost/api/item/${this.props.match.params.id}`)
-        .then((resp) => resp.json())
-        .then((resp) => {
-            this.setState({Item : resp});
-        })
-        .catch((error) => {
-            alert("Error could not fetch data.");
-        });
-    }
+    Load(){
+        fetch(`http://localhost/api/collection/${this.props.match.params.collection}`)
+          .then((resp) => resp.json())
+          .then((resp) => {
+              this.setState({Collection : resp});
+          })
+          .catch((error) => {
+              alert("Error could not fetch data.");
+          });
+      }
+
 
     Save(){
       fetch('http://localhost/api/item', {
-          method : "PUT",
+          method : "POST",
           headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({ 
               item : {
-                id : this.state.Item.ID,
-                collection : this.state.Item.Collection,
-                created : this.state.Item.Created,
-                creator : this.state.Item.Creator,
-                properties : this.state.Item.Properties
+                collection : this.state.Collection.ID,
+                creator : 14,
+                values : this.Item
               }
             }
           )
@@ -54,33 +54,33 @@ class Item extends React.Component {
       });
     }
 
-    updateItem(event, index){
-      const data = this.state.Item;
-
-      data.Properties[index].Value = event.target.value;
-
-      this.setState({
-        Item : data
-      });
+    update(event, index, id){        
+        this.Item.forEach((el) => {
+            // eslint-disable-next-line
+            if(el.property == id){
+                el.value =  event.target.value
+            }
+        });
     }
     
     render() {  
         let properties = null;
 
-        if(this.state.Item != null){
+        if(this.state.Collection != null){
 
-            properties = this.state.Item.Properties.map((el, index) => {
-                const value = el.Value;
-
+            properties = this.state.Collection.Properties.map((el, index) => {
+                this.Item.push({
+                    property : el.ID,
+                    value : ""
+                });
                 let inputField = null;
 
                 if(el.Type === "textarea")
                 inputField = <textarea
                     id={`item-${el.Name}`}
                     style={{width: "500px", height: "150px", resize: "vertical"}} 
-                    defaultValue = {el.Value} 
                     onChange={(e) => {
-                      this.updateItem(e, index)
+                      this.update(e, index, el.ID)
                     }}
                     ></textarea>
                 else
@@ -88,9 +88,8 @@ class Item extends React.Component {
                     inputField = <input 
                     id={`item-${el.Name}`} 
                     onChange={(e) => {
-                      this.updateItem(e, index)
+                      this.update(e, index, el.ID)
                     }}
-                    defaultValue={value} 
                     style={{width: "500px"}} 
                     type={el.Type} 
                     placeholder="Enter your content here" />
@@ -103,14 +102,16 @@ class Item extends React.Component {
                         {inputField}
                     </div>
                 );
-            });            
+            });  
+            
+            console.log(this.Item);
         }
 
       return (
         <main className="flex">
           <Navigation />
             <div id="holder">
-                <h1 style={{marginTop: "0px"}}>Edit item</h1>
+                <h1 style={{marginTop: "0px"}}>New item</h1>
                 {properties}
                 <div className="flex">
                     <button 
@@ -130,4 +131,4 @@ class Item extends React.Component {
     }
   }
 
-export default Item;
+export default ItemNew;

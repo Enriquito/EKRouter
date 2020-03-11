@@ -9,12 +9,12 @@ class Items extends React.Component {
         super(props);
         
         this.state = {
-          Items : null
+          Collection : null
         };
     }
 
     componentDidMount(){
-        this.LoadItems();
+        this.Load();
     }
 
     Save(event){
@@ -57,11 +57,11 @@ class Items extends React.Component {
       
     }
     
-    LoadItems(){
-      fetch(`http://localhost/api/items/${this.props.match.params.collection}`)
+    Load(){
+      fetch(`http://localhost/api/collection/${this.props.match.params.collection}`)
         .then((resp) => resp.json())
         .then((resp) => {
-            this.setState({Items : resp});
+            this.setState({Collection : resp});
         })
         .catch((error) => {
             alert("Error could not fetch data.");
@@ -72,8 +72,8 @@ class Items extends React.Component {
 
       let items = null;
 
-      if(this.state.Items != null){
-        items = this.state.Items.map((el) => {
+      if(this.state.Collection != null){
+        items = this.state.Collection.Items.map((el) => {
           let title = null;
 
           el.Properties.forEach(el => {
@@ -98,7 +98,12 @@ class Items extends React.Component {
           <div id="holder">
           <div className="flex">
             <h1 style={{marginTop: "0px"}}>{this.props.match.params.collection} items</h1>
-            <button style={{width: "75px", height : "30px", padding : "0"}} className="theme-green-bg new-collection-button">New</button>
+            <button 
+            style={{width: "75px", height : "30px", padding : "0"}}
+            onClick={() => {
+              window.location = `/item/new/collection/${this.state.Collection.Name}`
+            }}
+            className="theme-green-bg new-collection-button">New</button>
             </div>
             <table>
               <thead>

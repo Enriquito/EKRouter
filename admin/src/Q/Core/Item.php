@@ -9,21 +9,34 @@ class Item
     public $Created;
     public $Creator;
 
-    public function Create()
+    public function Create($values)
     {
-        // $database = new Database();
+        try
+        {
+            $database = new Database();
 
-        // $result = $database->Insert("collections", [
-        //     "id" => $this->ID,
-        //     "name" => $this->Name,
-        //     "description" => $this->Description,
-        //     "owner" => $this->Owner
-        // ]);
+            $result = $database->Insert("items", [
+                "collection" => $this->Collection,
+                "creator" => $this->Creator
+            ]);
+            
+            foreach($values as $prop)
+            {
+                $database->Insert("property_values", [
+                    "item" => $result,
+                    "property" => $prop['property'],
+                    "value" => $prop['value']
+                ]);
+            } 
+            
+            return true;
+        }
+        catch(Exception $e)
+        {
+            $this->Destroy($result);
+            return false;
+        }
         
-        // if($result != false)
-        //     return true;
-        // else
-        //     return false;
     }
 
     public static function Destroy($id)
@@ -105,6 +118,7 @@ class Item
             $item->ID = $itemEl['id'];
             $item->Created = $itemEl['created'];
             $item->Creator = $itemEl['creator'];
+            $item->Collection = $colID;
 
             $query = "SELECT pr.name, pv.value, t.type FROM items i
             JOIN property_values pv

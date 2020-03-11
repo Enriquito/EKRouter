@@ -193,7 +193,22 @@ $app->Router->Put("api/item", function(){
         Response::SetResponse(200);
     else
         Response::SetResponse(500);
-});
+})->UseAuthentication(true);
+
+$app->Router->Post("api/item", function(){
+    $data = Request::GetJson();
+
+    $item = new Item();
+    $item->Collection = $data["item"]["collection"];
+    $item->Creator = $data["item"]["creator"];
+
+    $result = $item->Create($data["item"]["values"]);
+
+    if($result)
+        Response::SetResponse(200);
+    else
+        Response::SetResponse(500);
+})->UseAuthentication(true);
 
 //Types
 $app->Router->Get("api/type/all", function() use(&$app){

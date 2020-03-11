@@ -7,6 +7,7 @@ import Collections from './Components/Collections';
 import Items from './Components/Items';
 import Collection from './Components/Collection';
 import Item from './Components/Item';
+import ItemNew from './Components/ItemNew';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/collection/edit/:name" component={Collection} />
         <Route exact path="/items/:collection" component={Items} />
         <Route exact path="/item/edit/:id" component={Item} />
+        <Route exact path="/item/new/collection/:collection" component={ItemNew} />
     </Router>
   );
 }
