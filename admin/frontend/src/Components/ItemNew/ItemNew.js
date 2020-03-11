@@ -109,7 +109,7 @@ class ItemNew extends React.Component {
 
       return (
         <main className="flex">
-          <Navigation />
+          <Navigation item="collections" />
             <div id="holder">
                 <h1 style={{marginTop: "0px"}}>New item</h1>
                 {properties}

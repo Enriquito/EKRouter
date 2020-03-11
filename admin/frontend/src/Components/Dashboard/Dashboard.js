@@ -15,8 +15,7 @@ class Dashboard extends React.Component {
     render() {
       return (
         <main className="flex">
-        
-          <Navigation />
+          <Navigation item="dashboard"/>
         </main>
       );
     }

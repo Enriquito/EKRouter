@@ -230,7 +230,7 @@ class Collection extends React.Component {
 
       return (
         <main className="flex">
-          <Navigation />
+          <Navigation item="collections" />
             <div id="holder">
                 <h1 style={{marginTop: "0px"}}>Edit Collection</h1>
                 <label>Name</label>

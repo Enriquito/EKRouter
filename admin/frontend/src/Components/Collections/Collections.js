@@ -101,7 +101,7 @@ class Collections extends React.Component {
 
       return (
         <main className="flex">
-          <Navigation />
+          <Navigation item="collections" />
           <div id="holder">
             <div className="flex">
               <h1 style={{marginTop: "0px"}}>Collections</h1>
