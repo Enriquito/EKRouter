@@ -82,6 +82,15 @@ input[type="text"], input[type="number"], textarea
 {
     color: tomato;
 }
+.theme-blue-color
+{
+    color: #00b5cc;
+}
+.theme-blue-bg
+{
+    background: #00b5cc;
+    color: #FFF;
+}
 #overlay
 {
     width: 100%;

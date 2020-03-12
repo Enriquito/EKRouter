@@ -101,8 +101,6 @@ class Property
             "type" => $this->Type
         ], "id = " . $this->ID);
 
-        
-
         return $result;
     }
 }

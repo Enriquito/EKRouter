@@ -59,7 +59,7 @@ $app->Router->Post("api/user/create", function(){
 })->UseAuthentication(true);
 
 //Collections
-$app->Router->Post("api/collection/create", function(){
+$app->Router->Post("api/collection", function(){
     $data = Request::GetJson();
 
     $collection = new Collection();
@@ -233,6 +233,10 @@ $app->Router->Post("api/item", function(){
         Response::SetResponse(200);
     else
         Response::SetResponse(500);
+})->UseAuthentication(true);
+
+$app->Router->Delete("api/item/destroy/{id}", function($param){
+    Item::Destroy($param["id"]);
 })->UseAuthentication(true);
 
 //Types

@@ -191,6 +191,7 @@ class Database
         try
         { 
             $this->PDO->exec($sql);
+            return true;
         }
         catch(PDOException $e)
         {

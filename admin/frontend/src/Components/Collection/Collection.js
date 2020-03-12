@@ -1,5 +1,5 @@
 import React from 'react';
-import { hasSession } from '../Helpers';
+import { hasSession, ReplaceSpaces } from '../Helpers';
 import Navigation from '../Navigation';
 import './collection.css';
 
@@ -39,6 +39,26 @@ class Collection extends React.Component {
         })
         .catch((error) => {
             alert("Error could not fetch data.");
+        });
+    }
+
+    deleteCollection(){
+        let r = window.confirm("Are you sure you want to delete this collection? All items and properties will be deleted.");
+
+        if(!r)
+            return;
+
+        fetch(`http://localhost/api/collection/destroy/${this.state.Collection.ID}`, {
+            method : "DELETE"
+        })
+        .then((data) => {
+            if(data.status === 200)
+                window.location = '/collections';
+            else
+                alert("Error while deleting collection");
+        })
+        .catch((error) => {
+            alert("Error while deleting collection");
         });
     }
 
@@ -120,7 +140,7 @@ class Collection extends React.Component {
                 {
                     console.log(true);
                     for(let i = 0; i < this.state.Types.length; i++){
-                        if(e.target.value == this.state.Types[i].type){
+                        if(e.target.value === this.state.Types[i].type){
                             el.Type = this.state.Types[i].type;
                         }
                     }
@@ -136,14 +156,6 @@ class Collection extends React.Component {
 
     saveProperty(index){
         const property = this.state.Collection.Properties[index];
-        const a = {
-            property : {
-                id : property.ID,
-                name: property.Name,
-                description: property.Description,
-                type : property.Type
-              }
-        }
 
         fetch('http://localhost/api/property', {
           method : "PUT",
@@ -344,7 +356,11 @@ class Collection extends React.Component {
                 <h1 style={{marginTop: "0px"}}>Edit Collection</h1>
                 <label>Name</label>
                 <br />
-                <input id="collection-name" style={{width: "500px"}} defaultValue={colName} type="text" placeholder="Collection name" />
+                <input id="collection-name" 
+                onChange={(e) => {
+                    e.target.value = ReplaceSpaces(e.target.value, '-')
+                }} 
+                style={{width: "500px"}} defaultValue={colName} type="text" placeholder="Collection name" />
                 <br />
                 <label>Description</label>
                 <br />
@@ -358,7 +374,7 @@ class Collection extends React.Component {
                     <button 
                     style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
                     className="theme-red-bg new-collection-button"
-                    onClick={() => {}}
+                    onClick={this.deleteCollection.bind(this)}
                     >Delete</button>
                 </div>
                 

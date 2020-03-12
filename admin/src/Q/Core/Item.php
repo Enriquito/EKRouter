@@ -43,7 +43,9 @@ class Item
     {
         $database = new Database();
 
-        $database->Destroy("items", "id = ". $id);
+        $result = $database->Destroy("items", "id = ". $id);
+
+        return $result;
     }
 
     public static function Get($id)

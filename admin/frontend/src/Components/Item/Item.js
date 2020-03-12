@@ -63,6 +63,26 @@ class Item extends React.Component {
         Item : data
       });
     }
+
+    delete(){
+      let r = window.confirm("Are you sure you want to delete this item?");
+
+      if(!r)
+          return;
+
+      fetch(`http://localhost/api/item/destroy/${this.state.Item.ID}`, {
+          method : "DELETE"
+      })
+      .then((data) => {
+          if(data.status === 200)
+              this.props.history.goBack();
+          else
+              alert("Error while deleting item");
+      })
+      .catch((error) => {
+          alert("Error while deleting item");
+      });
+  }
     
     render() {  
         let properties = null;
@@ -118,10 +138,15 @@ class Item extends React.Component {
                     className="theme-green-bg new-collection-button"
                     onClick={this.Save.bind(this)}
                     >Save</button>
+                     <button 
+                    style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
+                    className="theme-blue-bg new-collection-button"
+                    onClick={this.props.history.goBack}
+                    >Cancel</button>
                     <button 
                     style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
                     className="theme-red-bg new-collection-button"
-                    onClick={() => {}}
+                    onClick={this.delete.bind(this)}
                     >Delete</button>
                 </div>
             </div>

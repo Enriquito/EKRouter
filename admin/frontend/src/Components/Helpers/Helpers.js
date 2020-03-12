@@ -35,3 +35,7 @@ export function formatDate(date){
         seconds : t[5]
     }
 }
+
+export function ReplaceSpaces(input, replacement){
+    return input.split(' ').join(replacement);
+}
