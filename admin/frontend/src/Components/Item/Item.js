@@ -27,7 +27,15 @@ class Item extends React.Component {
         });
     }
 
-    Save(){
+    Save(e){
+      
+      const title = document.getElementById('item-Title');
+
+      if(!title.checkValidity())
+        return;
+
+        console.log(title);
+
       fetch('http://localhost/api/item', {
           method : "PUT",
           headers: {
@@ -52,6 +60,8 @@ class Item extends React.Component {
       .catch(function(error){
         alert('error');
       });
+
+      e.preventDefault();
     }
 
     updateItem(event, index){
@@ -105,15 +115,31 @@ class Item extends React.Component {
                     ></textarea>
                 else
                 {
-                    inputField = <input 
-                    id={`item-${el.Name}`} 
-                    onChange={(e) => {
-                      this.updateItem(e, index)
-                    }}
-                    defaultValue={value} 
-                    style={{width: "500px"}} 
-                    type={el.Type} 
-                    placeholder="Enter your content here" />
+                    if(el.Name === "Title"){
+                      inputField = <input 
+                      required={true}
+                      id={`item-${el.Name}`} 
+                      onChange={(e) => {
+                        this.updateItem(e, index)
+                      }}
+                      defaultValue={value} 
+                      style={{width: "500px"}} 
+                      type={el.Type} 
+                      placeholder="Enter your content here" />
+                    }
+                    else
+                    {
+                      inputField = <input 
+                      id={`item-${el.Name}`} 
+                      onChange={(e) => {
+                        this.updateItem(e, index)
+                      }}
+                      defaultValue={value} 
+                      style={{width: "500px"}} 
+                      type={el.Type} 
+                      placeholder="Enter your content here" />
+                    }
+                    
                 }
 
                 return (
@@ -129,27 +155,32 @@ class Item extends React.Component {
       return (
         <main className="flex">
           <Navigation item="collections" />
-            <div id="holder">
+            <form id="holder">
                 <h1 style={{marginTop: "0px"}}>Edit item</h1>
                 {properties}
                 <div className="flex">
+
                     <button 
                     style={{width: "75px", height : "30px", padding : "0"}} 
                     className="theme-green-bg new-collection-button"
-                    onClick={this.Save.bind(this)}
+                    onClick={(e) => {
+                      this.Save(e);
+                    }}
                     >Save</button>
-                     <button 
+
+                    <button 
                     style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
                     className="theme-blue-bg new-collection-button"
                     onClick={this.props.history.goBack}
                     >Cancel</button>
+
                     <button 
                     style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
                     className="theme-red-bg new-collection-button"
                     onClick={this.delete.bind(this)}
                     >Delete</button>
                 </div>
-            </div>
+            </form>
         </main>
       );
     }

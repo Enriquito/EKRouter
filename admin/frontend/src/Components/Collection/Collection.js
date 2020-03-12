@@ -64,7 +64,7 @@ class Collection extends React.Component {
     }
 
     Save(e){
-        e.preventDefault();
+        
         const name = document.getElementById("collection-name");
         const description = document.getElementById("collection-description");
 
@@ -124,6 +124,8 @@ class Collection extends React.Component {
               alert("Error while deleting property");
           }
       }.bind(this))
+
+      e.preventDefault();
     }
 
     updateProperty(e, id, type){

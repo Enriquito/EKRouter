@@ -17,7 +17,7 @@ class CollectionNew extends React.Component {
     }
 
     Save(e){
-      e.preventDefault();
+      
       const name = document.getElementById("collection-name");
       const description = document.getElementById("collection-description");
 
@@ -50,6 +50,8 @@ class CollectionNew extends React.Component {
       .catch(function(error){
         alert('error');
       });
+
+      e.preventDefault();
     }
   
     render() {  
