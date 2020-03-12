@@ -145,8 +145,6 @@ class Collection extends React.Component {
               }
         }
 
-        console.log(a);
-
         fetch('http://localhost/api/property', {
           method : "PUT",
           headers: {
@@ -262,17 +260,47 @@ class Collection extends React.Component {
             
             properties = this.state.Collection.Properties.map((el, index) => {
                 let status = null;
-                let inputField = <input defaultValue={el.Name} 
+                let propName = <input defaultValue={el.Name} 
                                 type="text" 
                                 onChange={(e) => {
                                     this.updateProperty(e, el.ID, "name");
                                 }}
                                 placeholder="Property name"/>;
+                let propDesc = <input 
+                                defaultValue={el.Description} 
+                                type="text"
+                                onChange={(e) => {
+                                    this.updateProperty(e, el.ID, "description");
+                                }}
+                                placeholder="Property description"/>
+                let propType = <select 
+                                onChange={(e) => {
+                                    this.updateProperty(e, el.ID, "type");
+                                }}
+                                defaultValue={el.Type}>
+                                    {types}
+                                </select>
 
                 if(parseInt(el.Locked) === 1)
                 {
                     status = <span className="gg-lock" />;
-                    inputField = <input disabled={true} defaultValue={el.Name} type="text" placeholder="Property name"/>;
+                    propName = <input disabled={true} defaultValue={el.Name} type="text" placeholder="Property name"/>;
+                    propDesc = <input 
+                                defaultValue={el.Description} 
+                                disabled={true}
+                                type="text"
+                                onChange={(e) => {
+                                    this.updateProperty(e, el.ID, "description");
+                                }}
+                                placeholder="Property description"/>;
+                    propType = <select 
+                                onChange={(e) => {
+                                    this.updateProperty(e, el.ID, "type");
+                                }}
+                                disabled={true}
+                                defaultValue={el.Type}>
+                                    {types}
+                                </select>;
                 }
                 else
                 {
@@ -286,24 +314,12 @@ class Collection extends React.Component {
                     
                 return (
                     <tr key={el.ID}>
-                        <td>{inputField}</td>
+                        <td>{propName}</td>
                         <td>
-                            <select 
-                            onChange={(e) => {
-                                this.updateProperty(e, el.ID, "type");
-                            }}
-                            defaultValue={el.Type}>
-                                {types}
-                            </select>
+                            {propType}
                         </td>
                         <td>
-                            <input 
-                                defaultValue={el.Description} 
-                                type="text"
-                                onChange={(e) => {
-                                    this.updateProperty(e, el.ID, "description");
-                                }}
-                                placeholder="Property description"/>
+                            {propDesc}
                         </td>
                         <td>{status}</td>
                         <td>
@@ -372,6 +388,7 @@ class Collection extends React.Component {
                                     <td>
                                         <input id="new-property-description" type="text" placeholder="Property description"/>
                                     </td>
+                                    <td></td>
                                     <td></td>
                                     <td>
                                         <button 

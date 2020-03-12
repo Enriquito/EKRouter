@@ -14,19 +14,37 @@ class Collection
 
     public function Create()
     {
-        $database = new Database();
+        try
+        {
+            $database = new Database();
 
-        $result = $database->Insert("collections", [
-            "id" => $this->ID,
-            "name" => $this->Name,
-            "description" => $this->Description,
-            "owner" => $this->Owner
-        ]);
-        
-        if($result != false)
-            return true;
-        else
+            $resultCollection = $database->Insert("collections", [
+                "id" => $this->ID,
+                "name" => $this->Name,
+                "description" => $this->Description,
+                "owner" => $this->Owner
+            ]);
+
+            // $prop = new Property();
+
+            // $prop->Name = "Title";
+            // $prop->Collection = $resultCollection;
+            // $prop->Description = "Default property";
+            // $prop->Type = 2;
+            // $prop->Locked = 1;
+
+            $database->Insert("properties", [
+                "name" => "Title",
+                "collection" => $resultCollection,
+                "description" => "Default property",
+                "type" => 2,
+                "locked" => 1,
+            ]);
+        }
+        catch(Exception $e)
+        {
             return false;
+        }
     }
 
     public static function Destroy($id)
