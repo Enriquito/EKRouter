@@ -96,6 +96,8 @@ class Collection extends React.Component {
         .catch(function(error){
             alert('error');
         });
+
+        e.preventDefault();
     }
 
     deleteProperty(e, id, arrayIndex){
@@ -157,7 +159,12 @@ class Collection extends React.Component {
         }
     }
 
-    saveProperty(index){
+    saveProperty(e, index){
+        const propName = document.getElementById('property-name');
+
+        if(!propName.checkValidity())
+            return;
+
         const property = this.state.Collection.Properties[index];
 
         fetch('http://localhost/api/property', {
@@ -183,13 +190,21 @@ class Collection extends React.Component {
       .catch(function(error){
         alert('error');
       });
+
+      e.preventDefault();
     }
 
-    createNewProperty(){
+    createNewProperty(e){
         const collection = this.state.Collection;
         const nameEl = document.getElementById("new-property-name");
         const descriptionEl = document.getElementById("new-property-description");
         const typeEl = document.getElementById("new-property-type");
+
+        if(!nameEl.checkValidity())
+            return;
+
+        
+        
         let id = 0;
 
         if(this.state.Collection.Properties == null)
@@ -202,15 +217,7 @@ class Collection extends React.Component {
             });
         }
 
-        try
-        {
-            id = parseInt(collection.Properties[(collection.Properties.length - 1)].ID) + 1;
-        }
-        catch
-        {
-
-        }
-        
+        id = parseInt(collection.Properties[(collection.Properties.length - 1)].ID) + 1;       
 
         const prop = {
             "Collection" : this.state.Collection.ID,
@@ -253,6 +260,8 @@ class Collection extends React.Component {
       .catch(function(error){
         alert('error');
       });
+
+      e.preventDefault();
     }
     
     render() {  
@@ -275,11 +284,13 @@ class Collection extends React.Component {
             
             properties = this.state.Collection.Properties.map((el, index) => {
                 let status = null;
-                let propName = <input defaultValue={el.Name} 
+                let propName = <input defaultValue={el.Name}
+                                id="property-name"
                                 type="text" 
                                 onChange={(e) => {
                                     this.updateProperty(e, el.ID, "name");
                                 }}
+                                required={true}
                                 placeholder="Property name"/>;
                 let propDesc = <input 
                                 defaultValue={el.Description} 
@@ -289,6 +300,7 @@ class Collection extends React.Component {
                                 }}
                                 placeholder="Property description"/>
                 let propType = <select 
+                                required={true}
                                 onChange={(e) => {
                                     this.updateProperty(e, el.ID, "type");
                                 }}
@@ -299,7 +311,7 @@ class Collection extends React.Component {
                 if(parseInt(el.Locked) === 1)
                 {
                     status = <span className="gg-lock" />;
-                    propName = <input disabled={true} defaultValue={el.Name} type="text" placeholder="Property name"/>;
+                    propName = <input required={true} disabled={true} defaultValue={el.Name} type="text" placeholder="Property name"/>;
                     propDesc = <input 
                                 defaultValue={el.Description} 
                                 disabled={true}
@@ -309,6 +321,7 @@ class Collection extends React.Component {
                                 }}
                                 placeholder="Property description"/>;
                     propType = <select 
+                                required={true}
                                 onChange={(e) => {
                                     this.updateProperty(e, el.ID, "type");
                                 }}
@@ -323,7 +336,7 @@ class Collection extends React.Component {
                     delButton = <button 
                                 style={{width: "75px", height : "30px", padding : "0"}} 
                                 className="theme-red-bg new-collection-button"
-                                onClick={() => {this.deleteProperty(el.ID, index);}}
+                                onClick={(event) => {this.deleteProperty(event, el.ID, index);}}
                                 >Delete</button>;       
                 }
                     
@@ -344,7 +357,7 @@ class Collection extends React.Component {
                         <button 
                                 style={{width: "75px", height : "30px", padding : "0"}} 
                                 className="theme-green-bg new-collection-button"
-                                onClick={() => {this.saveProperty(index)}}
+                                onClick={(e) => {this.saveProperty(e, index)}}
                                 >Save</button>
                         </td>
                     </tr>
@@ -355,38 +368,41 @@ class Collection extends React.Component {
       return (
         <main className="flex">
           <Navigation item="collections" />
-            <form id="holder">
-                <h1 style={{marginTop: "0px"}}>Edit Collection</h1>
-                <label>Name</label>
-                <br />
-                <input 
-                required={true}
-                id="collection-name" 
-                onChange={(e) => {
-                    e.target.value = ReplaceSpaces(e.target.value, '-')
-                }} 
-                style={{width: "500px"}} defaultValue={colName} type="text" placeholder="Collection name" />
-                <br />
-                <label>Description</label>
-                <br />
-                <textarea id="collection-description" style={{width: "500px", height: "150px", resize: "vertical"}} onChange={() => {}} defaultValue={colDescription}></textarea>
-                <div className="flex">
-                    <button 
-                    style={{width: "75px", height : "30px", padding : "0"}} 
-                    className="theme-green-bg new-collection-button"
-                    onClick={(e) => {
-                        this.Save(e);
-                    }}
-                    >Save</button>
-                    <button 
-                    style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
-                    className="theme-red-bg new-collection-button"
-                    onClick={(e) => {
-                        this.deleteCollection(e);
-                    }}
-                    >Delete</button>
-                </div>
+            <div id="holder">
+                <form>
+                    <h1 style={{marginTop: "0px"}}>Edit Collection</h1>
+                    <label>Name</label>
+                    <br />
+                    <input 
+                    required={true}
+                    id="collection-name" 
+                    onChange={(e) => {
+                        e.target.value = ReplaceSpaces(e.target.value, '-')
+                    }} 
+                    style={{width: "500px"}} defaultValue={colName} type="text" placeholder="Collection name" />
+                    <br />
+                    <label>Description</label>
+                    <br />
+                    <textarea id="collection-description" style={{width: "500px", height: "150px", resize: "vertical"}} onChange={() => {}} defaultValue={colDescription}></textarea>
+                    <div className="flex">
+                        <button 
+                        style={{width: "75px", height : "30px", padding : "0"}} 
+                        className="theme-green-bg new-collection-button"
+                        onClick={(e) => {
+                            this.Save(e);
+                        }}
+                        >Save</button>
+                        <button 
+                        style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
+                        className="theme-red-bg new-collection-button"
+                        onClick={(e) => {
+                            this.deleteCollection(e);
+                        }}
+                        >Delete</button>
+                    </div>
+                </form>
                 
+            <form>
                 <h2 style={{margin: "10px 0"}}>Properties</h2>
                 <div>
                     <div className="flex center">
@@ -403,7 +419,7 @@ class Collection extends React.Component {
                             <tbody>
                                 <tr>
                                     <td>
-                                        <input id="new-property-name" type="text" placeholder="Property name"/>
+                                        <input required={true} id="new-property-name" type="text" placeholder="Property name"/>
                                     </td>
                                     <td>
                                         <select id="new-property-type">
@@ -419,16 +435,38 @@ class Collection extends React.Component {
                                         <button 
                                         style={{width: "75px", height : "30px", padding : "0"}} 
                                         className="theme-green-bg new-collection-button"
-                                        onClick={() => {this.createNewProperty()}}
+                                        onClick={(e) => {this.createNewProperty(e)}}
                                         >New</button>
                                         </td>
                                 </tr>
-                                {properties}
+                                
                             </tbody>
                         </table>
                     </div>
                 </div>
+            </form>           
+            <form>
+            <table>
+                <thead >
+                    <tr style={{"background" : "none"}}>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {properties}
+                </tbody>
+            </table>
             </form>
+                        
+                    
+                
+            
+                
+            </div>
         </main>
       );
     }
