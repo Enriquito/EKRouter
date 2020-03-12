@@ -72,6 +72,11 @@ class CollectionNew extends React.Component {
                     className="theme-green-bg new-collection-button"
                     onClick={this.Save.bind(this)}
                     >Save</button>
+                  <button 
+                  style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
+                  className="theme-blue-bg new-collection-button"
+                  onClick={this.props.history.goBack}
+                  >Cancel</button>
                 </div>
             </div>
         </main>
