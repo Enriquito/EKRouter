@@ -17,8 +17,11 @@ class CollectionNew extends React.Component {
     }
 
     Save(){
-      const name = document.getElementById("collection-name").value;
-      const description = document.getElementById("collection-description").value;
+      const name = document.getElementById("collection-name");
+      const description = document.getElementById("collection-description");
+
+      if(!name.checkValidity())
+        return;
 
       fetch('http://localhost/api/collection', {
           method : "POST",
@@ -28,8 +31,8 @@ class CollectionNew extends React.Component {
           },
           body: JSON.stringify({ 
               collection : {
-                name: name,
-                description: description,
+                name: name.value,
+                description: description.value,
                 owner : 14
               }
             }
@@ -38,7 +41,7 @@ class CollectionNew extends React.Component {
       .then(function(data){
           if(data.status === 200)
           {
-            window.location = `/collection/edit/${name}`;
+            window.location = `/collection/edit/${name.value}`;
           }
           else
             alert("Error while updating page");
@@ -53,7 +56,7 @@ class CollectionNew extends React.Component {
       return (
         <main className="flex">
           <Navigation item="collections" />
-            <div id="holder">
+            <form id="holder">
                 <h1 style={{marginTop: "0px"}}>New Collection</h1>
                 <label>Name</label>
                 <br />
@@ -61,6 +64,7 @@ class CollectionNew extends React.Component {
                  onChange={(e) => {
                   e.target.value = ReplaceSpaces(e.target.value, '-')
                 }} 
+                required={true}
                 style={{width: "500px"}}  type="text" placeholder="Collection name" />
                 <br />
                 <label>Description</label>
@@ -71,6 +75,7 @@ class CollectionNew extends React.Component {
                     style={{width: "75px", height : "30px", padding : "0"}} 
                     className="theme-green-bg new-collection-button"
                     onClick={this.Save.bind(this)}
+                    type="submit"
                     >Save</button>
                   <button 
                   style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
@@ -78,7 +83,7 @@ class CollectionNew extends React.Component {
                   onClick={this.props.history.goBack}
                   >Cancel</button>
                 </div>
-            </div>
+            </form>
         </main>
       );
     }
