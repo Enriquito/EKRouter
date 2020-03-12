@@ -42,7 +42,8 @@ class Collection extends React.Component {
         });
     }
 
-    deleteCollection(){
+    deleteCollection(e){
+        e.preventDefault();
         let r = window.confirm("Are you sure you want to delete this collection? All items and properties will be deleted.");
 
         if(!r)
@@ -62,41 +63,42 @@ class Collection extends React.Component {
         });
     }
 
-    Save(){
-      const name = document.getElementById("collection-name").value;
-      const description = document.getElementById("collection-description").value;
+    Save(e){
+        e.preventDefault();
+        const name = document.getElementById("collection-name");
+        const description = document.getElementById("collection-description");
 
-      fetch('http://localhost/api/collection', {
-          method : "PUT",
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ 
-              collection : {
-                id : this.state.Collection.ID,
-                name: name,
-                description: description,
-                owner : 14
-              }
-            }
-          )
-      })
-      .then(function(data){
-          if(data.status !== 200)
-            alert("Error while updating page");
-      })
-      .catch(function(error){
-        alert('error');
-          this.setState(
-              {
-                  type : "error-messages",
-                  messages : "Something went wrong..."
-              });
-      }.bind(this));
+        if(!name.checkValidity())
+            return;
+
+        fetch('http://localhost/api/collection', {
+            method : "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                collection : {
+                    id : this.state.Collection.ID,
+                    name: name.value,
+                    description: description.value,
+                    owner : 14
+                }
+                }
+            )
+        })
+        .then(function(data){
+            if(data.status === 200)
+                window.location = `/collection/edit/${name.value}`;
+            else
+                alert("Error while updating page");
+        })
+        .catch(function(error){
+            alert('error');
+        });
     }
 
-    deleteProperty(id, arrayIndex){
+    deleteProperty(e, id, arrayIndex){
         let r = window.confirm("Are you sure you want to delete this property?");
 
         if(r === false)
@@ -113,7 +115,6 @@ class Collection extends React.Component {
           }
       })
       .then(function(data){
-          
           if(data.status === 200){
               this.setState({
                   Collection : collection
@@ -352,11 +353,13 @@ class Collection extends React.Component {
       return (
         <main className="flex">
           <Navigation item="collections" />
-            <div id="holder">
+            <form id="holder">
                 <h1 style={{marginTop: "0px"}}>Edit Collection</h1>
                 <label>Name</label>
                 <br />
-                <input id="collection-name" 
+                <input 
+                required={true}
+                id="collection-name" 
                 onChange={(e) => {
                     e.target.value = ReplaceSpaces(e.target.value, '-')
                 }} 
@@ -369,12 +372,16 @@ class Collection extends React.Component {
                     <button 
                     style={{width: "75px", height : "30px", padding : "0"}} 
                     className="theme-green-bg new-collection-button"
-                    onClick={this.Save.bind(this)}
+                    onClick={(e) => {
+                        this.Save(e);
+                    }}
                     >Save</button>
                     <button 
                     style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
                     className="theme-red-bg new-collection-button"
-                    onClick={this.deleteCollection.bind(this)}
+                    onClick={(e) => {
+                        this.deleteCollection(e);
+                    }}
                     >Delete</button>
                 </div>
                 
@@ -419,7 +426,7 @@ class Collection extends React.Component {
                         </table>
                     </div>
                 </div>
-            </div>
+            </form>
         </main>
       );
     }

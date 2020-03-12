@@ -16,7 +16,8 @@ class CollectionNew extends React.Component {
 
     }
 
-    Save(){
+    Save(e){
+      e.preventDefault();
       const name = document.getElementById("collection-name");
       const description = document.getElementById("collection-description");
 
@@ -74,7 +75,9 @@ class CollectionNew extends React.Component {
                     <button 
                     style={{width: "75px", height : "30px", padding : "0"}} 
                     className="theme-green-bg new-collection-button"
-                    onClick={this.Save.bind(this)}
+                    onClick={(e) => {
+                      this.Save(e);
+                    }}
                     type="submit"
                     >Save</button>
                   <button 
