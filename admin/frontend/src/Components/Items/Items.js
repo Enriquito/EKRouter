@@ -1,5 +1,5 @@
 import React from 'react';
-import { hasSession } from '../Helpers';
+import { hasSession, formatDate } from '../Helpers';
 import Navigation from '../Navigation';
 import './items.css';
 
@@ -75,6 +75,7 @@ class Items extends React.Component {
       if(this.state.Collection != null){
         items = this.state.Collection.Items.map((el) => {
           let title = null;
+          const date = formatDate(el.Created);
 
           el.Properties.forEach(el => {
             if(el.Name === "Title")
@@ -85,7 +86,7 @@ class Items extends React.Component {
             <tr key={el.ID}>
               <td>{title}</td>
               <td></td>
-              <td>{el.Created}</td>
+              <td>{`${date.day}-${date.month}-${date.year}`}</td>
               <td onClick={() => {document.location = `/item/edit/${el.ID.toLowerCase()}`}}><div className="gg-pen"></div></td>
             </tr>
             )
