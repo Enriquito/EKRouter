@@ -1,5 +1,5 @@
 import React from 'react';
-import { hasSession } from '../Helpers';
+import { hasSession, formatDate } from '../Helpers';
 import Navigation from '../Navigation';
 import './collections.css';
 
@@ -86,10 +86,11 @@ class Collections extends React.Component {
 
       if(this.state.Collections != null){
         cols = this.state.Collections.map((el) => {
+          const date = formatDate(el.Created);
           return(
             <tr key={el.ID}>
               <td>{el.Name}</td>
-              <td>{el.Created}</td>
+              <td>{`${date.day}-${date.month}-${date.year}`}</td>
               <td>{el.ItemCount}</td>
               <td>{el.Owner}</td>
               <td onClick={() => {document.location = `collection/edit/${el.Name.toLowerCase()}`}}><div className="gg-pen"></div></td>
