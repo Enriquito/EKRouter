@@ -9,6 +9,8 @@ class User
     public $ID;
     public $Username;
     public $Email;
+    public $Created;
+    public $LastLogin;
 
     public function Login($email, $password)
     {
@@ -230,5 +232,29 @@ class User
     public static function Logout()
     {
         session_destroy();
+    }
+
+    public static function ListAll() : Array
+    {
+        $database = new Database();
+        
+        $result = $database->query("SELECT `id`, `username`, `last_login`, `created`, `email` FROM users");
+
+        $ret = [];
+
+        foreach($result as $user)
+        {
+            $u = new User();
+
+            $u->ID = $user['id'];
+            $u->Username = $user['username'];
+            $u->Email = $user['email'];
+            $u->Created = $user['created'];
+            $u->LastLogin = $user['last_login'];
+
+            $ret[] = $u;
+        }
+
+        return $ret;
     }
 }

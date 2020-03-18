@@ -1,7 +1,7 @@
 <?php
 namespace Q\Core;
 
-// User stuff
+// Users
 $route = $app->Router->Head("api/logout", function(){
     User::Logout();
 });
@@ -41,7 +41,7 @@ $app->Router->Post("api/check-password", function(){
     $usr->DoesPasswordMeetRequierments($password);
 });
 
-$app->Router->Post("api/user/create", function(){
+$app->Router->Post("api/user", function(){
     $data = Request::GetJson();
 
     $user = new User();
@@ -52,11 +52,20 @@ $app->Router->Post("api/user/create", function(){
     $result = $user->Create($data["user"]["password"]);
 
     if($result["code"] == 1010)
-        Response::Json($result);
+        Response::Json($result, 201);
     else
-        Response::Json($result);
+        Response::Json($result, 200);
 
 })->UseAuthentication(true);
+
+$app->Router->Get("api/users/list", function(){
+    $result = User::ListAll();
+
+    if(count($result) > 0)
+        Response::Json($result, 200);
+    else
+        Response::SetResponse(500);
+});
 
 //Collections
 $app->Router->Post("api/collection", function(){
@@ -66,7 +75,7 @@ $app->Router->Post("api/collection", function(){
 
     $collection->Name = $data["collection"]["name"];
     $collection->Description = $data["collection"]["description"];
-    $collection->Owner = $data["collection"]["owner"];
+    $collection->Owner = $_SESSION['UserID'];
 
     if($collection->Create())
     {
@@ -225,18 +234,23 @@ $app->Router->Post("api/item", function(){
 
     $item = new Item();
     $item->Collection = $data["item"]["collection"];
-    $item->Creator = $data["item"]["creator"];
+    $item->Creator = $_SESSION['UserID'];
 
     $result = $item->Create($data["item"]["values"]);
 
     if($result)
-        Response::SetResponse(200);
+        Response::SetResponse(201);
     else
         Response::SetResponse(500);
 })->UseAuthentication(true);
 
 $app->Router->Delete("api/item/destroy/{id}", function($param){
-    Item::Destroy($param["id"]);
+    
+
+    if(Item::Destroy($param["id"]))
+        Response::SetResponse(200);
+    else
+        Response::SetResponse(404);
 })->UseAuthentication(true);
 
 //Types
