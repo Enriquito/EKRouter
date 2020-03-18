@@ -16,12 +16,26 @@ main nav ul li
 {
     list-style-type: none;
     padding: 5px;
+    color: #FFF;
+    font-size: 1.1em;
+}
+main nav ul li img
+{
+    height: 32px;
+    width: 32px;
+    margin-right: 20px;
+}
+main nav ul li:hover
+{
+    color: #1abc9c;
+    cursor: pointer;
 }
 main nav ul li a
 {
     color: #FFF;
     text-decoration: none;
     font-weight: bold;
+    display: block;
 }
 main nav ul li a:hover
 {

@@ -18,7 +18,7 @@ class UserNew extends React.Component {
         const email = document.getElementById('email');
         const password = document.getElementById('password');
 
-        if(!username.checkValidity(), !email.checkValidity(), !password.checkValidity())
+        if(!username.checkValidity() || !email.checkValidity() || !password.checkValidity())
             return;
 
         fetch('http://localhost/api/user', {

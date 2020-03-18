@@ -21,7 +21,7 @@ class Login extends React.Component {
                 'mode' : 'no-cors'
             },
             body: JSON.stringify({
-                email: document.getElementById('username').value,
+                username: document.getElementById('username').value,
                 password: document.getElementById('password').value,
             })
         })

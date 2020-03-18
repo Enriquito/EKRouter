@@ -1,6 +1,7 @@
 import React from 'react';
 import { hasSession, formatDate } from '../Helpers';
 import Navigation from '../Navigation';
+import editIcon from '../../icons/edit.svg';
 import './items.css';
 
 class Items extends React.Component {
@@ -86,8 +87,12 @@ class Items extends React.Component {
             <tr key={el.ID}>
               <td>{title}</td>
               <td>{el.Creator}</td>
-              <td>{`${date.day}-${date.month}-${date.year}`}</td>
-              <td onClick={() => {document.location = `/item/edit/${el.ID.toLowerCase()}`}}><div className="gg-pen"></div></td>
+              <td>{`${date.day}-${date.month}-${date.year} ${date.hour}:${date.minutes}`}</td>
+              <td>
+                <div onClick={() => {document.location = `/item/edit/${el.ID.toLowerCase()}`}}>
+                  <img style={{height : '40px'}} src={editIcon} alt='Edit item' />
+                </div>
+              </td>
             </tr>
             )
         });
@@ -112,7 +117,7 @@ class Items extends React.Component {
                   <th>Title</th>
                   <th>Author</th>
                   <th>Date</th>
-                  <td></td>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>

@@ -24,10 +24,10 @@ $app->Router->Post("api/create-password", function(){
 $app->Router->Post("api/login", function(){
     $data = Request::GetJson();
     $password = $data["password"];
-    $email = $data["email"];
+    $username = $data["username"];
 
     $user = new User();
-    $user->Login($email, $password);
+    $user->Login($username, $password);
 });
 
 $app->Router->Get("api/authenticate", function(){

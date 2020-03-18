@@ -2,6 +2,8 @@ import React from 'react';
 import { hasSession, formatDate } from '../Helpers';
 import Navigation from '../Navigation';
 import './collections.css';
+import editIcon from '../../icons/edit.svg';
+import listIcon from '../../icons/list.svg';
 
 class Collections extends React.Component {
     constructor(props){
@@ -93,8 +95,14 @@ class Collections extends React.Component {
               <td>{`${date.day}-${date.month}-${date.year}`}</td>
               <td>{el.ItemCount}</td>
               <td>{el.Owner}</td>
-              <td onClick={() => {document.location = `collection/edit/${el.Name.toLowerCase()}`}}><div className="gg-pen"></div></td>
-              <td onClick={() => {document.location = `items/${el.Name.toLowerCase()}`}}><div className="gg-feed"></div></td>
+              <td className='flex'>
+                <div onClick={() => {document.location = `collection/edit/${el.Name.toLowerCase()}`}}>
+                  <img style={{height : "40px"}} src={editIcon} alt='Edit collection' />
+                </div>
+                <div onClick={() => {document.location = `items/${el.Name.toLowerCase()}`}}>
+                  <img style={{height : "40px"}} src={listIcon} alt='List items' />
+                </div>
+                </td>
             </tr>
             )
         });
@@ -115,7 +123,7 @@ class Collections extends React.Component {
                   <th>Created</th>
                   <th>Items</th>
                   <th>Created by</th>
-                  <th></th>
+                  <th>Actions</th>
                   <th></th>
                 </tr>
               </thead>

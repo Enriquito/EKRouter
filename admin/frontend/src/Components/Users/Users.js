@@ -32,12 +32,14 @@ class Users extends React.Component {
 
         if(this.state.Users != null){
             users = this.state.Users.map((el) => {
+              const dateCreated = formatDate(el.Created);
+              const lastLogin = formatDate(el.LastLogin);
                 return(
                     <tr key={el.ID}>
                         <td>{el.Username}</td>
                         <td>{el.Email}</td>
-                        <td>{el.Created}</td>
-                        <td>{el.LastLogin}</td>
+                        <td>{`${dateCreated.day}-${dateCreated.month}-${dateCreated.year}`}</td>
+                        <td>{`${lastLogin.day}-${lastLogin.month}-${lastLogin.year} ${lastLogin.hour}:${lastLogin.minutes}`}</td>
                         <td><div className="gg-pen"></div></td>
                     </tr>
                 );
@@ -55,11 +57,11 @@ class Users extends React.Component {
             <table>
                 <thead>
                     <tr>
-                        <td>Username</td>
-                        <td>Email</td>
-                        <td>Created</td>
-                        <td>Last Login</td>
-                        <td></td>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Created</th>
+                        <th>Last Login</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

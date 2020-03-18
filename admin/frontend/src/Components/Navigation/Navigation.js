@@ -1,26 +1,31 @@
 import React from 'react';
 import './navigation.css';
 import { logout } from '../Helpers';
+import dashboardIcon from '../../icons/dashboard.svg';
+import exitIcon from '../../icons/exit.svg';
+import settingsIcon from '../../icons/settings.svg';
+import usersIcon from '../../icons/people.svg';
+import collectionItem from '../../icons/apps-alt.svg';
 
 function Navigation(activeTab){
-    let dashboard = <li><a href="/dashboard">Dashboard</a></li>;
-    let collections = <li><a href="/collections">Collections</a></li>;
-    let users = <li><a href="/users">Users</a></li>;
-    let settings = <li><a href="/settings">Settings</a></li>;
+    let dashboard = <a href="/dashboard">Dashboard</a>;
+    let collections = <a href="/collections">Collections</a>;
+    let users = <a href="/users">Users</a>;
+    let settings = <a href="/settings">Settings</a>;
 
     switch(activeTab.item)
     {
         case "dashboard":
-            dashboard = <li><a style={{"color" : "#1abc9c"}} href="/dashboard">Dashboard</a></li>
+            dashboard = <a style={{"color" : "#1abc9c"}} href="/dashboard">Dashboard</a>;
         break;
         case "collections":
-            collections = <li><a style={{"color" : "#1abc9c"}} href="/collections">Collections</a></li>
+            collections = <a style={{"color" : "#1abc9c"}} href="/collections">Collections</a>;
             break;
         case "users":
-            users = <li><a style={{"color" : "#1abc9c"}} href="/users">Users</a></li>
+            users = <a style={{"color" : "#1abc9c"}} href="/users">Users</a>;
             break;
         case "settings":
-            settings = <li><a style={{"color" : "#1abc9c"}} href="/settings">Settings</a></li>
+            settings = <a style={{"color" : "#1abc9c"}} href="/settings">Settings</a>;
             break;
         default:
             
@@ -30,11 +35,11 @@ function Navigation(activeTab){
     return(
         <nav>
             <ul>
-                {dashboard}
-                {collections}
-                {users}
-                {settings}
-                <li><a onClick={logout} href="#">Logout</a></li>
+                <li className='flex vertical-center'><img src={dashboardIcon} alt='Dashboard' />{dashboard}</li>
+                <li className='flex vertical-center'><img src={collectionItem} alt='Collections' />{collections}</li>
+                <li className='flex vertical-center'><img src={usersIcon} alt='Users' />{users}</li>
+                <li className='flex vertical-center'><img src={settingsIcon} alt='Settings' />{settings}</li>
+                <li onClick={logout} className='flex vertical-center'><img src={exitIcon} alt='Settings' />Logout</li>
             </ul>
         </nav>
     );

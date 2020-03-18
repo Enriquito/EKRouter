@@ -12,17 +12,18 @@ class User
     public $Created;
     public $LastLogin;
 
-    public function Login($email, $password)
+    public function Login($username, $password)
     {
         $database = new Database();
 
-        $email = $this->CheckInput($email);
+        $username = $this->CheckInput($username);
         $password = $this->CheckInput($password);
-        $countQuery = "SELECT email FROM users WHERE email = '$email'";
+
+        $countQuery = "SELECT email FROM users WHERE username = '$username'";
         
         if($database->CountRows($countQuery) == 1)
         {
-            $userData = $database->Query("SELECT * FROM users WHERE email = '$email'", true);
+            $userData = $database->Query("SELECT * FROM users WHERE username = '$username'", true);
 
             if(password_verify($password, $userData["password"]))
             {
@@ -156,7 +157,10 @@ class User
         $database = new Database();
 
         $this->Username = $this->CheckInput($this->Username);
+        $this->Username = strtolower($this->Username);
+
         $this->Email = $this->CheckInput($this->Email);
+        $this->Email = strtolower($this->Email);
 
         if(!$this->DoesPasswordMeetRequierments($password))
         {

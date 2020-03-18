@@ -9,12 +9,13 @@ export function hasSession(){
     })
     .catch((error) => {
         window.location = '/';
-        alert(error);
     })
 }
 
 export function logout(){
-    fetch("http://localhost/api/logout", {method : "HEAD"})
+    fetch("http://localhost/api/logout", {
+        method : "HEAD"
+    })
     .then((resp) => {
           window.location = '/';
     })
