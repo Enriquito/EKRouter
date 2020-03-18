@@ -24,6 +24,7 @@ class Item extends React.Component {
         })
         .catch((error) => {
             alert("Error could not fetch data.");
+            window.location = `/dashboard`;
         });
     }
 
@@ -74,24 +75,33 @@ class Item extends React.Component {
       });
     }
 
-    delete(){
+    delete(e){
       let r = window.confirm("Are you sure you want to delete this item?");
 
       if(!r)
           return;
 
       fetch(`http://localhost/api/item/destroy/${this.state.Item.ID}`, {
-          method : "DELETE"
+          method : 'DELETE'
       })
       .then((data) => {
+        console.log(data);
           if(data.status === 200)
-              this.props.history.goBack();
+          {
+            this.props.history.goBack();
+          }
           else
-              alert("Error while deleting item");
+          {
+            alert("Error while deleting item");
+            this.props.history.goBack();
+          }
+              
       })
       .catch((error) => {
-          alert("Error while deleting item");
+          alert(error);
       });
+
+      e.preventDefault();
   }
     
     render() {  
@@ -177,7 +187,9 @@ class Item extends React.Component {
                     <button 
                     style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
                     className="theme-red-bg new-collection-button"
-                    onClick={this.delete.bind(this)}
+                    onClick={(e) => {
+                      this.delete(e)
+                    }}
                     >Delete</button>
                 </div>
             </form>

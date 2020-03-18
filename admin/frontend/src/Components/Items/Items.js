@@ -85,7 +85,7 @@ class Items extends React.Component {
           return(
             <tr key={el.ID}>
               <td>{title}</td>
-              <td></td>
+              <td>{el.Creator}</td>
               <td>{`${date.day}-${date.month}-${date.year}`}</td>
               <td onClick={() => {document.location = `/item/edit/${el.ID.toLowerCase()}`}}><div className="gg-pen"></div></td>
             </tr>

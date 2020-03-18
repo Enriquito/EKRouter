@@ -51,8 +51,13 @@ class Item
     public static function Get($id)
     {
         $database = new Database();
+        $query = "SELECT I.id, I.collection, I.created , U.username
+        FROM items I
+        JOIN users U
+        ON I.creator = U.id
+        WHERE I.id = $id";
 
-        $data = $database->query("SELECT * FROM items WHERE id = $id", true);
+        $data = $database->query($query, true);
 
         if($data == null)
         {
@@ -65,7 +70,7 @@ class Item
         $item->ID = $data['id'];
         $item->Created = $data['created'];
         $item->Collection = $data['collection'];
-        $item->Creator = $data['creator'];
+        $item->Creator = $data['username'];
 
         $query = "SELECT pr.name, pv.value, t.type FROM items i
         JOIN property_values pv
@@ -103,7 +108,13 @@ class Item
 
         $colID = $database->query("SELECT id FROM collections WHERE name = '$collection'", true)['id'];
 
-        $data = $database->query("SELECT * FROM items WHERE `collection` = $colID");
+        $query = "SELECT I.id, I.collection, I.created , U.username
+        FROM items I
+        JOIN users U
+        ON I.creator = U.id
+        WHERE I.collection = $colID";
+
+        $data = $database->query($query);
 
         if($data == null)
         {
@@ -119,7 +130,7 @@ class Item
 
             $item->ID = $itemEl['id'];
             $item->Created = $itemEl['created'];
-            $item->Creator = $itemEl['creator'];
+            $item->Creator = $itemEl['username'];
             $item->Collection = $colID;
 
             $query = "SELECT pr.name, pv.value, t.type FROM items i

@@ -9,6 +9,8 @@ import Collection from './Components/Collection';
 import Item from './Components/Item';
 import ItemNew from './Components/ItemNew';
 import CollectionNew from './Components/CollectionNew';
+import Users from './Components/Users';
+import UserNew from './Components/UserNew';
 
 
 function App() {
@@ -24,6 +26,10 @@ function App() {
         <Route exact path="/items/:collection" component={Items} />
         <Route exact path="/item/edit/:id" component={Item} />
         <Route exact path="/item/new/collection/:collection" component={ItemNew} />
+
+        <Route exact path="/users" component={Users} />
+        <Route exact path="/user/new" component={UserNew} />
+
     </Router>
   );
 }

@@ -28,7 +28,6 @@ class ItemNew extends React.Component {
           });
       }
 
-
     Save(){
       fetch('http://localhost/api/item', {
           method : "POST",
@@ -46,11 +45,13 @@ class ItemNew extends React.Component {
           )
       })
       .then(function(data){
-          if(data.status !== 200)
+          if(data.status === 201)
+            window.location = `/items/${this.state.Collection.Name}`
+          else
             alert("Error while updating page");
-      })
+      }.bind(this))
       .catch(function(error){
-        alert('error');
+        alert(error);
       });
     }
 
