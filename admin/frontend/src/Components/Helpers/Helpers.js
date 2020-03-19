@@ -12,6 +12,19 @@ export function hasSession(){
     })
 }
 
+export function getUser(){
+    fetch("http://localhost/api/user/current")
+    .then((resp) => resp.json())
+    .then((resp) => {
+        if(resp.Code === 200){
+         return resp;
+        }
+    })
+    .catch((error) => {
+        console.warn('Could not fetch user data');
+    })
+}
+
 export function logout(){
     fetch("http://localhost/api/logout", {
         method : "HEAD"
