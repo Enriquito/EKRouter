@@ -7,7 +7,10 @@ use Q\Core\Response;
 class User
 {
     public $ID;
+    public $Role;
     public $Username;
+    public $FirstName;
+    public $LastName;
     public $Email;
     public $Created;
     public $LastLogin;
@@ -260,5 +263,28 @@ class User
         }
 
         return $ret;
+    }
+
+    public static function Load($id)
+    {
+        $database = new Database();
+        $data = $database->Query("SELECT id, `role`,first_name, last_name , username, email, created, last_login FROM users WHERE id = $id",true);
+        $role = $database->Query("SELECT id as 'ID', `name` as 'Name' FROM roles WHERE id = " . $data['role'],true);
+
+        if(count($data) == null)
+            return null;
+        
+        $user = new User();
+
+        $user->ID = $data['id'];
+        $user->Role = $role;
+        $user->FirstName = $data['first_name'];
+        $user->LastName = $data['last_name'];
+        $user->Username = $data['username'];
+        $user->Email = $data['email'];
+        $user->Created = $data['created'];
+        $user->LastLogin = $data['last_login'];
+
+        return $user;
     }
 }

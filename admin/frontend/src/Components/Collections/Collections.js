@@ -1,5 +1,5 @@
 import React from 'react';
-import { hasSession, formatDate } from '../Helpers';
+import { hasSession, formatDate, getUser } from '../Helpers';
 import Navigation from '../Navigation';
 import './collections.css';
 import editIcon from '../../icons/edit.svg';
@@ -12,6 +12,7 @@ class Collections extends React.Component {
         super(props);
 
         this.state = {
+          CurrentUser : null,
           Collections: [],
           Changes : {
             Properties : null,
@@ -25,6 +26,10 @@ class Collections extends React.Component {
 
     componentDidMount(){
         this.loadCollections();
+
+        getUser().then((resp) => {
+          this.setState({CurrentUser : resp});
+        });
     }
 
     update(){
@@ -109,34 +114,38 @@ class Collections extends React.Component {
         });
       }
 
+      let bar = null;
+
+      if(this.state.CurrentUser != null)
+        bar = <Topbar user={this.state.CurrentUser}/>;
+
       return (
         <main>
-          <Topbar />
-        <div style={{height: "100%"}} className="flex">
-          <Navigation item="collections" />
-          <div id="holder">
-            <div className="flex">
-              <h1 style={{marginTop: "0px"}}>Collections</h1>
-              <button onClick={() => {window.location = "/collection/new"}} style={{width: "100px", height : "30px", marginLeft : "10px"}} className="theme-green-bg new-collection-button">New</button>
+          {bar}
+          <div style={{height: "100%"}} className="flex">
+            <Navigation item="collections" />
+            <div id="holder">
+              <div className="flex">
+                <h1 style={{marginTop: "0px"}}>Collections</h1>
+                <button onClick={() => {window.location = "/collection/new"}} style={{width: "100px", height : "30px", marginLeft : "10px"}} className="theme-green-bg new-collection-button">New</button>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Created</th>
+                    <th>Items</th>
+                    <th>Created by</th>
+                    <th>Actions</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cols}
+                </tbody>
+              </table>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Created</th>
-                  <th>Items</th>
-                  <th>Created by</th>
-                  <th>Actions</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {cols}
-              </tbody>
-            </table>
           </div>
-        
-        </div>
         </main>  
       );
     }

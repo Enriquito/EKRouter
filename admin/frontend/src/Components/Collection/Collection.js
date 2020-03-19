@@ -1,7 +1,8 @@
 import React from 'react';
-import { hasSession, ReplaceSpaces } from '../Helpers';
+import { hasSession, ReplaceSpaces, getUser } from '../Helpers';
 import Navigation from '../Navigation';
 import './collection.css';
+import Topbar from '../Topbar';
 
 class Collection extends React.Component {
     constructor(props){
@@ -9,15 +10,20 @@ class Collection extends React.Component {
         super(props);
 
         this.state = {
-          Collection : null,
-          Changes : null,
-          Types : null
+            CurrentUser : null,
+            Collection : null,
+            Changes : null,
+            Types : null
         };
     }
 
     componentDidMount(){
         this.getCollection();
         this.getTypes();
+
+        getUser().then((resp) => {
+            this.setState({CurrentUser : resp});
+          });
     }
 
     getCollection(){
@@ -365,107 +371,110 @@ class Collection extends React.Component {
             });  
         }
 
+        let bar = null;
+
+        if(this.state.CurrentUser != null)
+          bar = <Topbar user={this.state.CurrentUser}/>;
+
       return (
-        <main className="flex">
-          <Navigation item="collections" />
-            <div id="holder">
-                <form>
-                    <h1 style={{marginTop: "0px"}}>Edit Collection</h1>
-                    <label>Name</label>
-                    <br />
-                    <input 
-                    required={true}
-                    id="collection-name" 
-                    onChange={(e) => {
-                        e.target.value = ReplaceSpaces(e.target.value, '-')
-                    }} 
-                    style={{width: "500px"}} defaultValue={colName} type="text" placeholder="Collection name" />
-                    <br />
-                    <label>Description</label>
-                    <br />
-                    <textarea id="collection-description" style={{width: "500px", height: "150px", resize: "vertical"}} onChange={() => {}} defaultValue={colDescription}></textarea>
-                    <div className="flex">
-                        <button 
-                        style={{width: "75px", height : "30px", padding : "0"}} 
-                        className="theme-green-bg new-collection-button"
-                        onClick={(e) => {
-                            this.Save(e);
-                        }}
-                        >Save</button>
-                        <button 
-                        style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
-                        className="theme-red-bg new-collection-button"
-                        onClick={(e) => {
-                            this.deleteCollection(e);
-                        }}
-                        >Delete</button>
-                    </div>
-                </form>
-                
-            <form>
-                <h2 style={{margin: "10px 0"}}>Properties</h2>
-                <div>
-                    <div className="flex center">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Description</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input required={true} id="new-property-name" type="text" placeholder="Property name"/>
-                                    </td>
-                                    <td>
-                                        <select id="new-property-type">
-                                            {types}
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input id="new-property-description" type="text" placeholder="Property description"/>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <button 
-                                        style={{width: "75px", height : "30px", padding : "0"}} 
-                                        className="theme-green-bg new-collection-button"
-                                        onClick={(e) => {this.createNewProperty(e)}}
-                                        >New</button>
-                                        </td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </form>           
-            <form>
-            <table>
-                <thead >
-                    <tr style={{"background" : "none"}}>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {properties}
-                </tbody>
-            </table>
-            </form>
-                        
+        <main>
+            {bar}
+            <div style={{height: "100%"}} className="flex">
+                <Navigation item="collections" />
+                <div id="holder">
+                    <form>
+                        <h1 style={{marginTop: "0px"}}>Edit Collection</h1>
+                        <label>Name</label>
+                        <br />
+                        <input 
+                        required={true}
+                        id="collection-name" 
+                        onChange={(e) => {
+                            e.target.value = ReplaceSpaces(e.target.value, '-')
+                        }} 
+                        style={{width: "500px"}} defaultValue={colName} type="text" placeholder="Collection name" />
+                        <br />
+                        <label>Description</label>
+                        <br />
+                        <textarea id="collection-description" style={{width: "500px", height: "150px", resize: "vertical"}} onChange={() => {}} defaultValue={colDescription}></textarea>
+                        <div className="flex">
+                            <button 
+                            style={{width: "75px", height : "30px", padding : "0"}} 
+                            className="theme-green-bg new-collection-button"
+                            onClick={(e) => {
+                                this.Save(e);
+                            }}
+                            >Save</button>
+                            <button 
+                            style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
+                            className="theme-red-bg new-collection-button"
+                            onClick={(e) => {
+                                this.deleteCollection(e);
+                            }}
+                            >Delete</button>
+                        </div>
+                    </form>
                     
-                
-            
-                
+                <form>
+                    <h2 style={{margin: "10px 0"}}>Properties</h2>
+                    <div>
+                        <div className="flex center">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td>Type</td>
+                                        <td>Description</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input required={true} id="new-property-name" type="text" placeholder="Property name"/>
+                                        </td>
+                                        <td>
+                                            <select id="new-property-type">
+                                                {types}
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input id="new-property-description" type="text" placeholder="Property description"/>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <button 
+                                            style={{width: "75px", height : "30px", padding : "0"}} 
+                                            className="theme-green-bg new-collection-button"
+                                            onClick={(e) => {this.createNewProperty(e)}}
+                                            >New</button>
+                                            </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>           
+                <form>
+                <table>
+                    <thead >
+                        <tr style={{"background" : "none"}}>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {properties}
+                    </tbody>
+                </table>
+                </form>
+                </div>
             </div>
         </main>
       );

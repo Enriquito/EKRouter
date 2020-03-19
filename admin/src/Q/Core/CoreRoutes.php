@@ -16,6 +16,16 @@ $app->Router->Get("api/user/{id}", function($param) use(&$app){
     );
 })->UseAuthentication(true);
 
+$app->Router->Get("api/user", function(){
+    $user = User::Load($_SESSION['UserID']);
+
+    if($user != null)
+        Response::Json($user, 200);
+    else
+        Response::SetResponse(404);
+    
+})->UseAuthentication(true);
+
 $app->Router->Post("api/create-password", function(){
     $password = Request::GetJson()["password"];
     Response::Json(["Password" => User::CreatePassword($password)]);
