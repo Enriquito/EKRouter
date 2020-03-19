@@ -4,6 +4,7 @@ import Navigation from '../Navigation';
 import './collections.css';
 import editIcon from '../../icons/edit.svg';
 import listIcon from '../../icons/list.svg';
+import Topbar from '../Topbar';
 
 class Collections extends React.Component {
     constructor(props){
@@ -109,7 +110,9 @@ class Collections extends React.Component {
       }
 
       return (
-        <main className="flex">
+        <main>
+          <Topbar />
+        <div style={{height: "100%"}} className="flex">
           <Navigation item="collections" />
           <div id="holder">
             <div className="flex">
@@ -132,7 +135,9 @@ class Collections extends React.Component {
               </tbody>
             </table>
           </div>
-        </main>
+        
+        </div>
+        </main>  
       );
     }
   }
