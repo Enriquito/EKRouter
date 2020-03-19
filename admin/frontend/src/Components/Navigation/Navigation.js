@@ -35,8 +35,8 @@ function Navigation(activeTab){
     return(
         <nav>
             <ul>
-                <li className='flex vertical-center'><img src={dashboardIcon} alt='Dashboard' />{dashboard}</li>
-                <li className='flex vertical-center'><img src={collectionItem} alt='Collections' />{collections}</li>
+                <li className='flex vertical-center'><img src={collectionItem} alt='Dashboard' />{dashboard}</li>
+                <li className='flex vertical-center'><img src={dashboardIcon} alt='Collections' />{collections}</li>
                 <li className='flex vertical-center'><img src={usersIcon} alt='Users' />{users}</li>
                 <li className='flex vertical-center'><img src={settingsIcon} alt='Settings' />{settings}</li>
                 <li onClick={logout} className='flex vertical-center'><img src={exitIcon} alt='Settings' />Logout</li>
