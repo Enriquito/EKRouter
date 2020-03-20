@@ -1,8 +1,9 @@
 import React from 'react';
-import { hasSession, formatDate } from '../Helpers';
+import { hasSession, formatDate, getUser } from '../Helpers';
 import Navigation from '../Navigation';
 import editIcon from '../../icons/edit.svg';
 import './items.css';
+import Topbar from '../Topbar';
 
 class Items extends React.Component {
     constructor(props){
@@ -10,12 +11,16 @@ class Items extends React.Component {
         super(props);
         
         this.state = {
+          CurrentUser : null,
           Collection : null
         };
     }
 
     componentDidMount(){
         this.Load();
+        getUser().then((resp) => {
+          this.setState({CurrentUser : resp});
+        });
     }
 
     Save(event){
@@ -97,33 +102,41 @@ class Items extends React.Component {
             )
         });
       }
+
+      let bar = null;
+
+      if(this.state.CurrentUser != null)
+        bar = <Topbar user={this.state.CurrentUser}/>;
           
       return (
-        <main className="flex">
-          <Navigation item="collections" />
-          <div id="holder">
-          <div className="flex">
-            <h1 style={{marginTop: "0px"}}>{this.props.match.params.collection} items</h1>
-            <button 
-            style={{width: "75px", height : "30px", padding : "0"}}
-            onClick={() => {
-              window.location = `/item/new/collection/${this.state.Collection.Name}`
-            }}
-            className="theme-green-bg new-collection-button">New</button>
+        <main>
+          {bar}
+          <div style={{height : "100%"}} className="flex">
+            <Navigation item="collections" />
+            <div id="holder">
+            <div className="flex">
+              <h1 style={{marginTop: "0px"}}>{this.props.match.params.collection} items</h1>
+              <button 
+              style={{width: "75px", height : "30px", padding : "0"}}
+              onClick={() => {
+                window.location = `/item/new/collection/${this.state.Collection.Name}`
+              }}
+              className="theme-green-bg new-collection-button">New</button>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {items}
+                </tbody>
+              </table>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {items}
-              </tbody>
-            </table>
           </div>
         </main>
       );

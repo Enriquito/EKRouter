@@ -1,6 +1,7 @@
 import React from 'react';
-import { hasSession } from '../Helpers';
+import { hasSession, getUser } from '../Helpers';
 import Navigation from '../Navigation';
+import Topbar from '../Topbar';
 
 class ItemNew extends React.Component {
     constructor(props){
@@ -9,12 +10,16 @@ class ItemNew extends React.Component {
         this.Item = [];
         
         this.state = {
-            Collection : null
+          CurrentUser : null,
+          Collection : null,
         };
     }
 
     componentDidMount(){
         this.Load();
+        getUser().then((resp) => {
+          this.setState({CurrentUser : resp});
+        });
     }
 
     Load(){
@@ -103,30 +108,36 @@ class ItemNew extends React.Component {
                         {inputField}
                     </div>
                 );
-            });  
-            
-            console.log(this.Item);
+            });              
         }
 
+      let bar = null;
+
+      if(this.state.CurrentUser != null)
+        bar = <Topbar user={this.state.CurrentUser}/>;
+
       return (
-        <main className="flex">
-          <Navigation item="collections" />
-            <div id="holder">
-                <h1 style={{marginTop: "0px"}}>New item</h1>
-                {properties}
-                <div className="flex">
-                    <button 
-                    style={{width: "75px", height : "30px", padding : "0"}} 
-                    className="theme-green-bg new-collection-button"
-                    onClick={this.Save.bind(this)}
-                    >Save</button>
-                    <button 
-                    style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
-                    className="theme-red-bg new-collection-button"
-                    onClick={() => {}}
-                    >Delete</button>
-                </div>
-            </div>
+        <main>
+          {bar}
+          <div style={{height : "100%"}} className="flex">
+            <Navigation item="collections" />
+              <div id="holder">
+                  <h1 style={{marginTop: "0px"}}>New item</h1>
+                  {properties}
+                  <div className="flex">
+                      <button 
+                      style={{width: "75px", height : "30px", padding : "0"}} 
+                      className="theme-green-bg new-collection-button"
+                      onClick={this.Save.bind(this)}
+                      >Save</button>
+                      <button 
+                      style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
+                      className="theme-red-bg new-collection-button"
+                      onClick={() => {}}
+                      >Delete</button>
+                  </div>
+              </div>
+          </div>
         </main>
       );
     }

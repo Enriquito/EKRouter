@@ -1,6 +1,7 @@
 import React from 'react';
-import { hasSession } from '../Helpers';
+import { hasSession, getUser } from '../Helpers';
 import Navigation from '../Navigation';
+import Topbar from '../Topbar';
 
 class Item extends React.Component {
     constructor(props){
@@ -8,12 +9,16 @@ class Item extends React.Component {
         super(props);
         
         this.state = {
+          CurrentUser : null,
           Item : null
         };
     }
 
     componentDidMount(){
         this.getItem();
+        getUser().then((resp) => {
+          this.setState({CurrentUser : resp});
+        });
     }
 
     getItem(){
@@ -162,9 +167,16 @@ class Item extends React.Component {
             });            
         }
 
+      let bar = null;
+
+      if(this.state.CurrentUser != null)
+        bar = <Topbar user={this.state.CurrentUser}/>;
+
       return (
-        <main className="flex">
-          <Navigation item="collections" />
+        <main>
+          {bar}
+          <div style={{height : "100%"}} className="flex">
+            <Navigation item="collections" />
             <form id="holder">
                 <h1 style={{marginTop: "0px"}}>Edit item</h1>
                 {properties}
@@ -193,6 +205,7 @@ class Item extends React.Component {
                     >Delete</button>
                 </div>
             </form>
+          </div>
         </main>
       );
     }

@@ -1,6 +1,7 @@
 import React from 'react';
-import { hasSession } from '../Helpers';
+import { hasSession, getUser } from '../Helpers';
 import Navigation from '../Navigation';
+import Topbar from '../Topbar';
 
 class UserNew extends React.Component {
     constructor(props){
@@ -9,8 +10,15 @@ class UserNew extends React.Component {
         this.Item = [];
         
         this.state = {
+            CurrentUser : null,
             User : null
         };
+    }
+
+    componentDidMount(){
+        getUser().then((resp) => {
+            this.setState({CurrentUser : resp});
+          });
     }
 
     Save(e){
@@ -50,40 +58,48 @@ class UserNew extends React.Component {
     }
     
     render() {  
+
+    let bar = null;
+
+      if(this.state.CurrentUser != null)
+        bar = <Topbar user={this.state.CurrentUser}/>;
         
       return (
-        <main className="flex">
-          <Navigation item="users" />
-            <div id="holder">
-                <h1 style={{marginTop: "0px"}}>New User</h1>
-                <form>
-                    <label for='username'>Username</label>
-                    <br />
-                    <input style={{'width' :'500px'}} id='username' type='text' placeholder='New username' required={true} />
-                    <br />
-                    <label for='email'>Email</label>
-                    <br />
-                    <input style={{'width' :'500px'}} id='email' type='email' placeholder='email@example.com' required={true} />
-                    <br />
-                    <label for='password'>Password</label>
-                    <br />
-                    <input style={{'width' :'500px'}} minLength='8' id='password' type='password' placeholder='Password' required={true} />
-                
-                    <div className="flex">
-                        <button 
-                        style={{width: "75px", height : "30px", padding : "0"}} 
-                        className="theme-green-bg new-collection-button"
-                        onClick={(e) => {
-                            this.Save(e);
-                        }}
-                        >Save</button>
-                        <button 
-                        style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
-                        className="theme-blue-bg new-collection-button"
-                        onClick={this.props.history.goBack}
-                        >Cancel</button>
-                    </div>
-                </form>
+        <main>
+            {bar}
+            <div style={{height : "100%"}} className="flex">
+                <Navigation item="users" />
+                <div id="holder">
+                    <h1 style={{marginTop: "0px"}}>New User</h1>
+                    <form>
+                        <label for='username'>Username</label>
+                        <br />
+                        <input style={{'width' :'500px'}} id='username' type='text' placeholder='New username' required={true} />
+                        <br />
+                        <label for='email'>Email</label>
+                        <br />
+                        <input style={{'width' :'500px'}} id='email' type='email' placeholder='email@example.com' required={true} />
+                        <br />
+                        <label for='password'>Password</label>
+                        <br />
+                        <input style={{'width' :'500px'}} minLength='8' id='password' type='password' placeholder='Password' required={true} />
+                    
+                        <div className="flex">
+                            <button 
+                            style={{width: "75px", height : "30px", padding : "0"}} 
+                            className="theme-green-bg new-collection-button"
+                            onClick={(e) => {
+                                this.Save(e);
+                            }}
+                            >Save</button>
+                            <button 
+                            style={{marginLeft : "0px", width: "75px", height : "30px", padding : "0"}} 
+                            className="theme-blue-bg new-collection-button"
+                            onClick={this.props.history.goBack}
+                            >Cancel</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
       );

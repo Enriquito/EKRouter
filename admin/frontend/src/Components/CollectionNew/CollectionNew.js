@@ -1,6 +1,7 @@
 import React from 'react';
-import { hasSession, ReplaceSpaces } from '../Helpers';
+import { hasSession, ReplaceSpaces, getUser } from '../Helpers';
 import Navigation from '../Navigation';
+import Topbar from '../Topbar';
 
 class CollectionNew extends React.Component {
     constructor(props){
@@ -8,12 +9,15 @@ class CollectionNew extends React.Component {
         super(props);
 
         this.state = {
+          CurrentUser : null,
           Collection : null
         };
     }
 
     componentDidMount(){
-
+      getUser().then((resp) => {
+        this.setState({CurrentUser : resp});
+      });
     }
 
     Save(e){
@@ -56,9 +60,16 @@ class CollectionNew extends React.Component {
   
     render() {  
 
+      let bar = null;
+
+      if(this.state.CurrentUser != null)
+        bar = <Topbar user={this.state.CurrentUser}/>;
+
       return (
-        <main className="flex">
-          <Navigation item="collections" />
+        <main>
+          {bar}
+          <div style={{height: "100%"}} className='flex'>
+            <Navigation item="collections" />
             <form id="holder">
                 <h1 style={{marginTop: "0px"}}>New Collection</h1>
                 <label>Name</label>
@@ -89,6 +100,7 @@ class CollectionNew extends React.Component {
                   >Cancel</button>
                 </div>
             </form>
+          </div>
         </main>
       );
     }

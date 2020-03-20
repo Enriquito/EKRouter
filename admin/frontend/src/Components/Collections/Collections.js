@@ -14,13 +14,6 @@ class Collections extends React.Component {
         this.state = {
           CurrentUser : null,
           Collections: [],
-          Changes : {
-            Properties : null,
-            Collection : {
-              Name : null,
-              Description : null
-            }
-          }
         };
     }
 
@@ -30,12 +23,6 @@ class Collections extends React.Component {
         getUser().then((resp) => {
           this.setState({CurrentUser : resp});
         });
-    }
-
-    update(){
-      if(this.state.Changes.Properties !== null){
-        
-      }
     }
 
     save(event){
