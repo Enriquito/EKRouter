@@ -51,6 +51,32 @@ class User
         }
     }
 
+    public function Update()
+    {
+
+        $database = new Database();
+
+        $this->FirstName = $this->CheckInput($this->FirstName);
+        $this->LastName = $this->CheckInput($this->LastName);
+
+        $this->Email = $this->CheckInput($this->Email);
+        $this->Email = strtolower($this->Email);
+
+        $insertResult = $database->Update("users", [
+            "email" => $this->Email,
+            "first_name" => $this->FirstName,
+            "last_name" => $this->LastName,
+            "role" => $this->Role
+        ], 'id = '. $this->ID);
+
+        $database->Close();
+
+        if($insertResult)
+            return true;
+        else
+            return false;
+    }
+
     public function ChangePassword($oldPassword, $newPassword)
     {
         if($this->Email != null && $_SESSION['UserID'] == $this->ID)

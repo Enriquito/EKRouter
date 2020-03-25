@@ -7,7 +7,8 @@ $route = $app->Router->Head("api/logout", function(){
 });
 
 $app->Router->Get("api/user/{id}", function($param) use(&$app){
-    $data = $app->Database->Query("SELECT id, username, email FROM users WHERE ID = ". $param['id'],true);
+    $data = $app->Database->Query("SELECT id, username, email, first_name 
+    as 'firstname', last_name as 'lastname', `role` FROM users WHERE ID = ". $param['id'],true);
 
     Response::Json(
         [
@@ -79,6 +80,23 @@ $app->Router->Get("api/users/list", function(){
     else
         Response::SetResponse(500);
 });
+
+$app->Router->Put("api/user/{id}", function($param){
+    $data = Request::GetJson();
+
+    $user = new User();
+    $user->ID = $param['id'];
+    $user->Email = $data["user"]["email"];
+    $user->Role = $data["user"]["role"];
+    $user->FirstName = $data["user"]["firstname"];
+    $user->LastName = $data["user"]["lastname"];
+
+    if($user->Update())
+        Response::SetResponse(202);
+    else
+        Response::SetResponse(406);
+
+})->UseAuthentication(true);
 
 //Collections
 $app->Router->Post("api/collection", function(){
