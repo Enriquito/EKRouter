@@ -1,8 +1,7 @@
 export function hasSession(){
     fetch("http://localhost/api/authenticate")
-    .then((resp) => resp.json())
     .then((resp) => {
-        if(resp.Code !== 1005){
+        if(resp.status !== 202){
           window.location = '/';
           alert("no session");
         }

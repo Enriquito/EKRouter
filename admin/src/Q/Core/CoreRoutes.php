@@ -58,13 +58,16 @@ $app->Router->Post("api/user", function(){
     
     $user->Username = $data["user"]["username"];
     $user->Email = $data["user"]["email"];
+    $user->Role = $data["user"]["role"];
+    $user->FirstName = $data["user"]["firstname"];
+    $user->LastName = $data["user"]["lastname"];
 
     $result = $user->Create($data["user"]["password"]);
 
-    if($result["code"] == 1010)
-        Response::Json($result, 201);
+    if($result)
+        Response::SetResponse(201);
     else
-        Response::Json($result, 200);
+        Response::SetResponse(406);
 
 })->UseAuthentication(true);
 
@@ -89,10 +92,7 @@ $app->Router->Post("api/collection", function(){
 
     if($collection->Create())
     {
-        Response::Json([
-            "code" => 000,
-            "messages" => "Collection has been created"
-        ], 201);
+        Response::SetResponse(201);
     }
 })->UseAuthentication(true);
 
@@ -152,11 +152,11 @@ $app->Router->Post("api/property", function() use(&$app){
 
     $property = new Property();
 
-    $property->Name = $data["property"]["name"];
-    $property->Description = $data["property"]["description"];
-    $property->Collection = $data["property"]["collection"];
+    $property->Name = $data["property"]["Name"];
+    $property->Description = $data["property"]["Description"];
+    $property->Collection = $data["property"]["Collection"];
 
-    $tempType = $data["property"]["type"];
+    $tempType = $data["property"]["Type"];
 
     $property->Type = $app->Database->query("SELECT id FROM types WHERE `type` = '$tempType'", true)['id'];
 
@@ -190,8 +190,6 @@ $app->Router->Put("api/property", function() use(&$app){
     $data = $database->query("SELECT id FROM types WHERE `type` = '$type'" , true);
 
     $property->Type = $data['id'];
-
-    print_r($property);
 
     if($property->Update())
         Response::SetResponse(200);
@@ -227,8 +225,7 @@ $app->Router->Put("api/item", function(){
     $item = new Item();
     $item->ID = $data["item"]["id"];
     $item->Collection = $data["item"]["collection"];
-    $item->Creator = $data["item"]["creator"];
-    $item->Created = $data["item"]["created"];
+    $item->Creator = $_SESSION['UserID'];
     $item->Properties = $data["item"]["properties"];
 
     $result = $item->Update();
@@ -266,6 +263,17 @@ $app->Router->Delete("api/item/destroy/{id}", function($param){
 //Types
 $app->Router->Get("api/type/all", function() use(&$app){
     $obj = $app->Database->query("SELECT * FROM types");
+
+    if($obj != null)
+        Response::Json($obj, 200);
+    else
+        Response::SetResponse(404);
+    
+})->UseAuthentication(true);
+
+//Roles
+$app->Router->Get("api/role/all", function(){
+    $obj = Role::GetAll();
 
     if($obj != null)
         Response::Json($obj, 200);

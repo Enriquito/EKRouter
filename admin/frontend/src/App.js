@@ -12,7 +12,6 @@ import CollectionNew from './Components/CollectionNew';
 import Users from './Components/Users';
 import UserNew from './Components/UserNew';
 
-
 function App() {
   return(
       <Router>

@@ -72,7 +72,7 @@ class Item
         $item->Collection = $data['collection'];
         $item->Creator = $data['username'];
 
-        $query = "SELECT pr.name, pv.value, t.type FROM items i
+        $query = "SELECT pr.id, pr.name, pv.value, t.type FROM items i
         JOIN property_values pv
         ON i.id = pv.item
         JOIN properties pr
@@ -90,6 +90,7 @@ class Item
             foreach($data as $d)
             {
                 $ar = [
+                    "ID" => $d['id'],
                     "Name" => $d['name'],
                     "Value" => $d['value'],
                     "Type" => $d['type']
@@ -172,10 +173,10 @@ class Item
         foreach($this->Properties as $prop)
         {
             $database = new Database();
-            $name = $prop['Name'];
+            $name = $prop['name'];
             $colID = $this->Collection;
             $propertyID = $database->query("SELECT id FROM properties WHERE `name` = '$name' AND `collection` = $colID", true)['id'];
-            $result = $database->Update("property_values", ["value" => $prop['Value']], "item = " . $this->ID . " AND property = " . $propertyID);
+            $result = $database->Update("property_values", ["value" => $prop['value']], "item = " . $this->ID . " AND property = " . $propertyID);
         }
 
         return $result;

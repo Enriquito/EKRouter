@@ -25,13 +25,12 @@ class Login extends React.Component {
                 password: document.getElementById('password').value,
             })
         })
-        .then((resp) => resp.json())
         .then(function(data){
             console.log(data);
-            if(data.Code === 1001){
+            if(data.status === 202){
                 window.location = "/dashboard";
             }
-            else if(data.Code === 100){
+            else if(data.status === 401){
                 document.getElementById('password').value = "";
                 this.setState(
                     {
@@ -41,6 +40,7 @@ class Login extends React.Component {
             }
         }.bind(this))
         .catch(function(error){
+            console.log(error);
             this.setState(
                 {
                     type : "error-messages",

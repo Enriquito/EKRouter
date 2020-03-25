@@ -25,14 +25,6 @@ class Collection
                 "owner" => $this->Owner
             ]);
 
-            // $prop = new Property();
-
-            // $prop->Name = "Title";
-            // $prop->Collection = $resultCollection;
-            // $prop->Description = "Default property";
-            // $prop->Type = 2;
-            // $prop->Locked = 1;
-
             $database->Insert("properties", [
                 "name" => "Title",
                 "collection" => $resultCollection,
@@ -40,6 +32,8 @@ class Collection
                 "type" => 2,
                 "locked" => 1,
             ]);
+
+            return true;
         }
         catch(Exception $e)
         {
