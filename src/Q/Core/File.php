@@ -3,11 +3,22 @@ namespace Q\Core;
 
 class File
 {
-    public $TargetDir = "sources/";
+    public $TargetDir = "sources/uploads/";
     public $MaxFileSize = 2000; // 2MB
     public $TargetFile;
     public $FileObject;
     private $ReadyForUpload = false;
+
+    public function __construct()
+    {
+
+    }
+
+    public function SetUploadDir($uploadDir)
+    {
+        if($uploadDir != null)
+            $this->TargetDir = $uploadDir;
+    }
 
     public function Prepare($file)
     {
@@ -37,8 +48,7 @@ class File
         if($passedChecks)
         {
             $this->ReadyForUpload = true;
-            if(move_uploaded_file($file["tmp_name"], $this->TargetFile))
-                return true;
+            return true;
         }
         else 
             return false;

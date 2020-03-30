@@ -306,7 +306,7 @@ $app->Router->Post("api/upload", function(){
     $file = new File();
     
     $result = $file->Prepare($data);
-    // $result = $file->Upload();
+    $result = $file->Upload();
 
     if($result)
         Response::SetResponse(201);
