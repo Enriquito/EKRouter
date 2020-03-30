@@ -20,8 +20,9 @@ class File
             $this->TargetDir = $uploadDir;
     }
 
-    public function Prepare($file)
+    public function Prepare($file) : array
     {
+        $error = [];
         $passedChecks = true;
         $uploaded = true;
 
@@ -30,34 +31,49 @@ class File
         $imageFileType = strtolower(pathinfo($this->TargetFile,PATHINFO_EXTENSION));
         $check = getimagesize($file["tmp_name"]);
 
-        // print_r($file);
-        // print_r($check);
-
-        if($imageFileType != "jpg" && 
-        $imageFileType != "png" && 
-        $imageFileType != "jpeg"&&
-        $imageFileType != "gif") 
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif")
+        {
             $passedChecks = false;
-        
+            $error = [
+                "Status" => 400,
+                "Errors" => ["File is not an image"]
+            ];
+        } 
+            
         if(!$check)
+        {
             $passedChecks = false;
+            $error = [
+                "Status" => 400,
+                "Errors" => ["File is not an image"]
+            ];
+        } 
             
         if(!$this->CheckFileSize($file['size']))
+        {
             $passedChecks = false;
+            $error = [
+                "Status" => 400,
+                "Errors" => ["File is to large maxium of ". ($this->MaxFileSize / 1000) . "MB allowed"]
+            ];
+        } 
 
         if($passedChecks)
         {
             $this->ReadyForUpload = true;
-            return true;
+            return $error;
         }
         else 
-            return false;
+            return $error;
     }
 
     public function Upload() : bool
     {
-        if(move_uploaded_file($this->FileObject["tmp_name"], $this->TargetFile))
-            return true;
+        if($this->ReadyForUpload)
+            if(move_uploaded_file($this->FileObject["tmp_name"], $this->TargetFile))
+                return true;
+            else
+                return false;
         else
             return false;
     }

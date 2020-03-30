@@ -305,11 +305,14 @@ $app->Router->Post("api/upload", function(){
     $data = Request::GetFiles();
     $file = new File();
     
-    $result = $file->Prepare($data);
+    $messages = $file->Prepare($data);
     $result = $file->Upload();
 
     if($result)
         Response::SetResponse(201);
     else
-        Response::SetResponse(500);
+    {
+        Response::Json($messages,400);
+    }
+        
 })->UseAuthentication(true);
