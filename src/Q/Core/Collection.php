@@ -54,7 +54,7 @@ class Collection
 
         $data = $database->query("SELECT `id`, `name`, `created`, `owner` FROM collections");
 
-        $ar = [];
+        $ar = null;
 
         foreach($data as $col)
         {

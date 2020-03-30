@@ -4,7 +4,7 @@ namespace Q\Core;
 class File
 {
     public $TargetDir = "sources/uploads/";
-    public $MaxFileSize = 2000; // 2MB
+    public $MaxFileSize = 4000; // 1000 = 1MB
     public $TargetFile;
     public $FileObject;
     private $ReadyForUpload = false;
