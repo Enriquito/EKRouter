@@ -8,6 +8,7 @@ session_start();
 session_regenerate_id();
 
 include_once('src/Settings.php');
+include_once('src/Q/Core/File.php');
 include_once('src/Q/Core/Role.php');
 include_once('src/Q/Core/User.php');
 include_once('src/Q/Core/Request.php');

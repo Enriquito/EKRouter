@@ -299,3 +299,17 @@ $app->Router->Get("api/role/all", function(){
         Response::SetResponse(404);
     
 })->UseAuthentication(true);
+
+//Upload
+$app->Router->Post("api/upload", function(){
+    $data = Request::GetFiles();
+    $file = new File();
+    
+    $result = $file->Prepare($data);
+    // $result = $file->Upload();
+
+    if($result)
+        Response::SetResponse(201);
+    else
+        Response::SetResponse(500);
+})->UseAuthentication(true);
