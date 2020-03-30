@@ -67,15 +67,30 @@ class File
             return $error;
     }
 
-    public function Upload() : bool
+    public function Upload() : array
     {
         if($this->ReadyForUpload)
             if(move_uploaded_file($this->FileObject["tmp_name"], $this->TargetFile))
-                return true;
+                return [
+                    "status" => 201,
+                    "ImagePath" => $this->GetProtocol().$_SERVER['SERVER_NAME'] . '/' .$this->TargetFile
+                ];
             else
-                return false;
+                return [
+                    "status" => 402
+                ];
         else
-            return false;
+            return [
+                "status" => 402
+            ];
+    }
+
+    private function GetProtocol() : string
+    {
+        if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)
+            return 'https://';
+        else
+            return 'http://';
     }
 
     private function CheckFileSize($size) : bool

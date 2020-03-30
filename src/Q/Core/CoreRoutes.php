@@ -2,11 +2,11 @@
 namespace Q\Core;
 
 // Users
-$route = $app->Router->Head("api/logout", function(){
+$route = $app->Router->Head("logout", function(){
     User::Logout();
 });
 
-$app->Router->Get("api/user/{id}", function($param) use(&$app){
+$app->Router->Get("user/{id}", function($param) use(&$app){
     $data = $app->Database->Query("SELECT id, username, email, first_name 
     as 'firstname', last_name as 'lastname', `role` FROM users WHERE ID = ". $param['id'],true);
 
@@ -17,7 +17,7 @@ $app->Router->Get("api/user/{id}", function($param) use(&$app){
     );
 })->UseAuthentication(true);
 
-$app->Router->Get("api/user", function(){
+$app->Router->Get("user", function(){
     $user = User::Load($_SESSION['UserID']);
 
     if($user != null)
@@ -27,12 +27,12 @@ $app->Router->Get("api/user", function(){
     
 })->UseAuthentication(true);
 
-$app->Router->Post("api/create-password", function(){
+$app->Router->Post("create-password", function(){
     $password = Request::GetJson()["password"];
     Response::Json(["Password" => User::CreatePassword($password)]);
 });
 
-$app->Router->Post("api/login", function(){
+$app->Router->Post("login", function(){
     $data = Request::GetJson();
     $password = $data["password"];
     $username = $data["username"];
@@ -41,18 +41,18 @@ $app->Router->Post("api/login", function(){
     $user->Login($username, $password);
 });
 
-$app->Router->Get("api/authenticate", function(){
+$app->Router->Get("authenticate", function(){
     User::CheckLogin(true);
 });
 
-$app->Router->Post("api/check-password", function(){
+$app->Router->Post("check-password", function(){
     $data = Request::GetJson();
     $password = $data["password"];
     $usr = new User();
     $usr->DoesPasswordMeetRequierments($password);
 });
 
-$app->Router->Post("api/user", function(){
+$app->Router->Post("user", function(){
     $data = Request::GetJson();
 
     $user = new User();
@@ -72,7 +72,7 @@ $app->Router->Post("api/user", function(){
 
 })->UseAuthentication(true);
 
-$app->Router->Get("api/users/list", function(){
+$app->Router->Get("users/list", function(){
     $result = User::ListAll();
 
     if(count($result) > 0)
@@ -81,7 +81,7 @@ $app->Router->Get("api/users/list", function(){
         Response::SetResponse(500);
 });
 
-$app->Router->Put("api/user/{id}", function($param){
+$app->Router->Put("user/{id}", function($param){
     $data = Request::GetJson();
 
     $user = new User();
@@ -99,7 +99,7 @@ $app->Router->Put("api/user/{id}", function($param){
 })->UseAuthentication(true);
 
 //Collections
-$app->Router->Post("api/collection", function(){
+$app->Router->Post("collection", function(){
     $data = Request::GetJson();
 
     $collection = new Collection();
@@ -114,19 +114,19 @@ $app->Router->Post("api/collection", function(){
     }
 })->UseAuthentication(true);
 
-$app->Router->Delete("api/collection/destroy/{id}", function($param){
+$app->Router->Delete("collection/destroy/{id}", function($param){
     Collection::Destroy($param["id"]);
 })->UseAuthentication(true);
 
-$app->Router->Get("api/collection/list/all", function(){
+$app->Router->Get("collection/list/all", function(){
     Response::Json(Collection::GetAll(), 200);
 })->UseAuthentication(true);
 
-$app->Router->Get("api/collection/{id}", function($param){
+$app->Router->Get("collection/{id}", function($param){
     Collection::Get($param["id"]);
 })->UseAuthentication(true);
 
-$app->Router->Put("api/collection", function(){
+$app->Router->Put("collection", function(){
     $data = Request::GetJson();
     $database = new Database();
 
@@ -155,7 +155,7 @@ $app->Router->Put("api/collection", function(){
 })->UseAuthentication(true);
 
 //Property
-$app->Router->Get("api/property/{id}", function($param){
+$app->Router->Get("property/{id}", function($param){
     $obj = Property::Get($param["id"]);
     
     if($obj != null)
@@ -165,7 +165,7 @@ $app->Router->Get("api/property/{id}", function($param){
     
 })->UseAuthentication(true);
 
-$app->Router->Post("api/property", function() use(&$app){
+$app->Router->Post("property", function() use(&$app){
     $data = Request::GetJson();
 
     $property = new Property();
@@ -187,13 +187,13 @@ $app->Router->Post("api/property", function() use(&$app){
     }
 })->UseAuthentication(true);
 
-$app->Router->Delete("api/property/destroy/{id}", function($param){
+$app->Router->Delete("property/destroy/{id}", function($param){
     $response = Property::Destroy($param["id"]);
 
     Response::SetResponse($response);
 })->UseAuthentication(true);
 
-$app->Router->Put("api/property", function() use(&$app){
+$app->Router->Put("property", function() use(&$app){
     $data = Request::GetJson();
 
     $property = new Property();
@@ -217,7 +217,7 @@ $app->Router->Put("api/property", function() use(&$app){
 })->UseAuthentication(true);
 
 //Items
-$app->Router->Get("api/item/{id}", function($param){
+$app->Router->Get("item/{id}", function($param){
     $obj = Item::Get($param["id"]);
     
     if($obj != null)
@@ -227,7 +227,7 @@ $app->Router->Get("api/item/{id}", function($param){
     
 })->UseAuthentication(true);
 
-$app->Router->Get("api/items/{collection}", function($param){
+$app->Router->Get("items/{collection}", function($param){
     $obj = Item::GetByCollection($param["collection"]);
     
     if($obj != null)
@@ -237,7 +237,7 @@ $app->Router->Get("api/items/{collection}", function($param){
     
 })->UseAuthentication(true);
 
-$app->Router->Put("api/item", function(){
+$app->Router->Put("item", function(){
     $data = Request::GetJson();
 
     $item = new Item();
@@ -254,7 +254,7 @@ $app->Router->Put("api/item", function(){
         Response::SetResponse(500);
 })->UseAuthentication(true);
 
-$app->Router->Post("api/item", function(){
+$app->Router->Post("item", function(){
     $data = Request::GetJson();
 
     $item = new Item();
@@ -269,7 +269,7 @@ $app->Router->Post("api/item", function(){
         Response::SetResponse(500);
 })->UseAuthentication(true);
 
-$app->Router->Delete("api/item/destroy/{id}", function($param){
+$app->Router->Delete("item/destroy/{id}", function($param){
     
 
     if(Item::Destroy($param["id"]))
@@ -279,7 +279,7 @@ $app->Router->Delete("api/item/destroy/{id}", function($param){
 })->UseAuthentication(true);
 
 //Types
-$app->Router->Get("api/type/all", function() use(&$app){
+$app->Router->Get("type/all", function() use(&$app){
     $obj = $app->Database->query("SELECT * FROM types");
 
     if($obj != null)
@@ -290,7 +290,7 @@ $app->Router->Get("api/type/all", function() use(&$app){
 })->UseAuthentication(true);
 
 //Roles
-$app->Router->Get("api/role/all", function(){
+$app->Router->Get("role/all", function(){
     $obj = Role::GetAll();
 
     if($obj != null)
@@ -301,15 +301,15 @@ $app->Router->Get("api/role/all", function(){
 })->UseAuthentication(true);
 
 //Upload
-$app->Router->Post("api/upload", function(){
+$app->Router->Post("upload", function(){
     $data = Request::GetFiles();
     $file = new File();
     
     $messages = $file->Prepare($data);
     $result = $file->Upload();
 
-    if($result)
-        Response::SetResponse(201);
+    if($result['status'] == 201)
+        Response::Json($result,201);
     else
     {
         Response::Json($messages,400);
