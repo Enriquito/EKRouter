@@ -2,7 +2,7 @@
 
 define("DB_USE", true);
 define("DB_DEBUG", true);
-define("DB_HOST", "quit0.nl");
+define("DB_HOST", "");
 define("DB_USERNAME", "");
 define("DB_NAME","");
 define("DB_PASSWORD", "");
