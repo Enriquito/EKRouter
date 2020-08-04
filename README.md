@@ -1,6 +1,6 @@
-# Q API
+# EKRouter
 
-Q API is a PHP library for routing and database opperations.
+EKRouter is a PHP library for routing and database opperations.
 
 ## Routings
 
