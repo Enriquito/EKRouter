@@ -32,4 +32,3 @@ $app->Router->Post("user/{id}", function($param) use(&$app){
     Response::Json(["ID" => $success]);
 });
 ```
-## License
